@@ -1,0 +1,34 @@
+setup react  -- done
+setup cors headers -- done
+setup reactstrap -- done
+
+make homepage
+make all courses page -- done 
+make single course page -- done
+
+make User profile page
+build user serialiser and api endpoints
+setup video uploads
+
+find admin template -- done creativetim black admin dash
+integrate admin template
+
+find video player 
+integrate video player 
+
+find conversion library (ffmpeg)
+integrate conversion library 
+
+make course detail page 
+    fix side bar --done
+    call lessons to populate side bar --done
+    display video on page -- done 
+    render out the html 
+
+setup route to explore -- done 
+setup route to my courses
+
+Critical**** fix bug where videos dont get deleted from the folder if they are changed 
+ensure all media gets deleted as appropriate.
+
+handle all fetch request gracefully ie handle error cases properly

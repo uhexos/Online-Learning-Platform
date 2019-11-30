@@ -1,0 +1,53 @@
+class Course():
+    id -> autoincrement()
+    title -> CharField()
+    owner -> ForeignKey(user, id)
+    description -> TextField()
+    pub_date -> models.DateField()
+    category -> models.ForeignKey(category, id)
+    is_live -> boolean()
+    rating ->integer()
+
+
+class Lesson():
+    id -> autoincrement()
+    title -> models.CharField()
+    video -> models.FileField()
+    content -> textField()
+    pub_date -> models.DateField()
+    course -> models.ForeignKey('Course', id)
+    description -> models.TextField()
+    owner -> models.ForeignKey(user, id)
+
+
+class Category():
+    id -> autoincrement()
+    title -> models.CharField(max_length->150, help_text->'Enter category title')
+    create_date -> models.DateField(null->True, blank->True)
+
+
+class EnrolledCourses():
+    id -> autoincrement()
+    user_id -> foreignKey('user', id)
+    course_id -> foreignKey('courses', id)
+
+
+class CustomUser():
+    # this is the django default
+    username ->charField()
+    first_name -> models.CharField()
+    last_name -> models.CharField()
+    email -> models.EmailField()
+    is_staff -> models.BooleanField()
+    is_active -> models.BooleanField()
+    date_joined -> models.DateTimeField()
+    -------------------------------------------
+    is_tutor-> booleanField
+
+
+class Comments():
+    id -> autoincrement()
+    text -> textField()
+    owner -> foreignKey('user', id)
+    lesson -> foreignKey('lesson', id)
+    date -> dateField()
