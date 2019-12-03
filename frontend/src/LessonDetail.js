@@ -8,11 +8,14 @@ export class LessonDetail extends Component {
                 {/* {console.log("lesson details",this.props.lesson)} */}
 
                 <h1>{this.props.lesson.title}</h1>
-                <video key={this.props.lesson.id} className="embed-responsive "controls>
+                {this.props.lesson.video ? (
+                    <video key={this.props.lesson.id} className="embed-responsive "controls>
                     {console.log("video url",this.props.lesson.video)}
                     <source src={this.props.lesson.video} type="video/mp4"></source>
                 </video>
-                <p>{this.props.lesson.content}</p>
+                ) : null}
+                
+                {this.props.lesson.content}
             </div>
         )
     }

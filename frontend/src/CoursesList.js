@@ -56,7 +56,7 @@ class CoursesList extends React.Component {
                     {console.log(item.thumbnail)}
                     <CardImg top src={item.thumbnail} alt="..." />
                     <CardBody>
-                      <CardTitle>{item.title}</CardTitle>
+                      <CardTitle><h4>{item.title}</h4></CardTitle>
                       <CardText>{item.description}</CardText>
                       <Link to={`/courses/${item.id}`}>
                         <Button color="primary" >View Course </Button>
