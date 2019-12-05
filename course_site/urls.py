@@ -16,16 +16,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from courses import views
-from django.conf import settings # new
-from django.conf.urls.static import static # new
+from django.conf import settings  # new
+from django.conf.urls.static import static  # new
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('courses.urls')),
     path('csrf/', views.csrf),
     path('ping/', views.ping),
+    path('auth/', obtain_jwt_token),
+    path('auth/refresh', refresh_jwt_token),
 ]
 
 
-if settings.DEBUG: # new
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:  # new
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

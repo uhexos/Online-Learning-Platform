@@ -6,6 +6,8 @@ import Row from 'reactstrap/lib/Row';
 import Col from 'reactstrap/lib/Col';
 import { Link } from 'react-router-dom';
 // import Sidebar from './Sidebar'
+let jwtkey = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNTc1NTcwNzIzLCJlbWFpbCI6IiIsIm9yaWdfaWF0IjoxNTc1NTY3MTIzfQ.rlrCjWuq_3GO0vXjUR7NVU9oSgGUmMqq2E6bOPneSzM";
+
 class CoursesList extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +19,14 @@ class CoursesList extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:8000/api/courses")
+    fetch("http://localhost:8000/api/courses",
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `JWT ${jwtkey}`
+        }
+      }
+    )
       .then(res => res.json())
       .then(
         (result) => {
@@ -63,7 +72,7 @@ class CoursesList extends React.Component {
                       </Link>
                     </CardBody>
                   </Card>
-
+                    
                 </Col>
               ))}
             </Row>

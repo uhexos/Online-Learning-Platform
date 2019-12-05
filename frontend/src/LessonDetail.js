@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 
 export class LessonDetail extends Component {
+    createMarkup() {
+        return {__html: this.props.lesson.content};
+      }
+
     render() {
         if (!this.props.lesson) return null //this line
         return (
@@ -12,7 +16,8 @@ export class LessonDetail extends Component {
                     {console.log("video url",this.props.lesson.video)}
                     <source src={this.props.lesson.video} type="video/mp4"></source>
                 </video>
-                <p>{this.props.lesson.content}</p>
+                <br/>
+                <div dangerouslySetInnerHTML={this.createMarkup()}/>
             </div>
         )
     }

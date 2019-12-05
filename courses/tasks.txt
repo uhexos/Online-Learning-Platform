@@ -2,7 +2,7 @@ setup react  -- done
 setup cors headers -- done
 setup reactstrap -- done
 
-make homepage
+TODO make homepage
 make all courses page -- done 
 make single course page -- done
 

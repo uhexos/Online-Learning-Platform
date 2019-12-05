@@ -42,7 +42,7 @@ import {
 // import AdminNavbar from "./AdminNavbar";
 // import Footer from "components/Footer/Footer.jsx";
 
-class RegisterPage extends React.Component {
+class LoginPage extends React.Component {
   state = {
     squares1to6: "",
     squares7and8: ""
@@ -103,7 +103,7 @@ class RegisterPage extends React.Component {
                           alt="..."
                           src={require("./assets/img/square-purple-1.png")}
                         />
-                        <CardTitle tag="h4">Register</CardTitle>
+                        <CardTitle tag="h4">Login</CardTitle>
                       </CardHeader>
                       <CardBody>
                         <Form className="form">
@@ -230,4 +230,4 @@ class RegisterPage extends React.Component {
   }
 }
 
-export default RegisterPage;
+export default LoginPage;
