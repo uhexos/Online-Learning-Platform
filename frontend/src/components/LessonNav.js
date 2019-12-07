@@ -8,7 +8,7 @@ class LessonNav extends React.Component {
     const printLesson = () => (
       this.props.lessons.map((lesson, index) => (
         <NavItem key={lesson.id} onClick={() => this.props.chooseLesson(index)}>
-          <NavLink href="#">{lesson.title}</NavLink>
+          <NavLink href="">{lesson.title}</NavLink>
         </NavItem>
       ))
     )

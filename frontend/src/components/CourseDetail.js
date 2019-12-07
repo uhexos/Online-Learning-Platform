@@ -45,7 +45,7 @@ export class CourseDetail extends Component {
                 });
             });
         //get all lessons their name, video url and descriptions etc from the api, 
-        fetch(`http://127.0.0.1:8000/api/courses/${this.props.match.params.id}/lessons`, {
+        fetch(`http://127.0.0.1:8000/api/courses/${this.props.match.params.id}/lessons/`, {
             method: 'GET',
             headers: {
                 Authorization: `JWT ${jwtkey}`
