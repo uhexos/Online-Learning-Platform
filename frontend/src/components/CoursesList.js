@@ -63,7 +63,7 @@ class CoursesList extends React.Component {
                   <Card>
                     <CardImg top src={item.thumbnail} alt="..." />
                     <CardBody>
-                      <CardTitle>{item.title}</CardTitle>
+                      <CardTitle><h4>{item.title}</h4></CardTitle>
                       <CardText>{item.description}</CardText>
                       <Link to={`/courses/${item.id}/lessons/0`}>
                         <Button color="primary" >View Course </Button>
