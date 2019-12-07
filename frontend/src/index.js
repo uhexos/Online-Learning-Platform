@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 //  import './assets/css/black-dashboard-react.css';
- //import './assets/css/blk-design-system-react.css';
-import './custom.css'
+ import './assets/css/blk-design-system-react.css';
+ import './assets/css/nucleo-icons.css';
+// import './custom.css'
 
 
 import App from './App';

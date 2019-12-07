@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
-import CoursesList from "./CoursesList";
-import CourseDetail from "./CourseDetail";
-import AdminNavbar from './AdminNavbar'
-import RegisterPage from './RegisterPage'
-import LoginPage from './LoginPage'
+import CoursesList from "./components/CoursesList";
+import CourseDetail from "./components/CourseDetail";
+import AdminNavbar from './components/AdminNavbar'
+import RegisterPage from './components/RegisterPage'
+import LoginPage from './components/LoginPage'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 // import Sidebar from './Sidebar'
 import routes from "./routes"

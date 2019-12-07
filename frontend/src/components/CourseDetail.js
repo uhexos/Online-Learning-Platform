@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 // import Vertical from "./Vertical" 
 import LessonNav from './LessonNav';
 import LessonDetail from './LessonDetail';
+
 import { Container, Row, Col } from 'reactstrap/lib';
 
 // TODO stop hardcoding jwt
-let jwtkey = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNTc1NTcwNzIzLCJlbWFpbCI6IiIsIm9yaWdfaWF0IjoxNTc1NTY3MTIzfQ.rlrCjWuq_3GO0vXjUR7NVU9oSgGUmMqq2E6bOPneSzM";
+let jwtkey = localStorage.getItem('token');
 export class CourseDetail extends Component {
 
     constructor(props) {

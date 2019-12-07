@@ -37,15 +37,17 @@ import {
   Row,
   Col
 } from "reactstrap";
+import Alert from "reactstrap/lib/Alert";
 
 // core components
 // import AdminNavbar from "./AdminNavbar";
 // import Footer from "components/Footer/Footer.jsx";
 
-class RegisterPage extends React.Component {
+class LoginPage extends React.Component {
   state = {
     squares1to6: "",
-    squares7and8: ""
+    squares7and8: "",
+    error: false
   };
   componentDidMount() {
     document.body.classList.toggle("register-page");
@@ -76,6 +78,36 @@ class RegisterPage extends React.Component {
         "deg)"
     });
   };
+  //user arrow functions to autobind component to this, setState wont work if you dont use arrow syntax
+  userLogin = () => {
+    //take user auth from the form and store our jwt token into local storage
+    let username = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    const data = { username: username, password: password };
+
+    // TODO handle fetch errors and add feedback to form
+    fetch(`http://127.0.0.1:8000/auth/`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => res.json())
+      .then(result => {
+        if (!result.token) {
+          // display error message alert in form 
+          this.setState({
+            error: true
+          });
+        } else {
+          this.setState({ error: false });
+          //store a value to the user computer to use on all pages expires after 1 hours check settings.py for current duration
+          localStorage.setItem('token',result.token);
+          this.props.history.push(`/courses/`);
+        }
+      });
+  };
   render() {
     return (
       <>
@@ -101,33 +133,16 @@ class RegisterPage extends React.Component {
                       <CardHeader>
                         <CardImg
                           alt="..."
-                          src={require("./assets/img/square-purple-1.png")}
+                          src={require("../assets/img/square-purple-1.png")}
                         />
-                        <CardTitle tag="h4">Register</CardTitle>
+                        <CardTitle tag="h4">Login</CardTitle>
+                        <Alert color="warning" isOpen={this.state.error}>
+                          {" "}
+                          Incorrect Username or Password
+                        </Alert>
                       </CardHeader>
                       <CardBody>
                         <Form className="form">
-                          <InputGroup
-                            className={classnames({
-                              "input-group-focus": this.state.fullNameFocus
-                            })}
-                          >
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="tim-icons icon-single-02" />
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                              placeholder="Full Name"
-                              type="text"
-                              onFocus={e =>
-                                this.setState({ fullNameFocus: true })
-                              }
-                              onBlur={e =>
-                                this.setState({ fullNameFocus: false })
-                              }
-                            />
-                          </InputGroup>
                           <InputGroup
                             className={classnames({
                               "input-group-focus": this.state.emailFocus
@@ -141,6 +156,7 @@ class RegisterPage extends React.Component {
                             <Input
                               placeholder="Email"
                               type="text"
+                              id="email"
                               onFocus={e => this.setState({ emailFocus: true })}
                               onBlur={e => this.setState({ emailFocus: false })}
                             />
@@ -157,7 +173,8 @@ class RegisterPage extends React.Component {
                             </InputGroupAddon>
                             <Input
                               placeholder="Password"
-                              type="text"
+                              id="password"
+                              type="password"
                               onFocus={e =>
                                 this.setState({ passwordFocus: true })
                               }
@@ -166,24 +183,16 @@ class RegisterPage extends React.Component {
                               }
                             />
                           </InputGroup>
-                          <FormGroup check className="text-left">
-                            <Label check>
-                              <Input type="checkbox" />
-                              <span className="form-check-sign" />I agree to the{" "}
-                              <a
-                                href="#pablo"
-                                onClick={e => e.preventDefault()}
-                              >
-                                terms and conditions
-                              </a>
-                              .
-                            </Label>
-                          </FormGroup>
                         </Form>
                       </CardBody>
                       <CardFooter>
-                        <Button className="btn-round" color="primary" size="lg">
-                          Get Started
+                        <Button
+                          className="btn-round"
+                          color="primary"
+                          size="md"
+                          onClick={this.userLogin}
+                        >
+                          Login
                         </Button>
                       </CardFooter>
                     </Card>
@@ -230,4 +239,4 @@ class RegisterPage extends React.Component {
   }
 }
 
-export default RegisterPage;
+export default LoginPage;
