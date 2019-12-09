@@ -5,13 +5,13 @@ import CourseDetail from "./components/CourseDetail";
 import AdminNavbar from './components/AdminNavbar'
 import RegisterPage from './components/RegisterPage'
 import LoginPage from './components/LoginPage'
+import ProfilePage from './components/ProfilePage'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 // import Sidebar from './Sidebar'
 import routes from "./routes"
 class App extends React.Component {
 
   render() {
-   
 
     return (
       <div>
@@ -24,9 +24,9 @@ class App extends React.Component {
             <Route path="/courses/:id/lessons/:lid" component={CourseDetail} />
             <Route path="/register" component={RegisterPage} />
             <Route path="/login" component={LoginPage} />
+            <Route path="/profile" component={ProfilePage} />
           </Switch>
         </Router>
-        {/* <CoursesList /> */}
       </div>
 
     )

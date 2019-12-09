@@ -21,7 +21,7 @@ const AdminNavbar = (props) => {
 
   return (
     <div>
-      <Navbar color="dark" dark expand="md">
+      <Navbar color="primary" dark expand="md">
         <NavbarBrand href="/">Courses</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>

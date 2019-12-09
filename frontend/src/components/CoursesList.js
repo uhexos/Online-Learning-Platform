@@ -75,9 +75,6 @@ class CoursesList extends React.Component {
             </Row>
           </Container>
         </div>
-
-
-
       );
     }
   }

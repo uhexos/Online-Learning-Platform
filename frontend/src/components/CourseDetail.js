@@ -5,7 +5,6 @@ import LessonDetail from './LessonDetail';
 
 import { Container, Row, Col } from 'reactstrap/lib';
 
-// TODO stop hardcoding jwt
 let jwtkey = localStorage.getItem('token');
 export class CourseDetail extends Component {
 
@@ -64,12 +63,11 @@ export class CourseDetail extends Component {
 
     }
     render() {
-        if (!this.state.course.lessons) return null //this line
         return (
             <Container>
                 <Row className="mt-3">
                     <Col md="3">
-                        <LessonNav lessons={this.state.lessons} chooseLesson={this.chooseLesson}></LessonNav>
+                        <LessonNav className="pt-3" lessons={this.state.lessons} chooseLesson={this.chooseLesson}></LessonNav>
                     </Col>
                     <Col md="9">
                         {/*select the first item from the array to display before first click happens */}

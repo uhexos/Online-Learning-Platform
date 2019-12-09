@@ -32,3 +32,4 @@ Critical**** fix bug where videos dont get deleted from the folder if they are c
 ensure all media gets deleted as appropriate.
 
 handle all fetch request gracefully ie handle error cases properly
+TODO downlaod argon and paper from creative tim.
