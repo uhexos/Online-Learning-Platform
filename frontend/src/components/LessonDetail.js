@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Card from 'reactstrap/lib/Card';
 import CardBody from 'reactstrap/lib/CardBody';
-import CardHeader from 'reactstrap/lib/CardHeader';
 import CardTitle from 'reactstrap/lib/CardTitle';
 
 export class LessonDetail extends Component {
@@ -14,11 +13,10 @@ export class LessonDetail extends Component {
         return (
             <Card>
                 {/* {console.log("lesson details",this.props.lesson)} */}
-                <CardHeader>
-                    <CardTitle>                    <h1>{this.props.lesson.title}</h1>
+                <CardBody className="shadow">
+                    <CardTitle>
+                        <h1>{this.props.lesson.title}</h1>
                     </CardTitle>
-                </CardHeader>
-                <CardBody >
                     {this.props.lesson.video ? (
                         <div>
                             <video key={this.props.lesson.id} className="embed-responsive " controls>

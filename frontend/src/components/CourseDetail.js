@@ -64,7 +64,7 @@ export class CourseDetail extends Component {
     }
     render() {
         return (
-            <Container>
+            <Container fluid>
                 <Row className="mt-3">
                     <Col md="3">
                         <LessonNav className="pt-3" lessons={this.state.lessons} chooseLesson={this.chooseLesson}></LessonNav>

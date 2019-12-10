@@ -52,13 +52,14 @@ class CoursesList extends React.Component {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
       return <div>Loading...</div>;
-    } else {
+    }
+    else {
       // TODO add fix to stop the rendering before fetcch from api 
       return (
         <div>
           <Container>
             <Row className="mt-5">
-              {items.map(item => (
+              {items.detail ? <h2>Loading courses...</h2> : (items.map(item => (
                 <Col sm="6" md="3" key={item.id}>
                   <Card>
                     <CardImg top src={item.thumbnail} alt="..." />
@@ -71,7 +72,8 @@ class CoursesList extends React.Component {
                     </CardBody>
                   </Card>
                 </Col>
-              ))}
+              )))}
+
             </Row>
           </Container>
         </div>

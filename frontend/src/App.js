@@ -9,6 +9,7 @@ import ProfilePage from './components/ProfilePage'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 // import Sidebar from './Sidebar'
 import routes from "./routes"
+import CoursePurchasePage from './components/views/CoursePurchasePage';
 class App extends React.Component {
 
   render() {
@@ -19,9 +20,10 @@ class App extends React.Component {
         <Router>
           <Switch>
             <Route path="/" exact={true} component={CoursesList} />
-            <Route path="/courses/" exact component={CoursesList} />
             TODO make a auto update url when new lesson is visited
+            <Route path="/courses/purchase/"   component={CoursePurchasePage} />
             <Route path="/courses/:id/lessons/:lid" component={CourseDetail} />
+            <Route path="/courses/" exact component={CoursesList} />
             <Route path="/register" component={RegisterPage} />
             <Route path="/login" component={LoginPage} />
             <Route path="/profile" component={ProfilePage} />
