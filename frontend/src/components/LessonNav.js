@@ -1,5 +1,5 @@
 import React from 'react';
-import { Nav, NavItem, NavLink } from 'reactstrap';
+import { Nav, NavItem } from 'reactstrap';
 import Card from 'reactstrap/lib/Card';
 import CardBody from 'reactstrap/lib/CardBody';
 import CardTitle from 'reactstrap/lib/CardTitle';
@@ -11,9 +11,9 @@ class LessonNav extends React.Component {
     //user can visit course/1/lesson/1 even though lesson id might be 23
     const printLesson = () => (
       this.props.lessons.map((lesson, index) => (
-        <NavItem key={lesson.id} onClick={() => this.props.chooseLesson(index)}>
-          <Link>
-            <NavLink href=""><i className="tim-icons icon-email-85" />{lesson.title}</NavLink>
+        <NavItem key={lesson.id} >
+          <Link to={`/courses/${lesson.course}/lessons/${index}`}>
+            <i className="tim-icons icon-email-85" />{lesson.title}
           </Link>
         </NavItem>
       ))

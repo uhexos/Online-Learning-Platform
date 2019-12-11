@@ -13,6 +13,7 @@ export class LessonDetail extends Component {
         return (
             <Card>
                 {/* {console.log("lesson details",this.props.lesson)} */}
+            {console.log("hit")}
                 <CardBody className="shadow">
                     <CardTitle>
                         <h1>{this.props.lesson.title}</h1>
@@ -23,7 +24,6 @@ export class LessonDetail extends Component {
                                 <source src={this.props.lesson.video} type="video/mp4"></source>
                             </video>
                             <br />
-                            {console.log("lesson content", this.props.lesson)}
                         </div>
                     ) : null}
                     <div dangerouslySetInnerHTML={this.createMarkup()} />

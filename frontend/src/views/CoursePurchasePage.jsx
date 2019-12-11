@@ -97,9 +97,9 @@ export class CoursePurchasePage extends Component {
                   Posted by Anonymous on 3/1/17
                 </small>
                 <hr />
-                <a href="#" className="btn btn-success">
+                <button className="btn btn-success">
                   Leave a Review
-                </a>
+                </button>
               </CardBody>
             </Card>
           </Col>

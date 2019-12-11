@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 //  import './assets/css/black-dashboard-react.css';
 //  import './assets/css/blk-design-system-react.css';
- import './assets/css/nucleo-icons.css';
+import './assets/css/nucleo-icons.css';
 import './assets/css/argon-design-system-react.min.css';
 // import './custom.css'
 

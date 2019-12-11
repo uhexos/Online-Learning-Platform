@@ -13,7 +13,7 @@ import {
   DropdownItem,
   // NavbarText
 } from 'reactstrap';
-
+import { NavLink as RRNavLink } from 'react-router-dom';
 const AdminNavbar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   
@@ -27,7 +27,7 @@ const AdminNavbar = (props) => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink href="/courses/">Explore</NavLink>
+              <NavLink tag={RRNavLink} to="/courses/">Explore</NavLink>
             </NavItem>
             <NavItem>
               <NavLink href="">My Courses</NavLink>

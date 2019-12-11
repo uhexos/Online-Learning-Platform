@@ -3,31 +3,37 @@ import './App.css';
 import CoursesList from "./components/CoursesList";
 import CourseDetail from "./components/CourseDetail";
 import AdminNavbar from './components/AdminNavbar'
-import RegisterPage from './components/RegisterPage'
-import LoginPage from './components/LoginPage'
+// import RegisterPage from './components/RegisterPage'
+// import LoginPage from './components/LoginPage'
+import Login from './views/Login'
+import Register from './views/Register'
 import ProfilePage from './components/ProfilePage'
+import NoMatch from './views/NoMatch'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 // import Sidebar from './Sidebar'
-import routes from "./routes"
-import CoursePurchasePage from './components/views/CoursePurchasePage';
+import CoursePurchasePage from './views/CoursePurchasePage';
+// core components
+import SimpleFooter from "./components/SimpleFooter.jsx";
 class App extends React.Component {
 
   render() {
 
     return (
       <div>
-        <AdminNavbar></AdminNavbar>
         <Router>
+          <AdminNavbar></AdminNavbar>
           <Switch>
             <Route path="/" exact={true} component={CoursesList} />
             TODO make a auto update url when new lesson is visited
-            <Route path="/courses/purchase/"   component={CoursePurchasePage} />
+            <Route path="/courses/purchase/" component={CoursePurchasePage} />
             <Route path="/courses/:id/lessons/:lid" component={CourseDetail} />
             <Route path="/courses/" exact component={CoursesList} />
-            <Route path="/register" component={RegisterPage} />
-            <Route path="/login" component={LoginPage} />
+            <Route path="/register" component={Register} />
+            <Route path="/login" component={Login} />
             <Route path="/profile" component={ProfilePage} />
+            <Route path="*" component={NoMatch} />
           </Switch>
+          <SimpleFooter/>
         </Router>
       </div>
 

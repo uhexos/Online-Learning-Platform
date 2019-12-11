@@ -12,23 +12,14 @@ export class CourseDetail extends Component {
         super(props);
         // Bind the this context to the handler function
         //selected refers to the index of the lesson in the return array and not the lesson id
-        this.chooseLesson = this.chooseLesson.bind(this);
         this.state = {
             course: {
                 lessons: []
             },
             lessons: [],
-            selected: "",
         };
     }
-    // This method will be sent to the child component ie prop drilling 
-    chooseLesson(id) {
-        this.setState({
-            selected: id
-        });
-        //update the url after course changes
-        this.props.history.push(`/courses/${this.props.match.params.id}/lessons/${id}/`);
-    }
+    
     componentDidMount() {
         //get all lesson id's from the selected course
         fetch(`http://127.0.0.1:8000/api/courses/${this.props.match.params.id}`, {
@@ -56,22 +47,17 @@ export class CourseDetail extends Component {
                     lessons: lessons,
                 });
             });
-        // open the appropriate lesson as entered from the url enetered.if user goes to course/2/lesson/2 open immediately
-        if(this.props.match.params.lid){
-            this.setState({selected:this.props.match.params.lid})
-        }
-
     }
     render() {
         return (
             <Container fluid>
                 <Row className="mt-3">
                     <Col md="3">
-                        <LessonNav className="pt-3" lessons={this.state.lessons} chooseLesson={this.chooseLesson}></LessonNav>
+                        <LessonNav className="pt-3" lessons={this.state.lessons}></LessonNav>
                     </Col>
                     <Col md="9">
                         {/*select the first item from the array to display before first click happens */}
-                        <LessonDetail lesson={this.state.lessons[this.state.selected?this.state.selected:0]}></LessonDetail>
+                        <LessonDetail lesson={this.state.lessons[this.props.match.params.lid]}></LessonDetail>
                     </Col>
                 </Row>
             </Container>
