@@ -25,7 +25,7 @@ class App extends React.Component {
           <Switch>
             <Route path="/" exact={true} component={CoursesList} />
             TODO make a auto update url when new lesson is visited
-            <Route path="/courses/purchase/" component={CoursePurchasePage} />
+            <Route path="/courses/:id/purchase/" component={CoursePurchasePage} />
             <Route path="/courses/:id/lessons/:lid" component={CourseDetail} />
             <Route path="/courses/" exact component={CoursesList} />
             <Route path="/register" component={Register} />

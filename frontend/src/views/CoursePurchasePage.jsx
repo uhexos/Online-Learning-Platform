@@ -8,6 +8,7 @@ import Container from "reactstrap/lib/Container";
 import CardTitle from "reactstrap/lib/CardTitle";
 import CardText from "reactstrap/lib/CardText";
 import Button from "reactstrap/lib/Button";
+import CourseAccordian from "../components/CourseAccordian";
 
 export class CoursePurchasePage extends Component {
   render() {
@@ -60,10 +61,10 @@ export class CoursePurchasePage extends Component {
                   <span className="text-warning">★ ★ ★ ★ ☆</span>
                   4.0 stars
                 </CardTitle>
+                <CourseAccordian courseID={this.props.match.params.id}/>
               </CardBody>
             </Card>
             {/* <!-- /.card --> */}
-
             <Card className="my-4 shadow">
               <CardHeader>Product Reviews</CardHeader>
               <CardBody>
