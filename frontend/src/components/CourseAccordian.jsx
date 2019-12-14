@@ -24,6 +24,7 @@ export class CourseAccordian extends Component {
           this.setState({
             lessons: result
           });
+          console.log(this.state.lessons);
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
@@ -35,7 +36,7 @@ export class CourseAccordian extends Component {
   }
   render() {
     return (
-      <Accordion allowZeroExpanded className="my-4  card">
+      <Accordion allowZeroExpanded className="my-4  card shadow">
         {this.state.lessons.map(lesson => (
           <AccordionItem className="card" key={lesson.id}>
             <AccordionItemHeading className="card-header">
