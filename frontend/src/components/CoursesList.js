@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardImg, CardBody, CardTitle, CardText, Button } from 'reactstrap';
+import { Card, CardImg, CardBody, CardTitle, Button } from 'reactstrap';
 import Container from 'reactstrap/lib/Container';
 import Row from 'reactstrap/lib/Row';
 import Col from 'reactstrap/lib/Col';
@@ -60,15 +60,14 @@ class CoursesList extends React.Component {
           <Container>
             <Row className="mt-5">
               {items.detail ? <h2>Loading courses...</h2> : (items.map(item => (
-                <Col sm="6" md="3" key={item.id}>
-                  <Card>
+                <Col sm="6" md="4" key={item.id}>
+                  <Card className="shadow">
                     <CardImg top src={item.thumbnail} alt="..." />
                     <CardBody>
-                      <CardTitle><h4>{item.title}</h4></CardTitle>
-                      <CardText>{item.description}</CardText>
+                      <CardTitle><h5>{item.title}</h5></CardTitle>
                       <Link to={`/courses/${item.id}/lessons/0`}>
                         <Button color="primary" >View Course </Button>
-                      </Link>
+                      </Link> 
                     </CardBody>
                   </Card>
                 </Col>

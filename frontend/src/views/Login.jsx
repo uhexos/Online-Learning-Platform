@@ -35,7 +35,6 @@ import {
 } from "reactstrap";
 
 // core components
-import SimpleFooter from "../components/SimpleFooter.jsx";
 import Alert from "reactstrap/lib/Alert";
 
 class Login extends React.Component {
