@@ -16,6 +16,7 @@
 
 */
 import React from "react";
+import axios from 'axios'
 
 // reactstrap components
 import {
@@ -37,11 +38,49 @@ import {
 
 
 class Register extends React.Component {
+
+  constructor(props){
+    super(props)
+    this.state = {
+      firstname: '',
+      lastname: '',
+      username: '',
+      email: '',
+      password: '',
+      confirmPassword: ''
+
+    }
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault()
+    const data = this.state
+    console.log(data)
+    axios.post('http://localhost:8000/api/users/', data)
+    .then((response) => {
+      console.log(response);
+    }, (error) => {
+      console.log(error);
+    });
+  }
+
+  handleInputChange = (event) =>{
+    // console.log(event.target.value)
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
+
+
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     this.refs.main.scrollTop = 0;
   }
+
+  
+
+
   render() {
     return (
       <>
@@ -100,7 +139,7 @@ class Register extends React.Component {
                       <div className="text-center text-muted mb-4">
                         <small>Or sign up with credentials</small>
                       </div>
-                      <Form role="form">
+                      <Form role="form" onSubmit={this.handleSubmit}>
                         <FormGroup>
                           <InputGroup className="input-group-alternative mb-3">
                             <InputGroupAddon addonType="prepend">
@@ -108,7 +147,27 @@ class Register extends React.Component {
                                 <i className="ni ni-hat-3" />
                               </InputGroupText>
                             </InputGroupAddon>
-                            <Input placeholder="Name" type="text" />
+                            <Input placeholder="Firstname" type="text" name="firstname" onChange={this.handleInputChange} required />
+                          </InputGroup>
+                        </FormGroup>
+                        <FormGroup>
+                          <InputGroup className="input-group-alternative mb-3">
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>
+                                <i className="ni ni-hat-3" />
+                              </InputGroupText>
+                            </InputGroupAddon>
+                            <Input placeholder="Lastname" type="text" name="lastname" onChange={this.handleInputChange} />
+                          </InputGroup>
+                        </FormGroup>
+                        <FormGroup>
+                          <InputGroup className="input-group-alternative mb-3">
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>
+                                <i className="ni ni-hat-3" />
+                              </InputGroupText>
+                            </InputGroupAddon>
+                            <Input placeholder="Username" type="text" name="username" onChange={this.handleInputChange} />
                           </InputGroup>
                         </FormGroup>
                         <FormGroup>
@@ -118,7 +177,7 @@ class Register extends React.Component {
                                 <i className="ni ni-email-83" />
                               </InputGroupText>
                             </InputGroupAddon>
-                            <Input placeholder="Email" type="email" />
+                            <Input placeholder="Email" type="email" name="email" onChange={this.handleInputChange} />
                           </InputGroup>
                         </FormGroup>
                         <FormGroup>
@@ -132,6 +191,24 @@ class Register extends React.Component {
                               placeholder="Password"
                               type="password"
                               autoComplete="off"
+                              name="password"
+                              onChange={this.handleInputChange}
+                            />
+                          </InputGroup>
+                        </FormGroup>
+                        <FormGroup>
+                          <InputGroup className="input-group-alternative">
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>
+                                <i className="ni ni-lock-circle-open" />
+                              </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                              placeholder="Confirm password"
+                              type="password"
+                              autoComplete="off"
+                              name="confirmPassword"
+                              onChange={this.handleInputChange}
                             />
                           </InputGroup>
                         </FormGroup>
@@ -172,7 +249,8 @@ class Register extends React.Component {
                           <Button
                             className="mt-4"
                             color="primary"
-                            type="button"
+                            type="submit"
+                            // onClick={this.userRegister}
                           >
                             Create account
                           </Button>

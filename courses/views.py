@@ -62,6 +62,7 @@ class LessonDetail(generics.RetrieveUpdateDestroyAPIView):
 class CustomUserList(generics.ListCreateAPIView):
     serializer_class = CustomUserSerializer
     queryset = CustomUser.objects.all()
+    permission_classes = [permissions.AllowAny]
 
 
 class CustomUserDetail(generics.RetrieveUpdateDestroyAPIView):
