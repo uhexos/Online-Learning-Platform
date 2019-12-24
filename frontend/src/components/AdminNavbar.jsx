@@ -14,6 +14,7 @@ import {
   // NavbarText
 } from 'reactstrap';
 import { NavLink as RRNavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 const AdminNavbar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   
@@ -49,6 +50,9 @@ const AdminNavbar = (props) => {
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
+            <NavItem>
+              <NavLink href="/login">Login</NavLink>
+            </NavItem>
           </Nav>
           {/* <NavbarText>Simple Text</NavbarText> */}
         </Collapse>
