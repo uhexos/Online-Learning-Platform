@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import generics
+from rest_framework import generics, permissions
 from .models import *
 from .serializers import *
 # Create your views here.
@@ -11,6 +11,10 @@ def csrf(request):
 
 def ping(request):
     return JsonResponse({'result': 'OK'})
+
+# def register(request):
+
+#     return render(request, '/')
     
 class CategoryList(generics.ListCreateAPIView):
     queryset = Category.objects.all()
@@ -58,3 +62,4 @@ class LessonDetail(generics.RetrieveUpdateDestroyAPIView):
 class CustomUserList(generics.ListCreateAPIView):
     serializer_class = CustomUserSerializer
     queryset = CustomUser.objects.all()
+    permission_classes = [permissions.AllowAny]
