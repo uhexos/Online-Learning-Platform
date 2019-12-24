@@ -1,40 +1,42 @@
-from django.shortcuts import render
-from rest_framework import generics
+from django.shortcuts import redirect
+from rest_framework import generics,permissions
 from .models import *
 from .serializers import *
-# Create your views here.
-from django.http import JsonResponse
-from django.middleware.csrf import get_token
+from .permissions import IsOwnerOrReadOnly,IsSuperUser
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
-def csrf(request):
-    return JsonResponse({'csrfToken': get_token(request)})
-
-def ping(request):
-    return JsonResponse({'result': 'OK'})
-    
 class CategoryList(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
 
 class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
+
 class CourseList(generics.ListCreateAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
-      
+
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
-        
+
+
 class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
     # queryset = Course.objects.all()
     serializer_class = CourseSerializer
+
     def get_object(self):
+        print(self.request.user)
+
         return Course.objects.get(id=self.kwargs['pk'])
+
 
 class LessonList(generics.ListCreateAPIView):
     serializer_class = LessonSerializer
+
     def get_queryset(self):
        # GET PK FROM URL USING KWARGS TO URL DEFINTIIION
         pk = self.kwargs['pk']
@@ -42,19 +44,32 @@ class LessonList(generics.ListCreateAPIView):
         return qs
 
     def perform_create(self, serializer):
-        course =  Course.objects.get(id=self.kwargs['pk'])
+        course = Course.objects.get(id=self.kwargs['pk'])
         serializer.save(owner=self.request.user, course=course)
-             
+
 
 class LessonDetail(generics.RetrieveUpdateDestroyAPIView):
     # queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
+
     def get_object(self):
        # GET PK FROM URL USING KWARGS TO URL DEFINTIIION
         course_pk = self.kwargs['pk']
         lesson_pk = self.kwargs['lpk']
-        return  Lesson.objects.get(course_id=course_pk,id=lesson_pk)
+        return Lesson.objects.get(course_id=course_pk, id=lesson_pk)
+
 
 class CustomUserList(generics.ListCreateAPIView):
     serializer_class = CustomUserSerializer
     queryset = CustomUser.objects.all()
+
+
+class CustomUserDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsOwnerOrReadOnly|IsSuperUser]
+    serializer_class = CustomUserSerializer
+    queryset = CustomUser.objects.all()
+
+class UserProfileView(APIView):
+    def get(self, request):
+        serializer = CustomUserSerializer(request.user)
+        return Response(serializer.data)

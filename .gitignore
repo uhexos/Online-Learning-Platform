@@ -1,3 +1,9 @@
 venv/
 .vscode/
+.idea/
 
+*.log
+*.pot
+*.pyc
+local_settings.py
+courses/__pycache__
