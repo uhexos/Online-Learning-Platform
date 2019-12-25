@@ -11,6 +11,11 @@ import Button from "reactstrap/lib/Button";
 import CourseAccordian from "../components/CourseAccordian";
 
 export class CoursePurchasePage extends Component {
+  state = {isLoaded : false};
+  componentDidMount() {
+    
+  }
+  
   render() {
     return (
       <Container fluid>

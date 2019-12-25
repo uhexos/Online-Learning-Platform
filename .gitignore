@@ -7,3 +7,4 @@ venv/
 *.pyc
 local_settings.py
 courses/__pycache__
+db.sqlite3

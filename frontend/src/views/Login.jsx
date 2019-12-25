@@ -70,6 +70,7 @@ class Login extends React.Component {
           this.setState({ loginError: false });
           //store a value to the user computer to use on all pages expires after 1 hours check settings.py for current duration
           localStorage.setItem('token',result.token);
+          console.log("token",result.token)
           this.props.history.push(`/courses/`);
         }
       });

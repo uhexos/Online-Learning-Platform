@@ -13,7 +13,7 @@ class CoursesList extends React.Component {
     this.state = {
       error: null,
       isLoaded: false,
-      items: []
+      items: null
     };
   }
 
@@ -22,11 +22,16 @@ class CoursesList extends React.Component {
       {
         method: 'GET',
         headers: {
-          Authorization: `JWT ${jwtkey}`
+          Authorization: `JWT ${localStorage.getItem('token')}`
         }
       }
     )
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw Error(res.statusText);
+        }
+        return res.json()
+      })
       .then(
         (result) => {
           this.setState({
@@ -50,31 +55,29 @@ class CoursesList extends React.Component {
     const { error, isLoaded, items } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
-      return <div>Loading...</div>;
     }
     else {
-      // TODO add fix to stop the rendering before fetcch from api 
       return (
         <div>
-          <Container>
-            <Row className="mt-5">
-              {items.detail ? <h2>Loading courses...</h2> : (items.map(item => (
-                <Col sm="6" md="4" key={item.id}>
-                  <Card className="shadow">
-                    <CardImg top src={item.thumbnail} alt="..." />
-                    <CardBody>
-                      <CardTitle><h5>{item.title}</h5></CardTitle>
-                      <Link to={`/courses/${item.id}/lessons/0`}>
-                        <Button color="primary" >View Course </Button>
-                      </Link> 
-                    </CardBody>
-                  </Card>
-                </Col>
-              )))}
-
-            </Row>
-          </Container>
+          {/* //check if we have any items before mapping. */}
+          {!isLoaded || items == null ? (<h5 className="title">Loading courses...</h5>) : (
+            <Container>
+              <Row className="mt-5">
+                {items.map(item => (
+                  <Col sm="6" md="4" key={item.id}>
+                    <Card className="shadow">
+                      <CardImg top src={item.thumbnail} alt="..." />
+                      <CardBody>
+                        <CardTitle><h5>{item.title}</h5></CardTitle>
+                        <Link to={`/courses/${item.id}/lessons/0`}>
+                          <Button color="primary" >View Course </Button>
+                        </Link>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            </Container>)}
         </div>
       );
     }
