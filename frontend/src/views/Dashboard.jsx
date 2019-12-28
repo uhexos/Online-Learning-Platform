@@ -28,7 +28,7 @@ class Dashbaord extends React.Component{
       
     getRoutes = routes => {
         return routes.map((prop, key) => {
-          if (prop.layout === "/admin") {
+          if (prop.layout === "/dashboard") {
             return (
               <Route
                 path={prop.layout + prop.path}
