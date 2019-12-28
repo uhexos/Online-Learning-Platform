@@ -1,7 +1,20 @@
 from rest_framework import serializers
 from .models import *
 
-
+class CustomUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model  = CustomUser
+        fields = '__all__'
+    
+    def create(self, validated_data):
+        user = CustomUser(
+            email=validated_data['email'],
+            username=validated_data['username']
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
+        
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
@@ -11,9 +24,9 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class CourseSerializer(serializers.ModelSerializer):
     lessons = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-    owner = serializers.PrimaryKeyRelatedField(read_only=True)
+    # owner = serializers.PrimaryKeyRelatedField(read_only=True)
     rating = serializers.ReadOnlyField()
-
+    owner = CustomUserSerializer(read_only=True)
     class Meta:
         model = Course
         # fields = ['id', 'title', 'description', 'category', 'owner', 'lessons']
@@ -28,16 +41,3 @@ class LessonSerializer(serializers.ModelSerializer):
         model = Lesson
         fields = '__all__'
 
-class CustomUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model  = CustomUser
-        fields = '__all__'
-    
-    def create(self, validated_data):
-        user = CustomUser(
-            email=validated_data['email'],
-            username=validated_data['username']
-        )
-        user.set_password(validated_data['password'])
-        user.save()
-        return user
