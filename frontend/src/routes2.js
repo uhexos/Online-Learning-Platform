@@ -17,12 +17,12 @@
 */
 import Index from "./views/Index.jsx";
 import Profile from "./views/examples/Profile.jsx";
-import Maps from "./views/examples/Maps.jsx";
-import Register from "./views/examples/Register.jsx";
-import Login from "./views/examples/Login.jsx";
-import Tables from "./views/examples/Tables.jsx";
-import Icons from "./views/examples/Icons.jsx";
-import ProfilePage from "./components/ProfilePage.jsx";
+// import Maps from "./views/examples/Maps.jsx";
+// import Register from "./views/examples/Register.jsx";
+// import Login from "./views/examples/Login.jsx";
+// import Tables from "./views/examples/Tables.jsx";
+// import Icons from "./views/examples/Icons.jsx";
+// import ProfilePage from "./components/ProfilePage.jsx";
 
 var routes = [
   {
@@ -30,7 +30,7 @@ var routes = [
     name: "Dashboard",
     icon: "ni ni-tv-2 text-primary",
     component: Index,
-    layout: "/admin"
+    layout: "/dashboard"
   },
   // {
   //   path: "/icons",
@@ -51,7 +51,7 @@ var routes = [
     name: "User Profile",
     icon: "ni ni-single-02 text-yellow",
     component: Profile,
-    layout: "/admin"
+    layout: "/dashboard"
   }
   // {
   //   path: "/tables",

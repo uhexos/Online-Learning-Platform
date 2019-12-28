@@ -9,6 +9,7 @@ import Login from './views/Login'
 import Register from './views/Register'
 import Dashboard from './views/Dashboard'
 import ProfilePage from './components/ProfilePage'
+import Profile from "./views/examples/Profile.jsx";
 import NoMatch from './views/NoMatch'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 // import Sidebar from './Sidebar'
@@ -33,6 +34,7 @@ class App extends React.Component {
             <Route path="/login" component={Login} />
             <Route path="/profile" component={ProfilePage} />
             <Route path="/dashboard" component={Dashboard} />
+            {/* <Route path="profile" component={Profile} /> */}
             <Route path="*" component={NoMatch} />
             
           </Switch>
