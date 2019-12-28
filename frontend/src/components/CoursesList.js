@@ -68,8 +68,8 @@ class CoursesList extends React.Component {
                 <Row className="mt-5">
                   {items.map(item => (
                     <Col sm="6" md="4" key={item.id}>
-                      <Card className="shadow">
-                        <CardImg top src={item.thumbnail} alt="..." />
+                      <Card className="shadow mb-3">
+                        <CardImg top src={item.thumbnail} alt="course thumbnail" />
                         <CardBody>
                           <CardTitle>
                             <h5>{item.title}</h5>

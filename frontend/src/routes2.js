@@ -17,12 +17,7 @@
 */
 import Index from "./views/Index.jsx";
 import Profile from "./views/examples/Profile.jsx";
-// import Maps from "./views/examples/Maps.jsx";
-// import Register from "./views/examples/Register.jsx";
-// import Login from "./views/examples/Login.jsx";
-// import Tables from "./views/examples/Tables.jsx";
-// import Icons from "./views/examples/Icons.jsx";
-// import ProfilePage from "./components/ProfilePage.jsx";
+import AddCourse from "./components/AddCourse";
 
 var routes = [
   {
@@ -32,13 +27,13 @@ var routes = [
     component: Index,
     layout: "/dashboard"
   },
-  // {
-  //   path: "/icons",
-  //   name: "Icons",
-  //   icon: "ni ni-planet text-blue",
-  //   component: Icons,
-  //   layout: "/admin"
-  // },
+  {
+    path: "/course/new",
+    name: "Add Course",
+    icon: "ni ni-planet text-blue",
+    component: AddCourse,
+    layout: "/dashboard"
+  },
   // {
   //   path: "/maps",
   //   name: "Maps",
