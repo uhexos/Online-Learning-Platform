@@ -16,6 +16,8 @@
 
 */
 import React from "react";
+import AdminNavbar from './AdminNavbar';
+import SimpleFooter from './SimpleFooter';
 
 // reactstrap components
 import {
@@ -36,6 +38,7 @@ class UserProfile extends React.Component {
   render() {
     return (
       <>
+        <AdminNavbar></AdminNavbar>
         <div className="content container-fluid mt-4">
           <Row>
             <Col md="8">
@@ -204,6 +207,7 @@ class UserProfile extends React.Component {
             </Col>
           </Row>
         </div>
+        <SimpleFooter></SimpleFooter>
       </>
     );
   }

@@ -36,6 +36,8 @@ import {
 
 // core components
 import Alert from "reactstrap/lib/Alert";
+import AdminNavbar from '../components/AdminNavbar';
+import SimpleFooter from '../components/SimpleFooter';
 
 class Login extends React.Component {
   state ={loginError:false}; 
@@ -77,6 +79,7 @@ class Login extends React.Component {
   render() {
     return (
       <>
+        <AdminNavbar></AdminNavbar>
         <main ref="main">
           <section className="section section-shaped section-lg">
             <div className="shape shape-style-1 bg-gradient-default">
@@ -210,6 +213,7 @@ class Login extends React.Component {
             </Container>
           </section>
         </main>
+        <SimpleFooter></SimpleFooter>
       </>
     );
   }

@@ -69,6 +69,9 @@ const AdminNavbar = props => {
             <NavItem>
               <NavLink href="/register">Register</NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink href="/dashboard">Dashboard</NavLink>
+            </NavItem>
           </Nav>
           {/* <NavbarText>Simple Text</NavbarText> */}
         </Collapse>

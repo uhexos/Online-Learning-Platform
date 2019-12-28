@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from datetime import date
 from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
@@ -12,7 +13,7 @@ class Course(models.Model):
     )
     description = models.TextField(
         max_length=1000, help_text='Enter a brief description of the course')
-    pub_date = models.DateField(null=True, blank=True)
+    pub_date = models.DateField(null=True, default=date.today)
     category = models.ForeignKey(
         'Category', on_delete=models.CASCADE, related_name='category')
     is_live = models.BooleanField()

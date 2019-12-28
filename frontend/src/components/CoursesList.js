@@ -4,6 +4,8 @@ import Container from 'reactstrap/lib/Container';
 import Row from 'reactstrap/lib/Row';
 import Col from 'reactstrap/lib/Col';
 import { Link } from 'react-router-dom';
+import AdminNavbar from './AdminNavbar';
+import SimpleFooter from './SimpleFooter';
 // import Sidebar from './Sidebar'
 let jwtkey = localStorage.getItem('token');
 
@@ -57,6 +59,7 @@ class CoursesList extends React.Component {
       // TODO add fix to stop the rendering before fetcch from api 
       return (
         <div>
+          <AdminNavbar></AdminNavbar>
           <Container>
             <Row className="mt-5">
               {items.detail ? <h2>Loading courses...</h2> : (items.map(item => (
@@ -75,6 +78,7 @@ class CoursesList extends React.Component {
 
             </Row>
           </Container>
+          <SimpleFooter></SimpleFooter>
         </div>
       );
     }
