@@ -1,9 +1,11 @@
-import React from "react";
-import { Card, CardImg, CardBody, CardTitle, Button } from "reactstrap";
-import Container from "reactstrap/lib/Container";
-import Row from "reactstrap/lib/Row";
-import Col from "reactstrap/lib/Col";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Card, CardImg, CardBody, CardTitle, Button } from 'reactstrap';
+import Container from 'reactstrap/lib/Container';
+import Row from 'reactstrap/lib/Row';
+import Col from 'reactstrap/lib/Col';
+import { Link } from 'react-router-dom';
+import AdminNavbar from './AdminNavbar';
+import SimpleFooter from './SimpleFooter';
 // import Sidebar from './Sidebar'
 let jwtkey = localStorage.getItem("token");
 
@@ -56,30 +58,33 @@ class CoursesList extends React.Component {
     } else {
       return (
         <div>
+          <AdminNavbar></AdminNavbar>
+
           {/* //check if we have any items before mapping. */}
           {!isLoaded || items == null ? (
             <h5 className="title">Loading courses...</h5>
           ) : (
-            <Container>
-              <Row className="mt-5">
-                {items.map(item => (
-                  <Col sm="6" md="4" key={item.id}>
-                    <Card className="shadow">
-                      <CardImg top src={item.thumbnail} alt="..." />
-                      <CardBody>
-                        <CardTitle>
-                          <h5>{item.title}</h5>
-                        </CardTitle>
-                        <Link to={`/courses/${item.id}/lessons/0`}>
-                          <Button color="primary">View Course </Button>
-                        </Link>
-                      </CardBody>
-                    </Card>
-                  </Col>
-                ))}
-              </Row>
-            </Container>
-          )}
+              <Container>
+                <Row className="mt-5">
+                  {items.map(item => (
+                    <Col sm="6" md="4" key={item.id}>
+                      <Card className="shadow">
+                        <CardImg top src={item.thumbnail} alt="..." />
+                        <CardBody>
+                          <CardTitle>
+                            <h5>{item.title}</h5>
+                          </CardTitle>
+                          <Link to={`/courses/${item.id}/lessons/0`}>
+                            <Button color="primary">View Course </Button>
+                          </Link>
+                        </CardBody>
+                      </Card>
+                    </Col>
+                  ))}
+                </Row>
+              </Container>
+            )}
+          <SimpleFooter></SimpleFooter>
         </div>
       );
     }

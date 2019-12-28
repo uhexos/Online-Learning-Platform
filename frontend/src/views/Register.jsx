@@ -16,7 +16,9 @@
 
 */
 import React from "react";
-import axios from 'axios'
+import axios from 'axios';
+import AdminNavbar from '../components/AdminNavbar';
+import SimpleFooter from '../components/SimpleFooter';
 
 // reactstrap components
 import {
@@ -84,6 +86,7 @@ class Register extends React.Component {
   render() {
     return (
       <>
+        <AdminNavbar></AdminNavbar>
         <main ref="main">
           <section className="section section-shaped section-lg">
             <div className="shape shape-style-1 bg-gradient-default">
@@ -263,6 +266,7 @@ class Register extends React.Component {
             </Container>
           </section>
         </main>
+        <SimpleFooter></SimpleFooter>
       </>
     );
   }

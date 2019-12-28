@@ -16,6 +16,8 @@
 
 */
 import React from "react";
+import AdminNavbar from "./AdminNavbar";
+import SimpleFooter from "./SimpleFooter";
 
 // reactstrap components
 import {
@@ -54,7 +56,9 @@ class UserProfile extends React.Component {
   render() {
     return (
       <>
-        {this.state.loading||!this.state.user ? (
+        <AdminNavbar></AdminNavbar>
+
+        {this.state.loading || !this.state.user ? (
           <h5 className="title">Loading user profile... </h5>
         ) : (
           <div className="content container-fluid mt-4">
@@ -67,7 +71,7 @@ class UserProfile extends React.Component {
                   <CardBody>
                     <Form>
                       <Row>
-                        <Col className="px-md-1" md = "6">
+                        <Col className="px-md-1" md="6">
                           <FormGroup>
                             <label>Username</label>
                             <Input
@@ -77,12 +81,16 @@ class UserProfile extends React.Component {
                             />
                           </FormGroup>
                         </Col>
-                        <Col className="pl-md-1" md = "6">
+                        <Col className="pl-md-1" md="6">
                           <FormGroup>
                             <label htmlFor="exampleInputEmail1">
                               Email address
                             </label>
-                            <Input defaultValue={this.state.user.email}placeholder="mike@example.com" type="email" />
+                            <Input
+                              defaultValue={this.state.user.email}
+                              placeholder="mike@example.com"
+                              type="email"
+                            />
                           </FormGroup>
                         </Col>
                       </Row>
@@ -162,6 +170,8 @@ class UserProfile extends React.Component {
             </Row>
           </div>
         )}
+
+        <SimpleFooter></SimpleFooter>
       </>
     );
   }
