@@ -16,10 +16,11 @@ class Course(models.Model):
     pub_date = models.DateField(null=True, default=date.today)
     category = models.ForeignKey(
         'Category', on_delete=models.CASCADE, related_name='category')
-    is_live = models.BooleanField()
+    is_live = models.BooleanField(default=0)
     rating = models.IntegerField(default=0)
     thumbnail = models.ImageField(
         help_text='Enter course thumbnail', null=True ,upload_to='course_thumbnails')
+    price = models.DecimalField(max_digits=8, decimal_places=2,default="0.0")
     def __str__(self):
         return self.title
 

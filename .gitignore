@@ -1,3 +1,10 @@
 venv/
 .vscode/
-
+.idea/
+/media
+*.log
+*.pot
+*.pyc
+local_settings.py
+courses/__pycache__
+db.sqlite3

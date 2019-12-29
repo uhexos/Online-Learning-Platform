@@ -24,6 +24,7 @@ import AddLesson from "./views/AddLesson.jsx";
 // import Tables from "./views/examples/Tables.jsx";
 // import Icons from "./views/examples/Icons.jsx";
 // import ProfilePage from "./components/ProfilePage.jsx";
+import AddCourse from "./components/AddCourse";
 
 var routes = [
   {
@@ -33,20 +34,20 @@ var routes = [
     component: Index,
     layout: "/dashboard"
   },
-  // {
-  //   path: "/icons",
-  //   name: "Icons",
-  //   icon: "ni ni-planet text-blue",
-  //   component: Icons,
-  //   layout: "/admin"
-  // },
   {
-    path: "/addlesson",
-    name: "Add Lesson",
-    icon: "ni ni-pin-3 text-orange",
-    component: AddLesson,
+    path: "/course/new",
+    name: "Add Course",
+    icon: "ni ni-planet text-blue",
+    component: AddCourse,
     layout: "/dashboard"
   },
+  // {
+  //   path: "/maps",
+  //   name: "Maps",
+  //   icon: "ni ni-pin-3 text-orange",
+  //   component: Maps,
+  //   layout: "/admin"
+  // },
   {
     path: "/profile",
     name: "User Profile",

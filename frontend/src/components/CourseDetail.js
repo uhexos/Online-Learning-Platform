@@ -6,6 +6,7 @@ import AdminNavbar from './AdminNavbar';
 import SimpleFooter from "./SimpleFooter.jsx";
 
 import { Container, Row, Col } from 'reactstrap/lib';
+import AdminNavbar from './AdminNavbar';
 
 let jwtkey = localStorage.getItem('token');
 export class CourseDetail extends Component {
@@ -21,7 +22,7 @@ export class CourseDetail extends Component {
             lessons: [],
         };
     }
-    
+
     componentDidMount() {
         //get all lesson id's from the selected course
         fetch(`http://127.0.0.1:8000/api/courses/${this.props.match.params.id}`, {
@@ -72,4 +73,4 @@ export class CourseDetail extends Component {
     }
 }
 
-export default CourseDetail
+export default CourseDetail;

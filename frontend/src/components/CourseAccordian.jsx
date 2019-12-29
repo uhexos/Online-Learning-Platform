@@ -7,7 +7,7 @@ import {
   AccordionItemButton,
   AccordionItemPanel
 } from "react-accessible-accordion";
-
+// TODO neaten the fetch and handle error 
 export class CourseAccordian extends Component {
   jwtkey = localStorage.getItem("token");
   state = { lessons: [{ title: "No lessons yet", id: -1 }] };
@@ -24,7 +24,6 @@ export class CourseAccordian extends Component {
           this.setState({
             lessons: result
           });
-          console.log(this.state.lessons);
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
