@@ -17,6 +17,7 @@
 */
 import Index from "./views/Index.jsx";
 import Profile from "./views/examples/Profile.jsx";
+import AddLesson from "./views/AddLesson.jsx";
 // import Maps from "./views/examples/Maps.jsx";
 // import Register from "./views/examples/Register.jsx";
 // import Login from "./views/examples/Login.jsx";
@@ -39,13 +40,13 @@ var routes = [
   //   component: Icons,
   //   layout: "/admin"
   // },
-  // {
-  //   path: "/maps",
-  //   name: "Maps",
-  //   icon: "ni ni-pin-3 text-orange",
-  //   component: Maps,
-  //   layout: "/admin"
-  // },
+  {
+    path: "/addlesson",
+    name: "Add Lesson",
+    icon: "ni ni-pin-3 text-orange",
+    component: AddLesson,
+    layout: "/dashboard"
+  },
   {
     path: "/profile",
     name: "User Profile",

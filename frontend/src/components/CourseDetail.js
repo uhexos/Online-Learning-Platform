@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 // import Vertical from "./Vertical" 
 import LessonNav from './LessonNav';
 import LessonDetail from './LessonDetail';
+import AdminNavbar from './AdminNavbar';
+import SimpleFooter from "./SimpleFooter.jsx";
 
 import { Container, Row, Col } from 'reactstrap/lib';
 
@@ -50,7 +52,10 @@ export class CourseDetail extends Component {
     }
     render() {
         return (
+            <div>
+            <AdminNavbar></AdminNavbar>
             <Container fluid>
+                
                 <Row className="mt-3">
                     <Col md="3">
                         <LessonNav className="pt-3" lessons={this.state.lessons}></LessonNav>
@@ -61,6 +66,8 @@ export class CourseDetail extends Component {
                     </Col>
                 </Row>
             </Container>
+            <SimpleFooter/>
+            </div>
         )
     }
 }
