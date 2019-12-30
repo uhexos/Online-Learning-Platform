@@ -45,7 +45,7 @@ class Lesson(models.Model):
 
 
 class Category(models.Model):
-    title = models.CharField(max_length=150, help_text='Enter category title')
+    title = models.CharField(max_length=150, help_text='Enter category title',unique=True)
     create_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
