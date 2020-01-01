@@ -57,7 +57,6 @@ class Register extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault()
     const data = this.state
-    console.log(data)
     axios.post('http://localhost:8000/api/users/', data)
     .then((response) => {
       console.log(response);
