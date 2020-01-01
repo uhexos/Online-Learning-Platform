@@ -25,6 +25,7 @@ import AddLesson from "./views/AddLesson.jsx";
 // import Icons from "./views/examples/Icons.jsx";
 // import ProfilePage from "./components/ProfilePage.jsx";
 import AddCourse from "./components/AddCourse";
+import TutorCourses from "./components/TutorCourses";
 
 var routes = [
   {
@@ -41,13 +42,13 @@ var routes = [
     component: AddCourse,
     layout: "/dashboard"
   },
-  // {
-  //   path: "/maps",
-  //   name: "Maps",
-  //   icon: "ni ni-pin-3 text-orange",
-  //   component: Maps,
-  //   layout: "/admin"
-  // },
+  {
+    path: "/courses",
+    name: "My Courses",
+    icon: "ni ni-pin-3 text-orange",
+    component: TutorCourses,
+    layout: "/dashboard"
+  },
   {
     path: "/profile",
     name: "User Profile",
@@ -56,12 +57,12 @@ var routes = [
     layout: "/dashboard"
   }
   // {
-  //   path: "/tables",
-  //   name: "Tables",
+  //   path: "/courses/:id/lesson/new",
+  //   name: "Add Lessons",
   //   icon: "ni ni-bullet-list-67 text-red",
-  //   component: Tables,
-  //   layout: "/admin"
-  // },
+  //   component: AddLesson,
+  //   layout: "/dashboard"
+  // }
   // {
   //   path: "/login",
   //   name: "Login",

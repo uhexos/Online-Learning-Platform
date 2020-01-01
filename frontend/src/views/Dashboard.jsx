@@ -14,8 +14,8 @@ import AdminNavbar from "../components/Navbars/AdminNavbar.jsx";
 import AdminFooter from "../components/Footers/AdminFooter.jsx";
 import Sidebar from '../components/Sidebar/Sidebar';
 
-import AdminLayout from "../layouts/Admin.jsx";
-import AuthLayout from "../layouts/Auth.jsx";
+// import AdminLayout from "../layouts/Admin.jsx";
+// import AuthLayout from "../layouts/Auth.jsx";
 
 import routes from '../routes2.js'
 
@@ -71,7 +71,7 @@ class Dashbaord extends React.Component{
                     }}
                 />
                 <div className="main-content" ref="mainContent">
-          
+          {console.log(routes)}
           <Switch>{this.getRoutes(routes)}</Switch>
           <Container fluid>
             <AdminFooter />

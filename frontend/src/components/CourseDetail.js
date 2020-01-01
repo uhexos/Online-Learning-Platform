@@ -6,7 +6,6 @@ import AdminNavbar from './AdminNavbar';
 import SimpleFooter from "./SimpleFooter.jsx";
 
 import { Container, Row, Col } from 'reactstrap/lib';
-import AdminNavbar from './AdminNavbar';
 
 let jwtkey = localStorage.getItem('token');
 export class CourseDetail extends Component {

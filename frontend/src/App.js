@@ -2,24 +2,24 @@ import React from 'react';
 import './App.css';
 import CoursesList from "./components/CoursesList";
 import CourseDetail from "./components/CourseDetail";
-import AdminNavbar from './components/AdminNavbar';
+// import AdminNavbar from './components/AdminNavbar';
 // import RegisterPage from './components/RegisterPage'
 // import LoginPage from './components/LoginPage'
 import Login from './views/Login'
 import Register from './views/Register'
 import Dashboard from './views/Dashboard'
+import AddLesson from './views/AddLesson'
 import ProfilePage from './components/ProfilePage'
-import Profile from "./views/examples/Profile.jsx";
+// import Profile from "./views/examples/Profile.jsx";
 import NoMatch from './views/NoMatch'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 // import Sidebar from './Sidebar'
 import CoursePurchasePage from './views/CoursePurchasePage';
 // core components
-import SimpleFooter from "./components/SimpleFooter.jsx";
+// import SimpleFooter from "./components/SimpleFooter.jsx";
 class App extends React.Component {
 
   render() {
-
     return (
       <div>
         <Router>
@@ -34,6 +34,7 @@ class App extends React.Component {
             <Route path="/login" component={Login} />
             <Route path="/profile" component={ProfilePage} />
             <Route path="/dashboard" component={Dashboard} />
+            <Route path="/courses/:id/lesson/new" component={AddLesson} />
             {/* <Route path="profile" component={Profile} /> */}
             <Route path="*" component={NoMatch} />
             

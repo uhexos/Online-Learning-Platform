@@ -37,6 +37,7 @@ import {
 
 class AdminNavbar extends React.Component {
   render() {
+    const user = localStorage.getItem("username");
     return (
       <>
         <Navbar className="navbar-top" expand="md" id="navbar-main">
@@ -71,7 +72,7 @@ class AdminNavbar extends React.Component {
                     </span>
                     <Media className="ml-2 d-none d-lg-block">
                       <span className="mb-0 text-sm font-weight-bold">
-                        Jessica Jones
+                          {user}
                       </span>
                     </Media>
                   </Media>
