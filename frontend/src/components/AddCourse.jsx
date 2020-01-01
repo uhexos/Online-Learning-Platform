@@ -45,7 +45,6 @@ export class AddCourse extends Component {
     formData.append("is_live", isLive);
     formData.append("thumbnail", fileField.files[0],fileField.files[0].name);
 
-    const data = { title, price, category, description, is_live: isLive };
     fetch("http://localhost:8000/api/courses/", {
       method: "POST",
       body: formData,

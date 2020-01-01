@@ -71,7 +71,6 @@ class Dashbaord extends React.Component{
                     }}
                 />
                 <div className="main-content" ref="mainContent">
-          {console.log(routes)}
           <Switch>{this.getRoutes(routes)}</Switch>
           <Container fluid>
             <AdminFooter />

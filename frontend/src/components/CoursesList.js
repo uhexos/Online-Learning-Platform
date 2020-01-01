@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import AdminNavbar from './AdminNavbar';
 import SimpleFooter from './SimpleFooter';
 // import Sidebar from './Sidebar'
-let jwtkey = localStorage.getItem("token");
 
 class CoursesList extends React.Component {
   constructor(props) {

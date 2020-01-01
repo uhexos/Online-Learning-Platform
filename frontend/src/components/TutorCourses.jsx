@@ -58,14 +58,13 @@ export class TutorCourses extends Component {
 
   render() {
     let { error, isLoaded, items } = this.state;
-    // TODO see if we can use state instead of making a variable 
-    const userCourses = []
 
     if (items === null) {
       return <p>loading!!! </p>
 
     } else {
       // reduces the filter to a one liner 
+      //update the items in the state 
      items =  items
         .filter(item => this.currentUserCourse(item.owner.username));
     }

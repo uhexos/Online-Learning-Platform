@@ -3,7 +3,7 @@ import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
-import { Col, Button, Form, FormGroup, Label, Input, FormText, FormFeedback } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import Container from 'reactstrap/lib/Container';
 import Row from 'reactstrap/lib/Row';
 
