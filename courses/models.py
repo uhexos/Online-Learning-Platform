@@ -69,7 +69,8 @@ class Comments(models.Model):
         return self.text
 
 class CustomUser(AbstractUser):
-    is_tutor = models.BooleanField(default=False)
+    is_tutor = models.BooleanField(default=False,null=True)
+    about = models.TextField(null=True,blank=True)
     # add additional fields in here
 
     def __str__(self):
