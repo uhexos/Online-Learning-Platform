@@ -3,7 +3,8 @@ import Container from "reactstrap/lib/Container";
 import { Card, CardImg, CardBody, CardTitle, Button } from 'reactstrap';
 import Row from 'reactstrap/lib/Row';
 import Col from 'reactstrap/lib/Col';
-import { Link } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
+import AddLesson from '../views/AddLesson';
 
 export class TutorCourses extends Component {
   constructor(props) {
@@ -75,6 +76,8 @@ export class TutorCourses extends Component {
             <h5 className="title">Loading courses...</h5>
           ) : (
               <Container>
+                {console.log("entered MY COURSES")}
+
                 <Row className="mt-5">
                   {items.map(item => (
                     <Col sm="6" md="4" key={item.id}>
@@ -89,13 +92,12 @@ export class TutorCourses extends Component {
                           <Link to={`/courses/${item.id}/lessons/0`}>
                             <Button color="primary">View Course </Button>
                           </Link>
-                          <Link to={`/courses/${item.id}/lesson/new`} style={{ marginLeft: "20px" }}>
+                          <Link to={`/admin/courses/${item.id}/lessons/new`} style={{ marginLeft: "20px" }}>
                             <Button color="success">Add Lesson</Button>
                           </Link>
                         </CardBody>
                       </Card>
                       {/* // ) : null } */}
-
                     </Col>
 
 

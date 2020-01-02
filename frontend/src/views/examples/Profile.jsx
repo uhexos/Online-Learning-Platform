@@ -127,7 +127,7 @@ class Profile extends React.Component {
                 </CardBody>
               </Card>
             </Col>
-            <Col className="order-xl-1" xl="8">
+            <Col className="order-xl-2" xl="8">
               <Card className="bg-secondary shadow">
                 <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">

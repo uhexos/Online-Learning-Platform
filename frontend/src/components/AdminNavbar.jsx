@@ -70,7 +70,7 @@ const AdminNavbar = props => {
               <NavLink href="/register">Register</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/dashboard">Dashboard</NavLink>
+              <NavLink href="/admin">Dashboard</NavLink>
             </NavItem>
           </Nav>
           {/* <NavbarText>Simple Text</NavbarText> */}

@@ -56,14 +56,12 @@ class UserProfile extends React.Component {
   render() {
     return (
       <>
-        <AdminNavbar></AdminNavbar>
-
         {this.state.loading || !this.state.user ? (
           <h5 className="title">Loading user profile... </h5>
         ) : (
           <div className="content container-fluid mt-4">
             <Row>
-              <Col md="8">
+              <Col md="8" className="order-xl-2">
                 <Card>
                   <CardHeader>
                     <h5 className="title">Edit Profile</h5>
@@ -126,7 +124,7 @@ class UserProfile extends React.Component {
                   </CardFooter>
                 </Card>
               </Col>
-              <Col md="4">
+              <Col md="4" className="order-xl-1">
                 <Card className="card-user">
                   <CardBody>
                     <CardText />
