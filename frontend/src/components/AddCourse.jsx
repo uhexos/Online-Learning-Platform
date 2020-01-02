@@ -43,7 +43,9 @@ export class AddCourse extends Component {
     formData.append("category", category);
     formData.append("description", description);
     formData.append("is_live", isLive);
-    formData.append("thumbnail", fileField.files[0],fileField.files[0].name);
+    if (fileField.files[0]) {
+      formData.append("thumbnail", fileField.files[0], fileField.files[0].name);
+    }
 
     fetch("http://localhost:8000/api/courses/", {
       method: "POST",
@@ -99,10 +101,10 @@ export class AddCourse extends Component {
                     <Input type="select" name="category" id="courseCategory">
                       {this.state.categories
                         ? this.state.categories.map(category => (
-                            <option key={category.id} value={category.id}>
-                              {category.title}
-                            </option>
-                          ))
+                          <option key={category.id} value={category.id}>
+                            {category.title}
+                          </option>
+                        ))
                         : null}
                     </Input>
                   </FormGroup>

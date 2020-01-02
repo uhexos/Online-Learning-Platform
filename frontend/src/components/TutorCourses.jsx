@@ -32,7 +32,8 @@ export class TutorCourses extends Component {
         result => {
           this.setState({
             isLoaded: true,
-            items: result
+            // take only the courses made by the user and toss the rest away
+            items: result.filter(item => this.currentUserCourse(item.owner.username))
           });
         },
         // Note: it's important to handle errors here
@@ -62,11 +63,6 @@ export class TutorCourses extends Component {
     if (items === null) {
       return <p>loading!!! </p>
 
-    } else {
-      // reduces the filter to a one liner 
-      //update the items in the state 
-     items =  items
-        .filter(item => this.currentUserCourse(item.owner.username));
     }
     if (error) {
       return <div>Error: {error.message}</div>;
@@ -81,7 +77,6 @@ export class TutorCourses extends Component {
               <Container>
                 <Row className="mt-5">
                   {items.map(item => (
-
                     <Col sm="6" md="4" key={item.id}>
                       {/* {this.currentUserCourse(item.owner.username) ? ( */}
                       <Card className="shadow mb-3">

@@ -18,9 +18,11 @@ export class AddLesson extends Component {
         let description = document.getElementById("lessonDescription").value;
 
         formData.append("title", title);
-        formData.append("video", fileField.files[0], fileField.files[0].name);
         formData.append("content", content);
         formData.append("description", description);
+        if(fileField.files[0]){
+            formData.append("video", fileField.files[0], fileField.files[0].name);
+        }
         fetch(`http://localhost:8000/api/courses/${this.props.match.params.id}/lessons/`, {
             method: "POST",
             body: formData,
