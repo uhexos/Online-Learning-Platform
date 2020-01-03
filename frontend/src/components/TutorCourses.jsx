@@ -76,6 +76,9 @@ export class TutorCourses extends Component {
           ) : (
               <Container>
                 <Row className="mt-5">
+                  {items == 0 ? (
+                    <p>You do not have any courses yet.</p>
+                  ): null}
                   {items.map(item => (
                     <Col sm="6" md="4" key={item.id}>
                       {/* {this.currentUserCourse(item.owner.username) ? ( */}
@@ -84,7 +87,7 @@ export class TutorCourses extends Component {
                         <CardBody>
                           <CardTitle>
                             <h5>{item.title}</h5>
-                            <p>{item.owner.username}</p>
+                            <p><span>By </span>{item.owner.username}</p>
                           </CardTitle>
                           <Link to={`/courses/${item.id}/lessons/0`}>
                             <Button color="primary">View Course </Button>

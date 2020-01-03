@@ -54,10 +54,10 @@ export class AddLesson extends Component {
                         {/* end sample */}
                         <FormGroup>
                             <Input type="file" name="video" id="lessonVideo" />
-                            <span>Choose course video if any</span>
+                            <FormText>Choose course video if any</FormText>
                         </FormGroup>
                         <FormGroup>
-                            <span>Content</span>
+                            <Label>Content</Label>
                             <CKEditor
                                 editor={ClassicEditor}
                                 data="<p>Hello from CKEditor 5!</p>"
@@ -83,7 +83,7 @@ export class AddLesson extends Component {
 
                             <Input type="textarea" name="text" id="lessonDescription" />
 
-                            <span style={{ marginLeft: "15px" }}>Enter a brief description of the lesson</span>
+                            <FormText>Enter a brief description of the lesson</FormText>
                         </FormGroup>
                         <Button color="primary" type="button" onClick={this.saveLesson}>Post</Button>
                     </Form>

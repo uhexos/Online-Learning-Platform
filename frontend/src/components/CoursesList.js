@@ -72,7 +72,7 @@ class CoursesList extends React.Component {
                         <CardBody>
                           <CardTitle>
                             <h5>{item.title}</h5>
-                            <p>{item.owner.username}</p>
+                            <p><span>By </span>{item.owner.username}</p>
                           </CardTitle>
                           <Link to={`/courses/${item.id}/lessons/0`}>
                             <Button color="primary">View Course </Button>
