@@ -29,8 +29,7 @@ class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CourseSerializer
 
     def get_object(self):
-        print(self.request.user)
-
+        # print(self.request.user)
         return Course.objects.get(id=self.kwargs['pk'])
 
 
@@ -66,11 +65,13 @@ class CustomUserList(generics.ListCreateAPIView):
 
 
 class CustomUserDetail(generics.RetrieveUpdateDestroyAPIView):
+    # see any user profile
     permission_classes = [IsOwnerOrReadOnly|IsSuperUser]
     serializer_class = CustomUserSerializer
     queryset = CustomUser.objects.all()
 
 class UserProfileView(APIView):
+    # see the profile of the logged in user.
     def get(self, request):
         serializer = CustomUserSerializer(request.user)
         return Response(serializer.data)

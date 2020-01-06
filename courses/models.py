@@ -10,6 +10,7 @@ class Course(models.Model):
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
+        related_name='courses'
     )
     description = models.TextField(
         max_length=1000, help_text='Enter a brief description of the course')
@@ -19,8 +20,9 @@ class Course(models.Model):
     is_live = models.BooleanField(default=0)
     rating = models.IntegerField(default=0)
     thumbnail = models.ImageField(
-        help_text='Enter course thumbnail', null=True ,upload_to='course_thumbnails')
-    price = models.DecimalField(max_digits=8, decimal_places=2,default="0.0")
+        help_text='Enter course thumbnail', null=True, upload_to='course_thumbnails')
+    price = models.DecimalField(max_digits=8, decimal_places=2, default="0.0")
+
     def __str__(self):
         return self.title
 
@@ -28,7 +30,7 @@ class Course(models.Model):
 class Lesson(models.Model):
     title = models.CharField(max_length=150, help_text='Enter lesson title')
     video = models.FileField(
-        help_text='Enter course video', null=True, upload_to="lesson_videos" )
+        help_text='Enter course video', null=True, upload_to="lesson_videos")
     content = models.TextField(help_text='Enter lesson text ', null=True)
     pub_date = models.DateField(null=True, blank=True)
     course = models.ForeignKey(
@@ -45,8 +47,11 @@ class Lesson(models.Model):
 
 
 class Category(models.Model):
-    title = models.CharField(max_length=150, help_text='Enter category title',unique=True)
-    create_date = models.DateField(null=True, blank=True)
+    title = models.CharField(
+        max_length=150, help_text='Enter category title', unique=True)
+    create_date = models.DateField(null=True, blank=True, default=date.today)
+    description = models.TextField(
+        max_length=1000, help_text='Enter a brief description of the category')
 
     def __str__(self):
         return self.title
@@ -65,12 +70,14 @@ class Comments(models.Model):
     lesson = models.ForeignKey('Lesson', on_delete=models.CASCADE)
     date = models.DateField()
 
-    def __str__ (self):
+    def __str__(self):
         return self.text
 
+
 class CustomUser(AbstractUser):
-    is_tutor = models.BooleanField(default=False,null=True)
-    about = models.TextField(null=True,blank=True)
+    is_tutor = models.BooleanField(default=False, null=True)
+    about = models.TextField(null=True, blank=True)
+
     # add additional fields in here
 
     def __str__(self):

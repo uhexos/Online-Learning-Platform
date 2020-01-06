@@ -58,13 +58,14 @@ class UserProfile extends React.Component {
   updateProfile = () => {
     let form = document.querySelector('form');
     let formdata = new FormData();
-    
-    formdata.append('username',document.getElementById("username").value);
-    formdata.append('email',document.getElementById("userEmail").value);
-    formdata.append('first_name',document.getElementById("userFirstName").value);
-    formdata.append('last_name',document.getElementById("userLastName").value);
-    formdata.append('about',document.getElementById("userDescription").value);
- 
+
+    formdata.append('username', document.getElementById("username").value);
+    formdata.append('email', document.getElementById("userEmail").value);
+    formdata.append('first_name', document.getElementById("userFirstName").value);
+    formdata.append('last_name', document.getElementById("userLastName").value);
+    formdata.append('about', document.getElementById("userDescription").value);
+    formdata.append('is_tutor', document.getElementById("userIsTutor").checked);
+
     fetch(`http://localhost:8000/api/users/${this.state.user.id}/`, {
       method: "PATCH",
       body: formdata,
@@ -143,13 +144,21 @@ class UserProfile extends React.Component {
                           </Col>
                         </Row>
                         <FormGroup>
-                          <Label for="">Description</Label>
-                          <Input defaultValue={this.state.user.about} type="textarea" name="userDescription"  id="userDescription"/>
+                          <Label for="userDescription ">Description</Label>
+                          <Input defaultValue={this.state.user.about} type="textarea" name="userDescription" id="userDescription" />
+                        </FormGroup>
+                        <FormGroup>
+                          {/* TODO fix this to use proper react strap components */}
+                          <Label for="courseIsTutor">Become A tutor</Label>
+                          <span className="clearfix" />
+                          <Label className="custom-toggle">
+                            <Input defaultChecked={this.state.user.is_tutor} type="checkbox" id="userIsTutor"/>
+                            <span className="custom-toggle-slider rounded-circle" />
+                          </Label>
                         </FormGroup>
                       </Form>
                     </CardBody>
                     <CardFooter>
-                      {/* TODO implement the save button  */}
                       <Button className="btn-fill" color="primary" type="button" onClick={this.updateProfile}>
                         Save
                     </Button>
@@ -196,8 +205,6 @@ class UserProfile extends React.Component {
               </Row>
             </Container>
           )}
-
-        <SimpleFooter></SimpleFooter>
       </>
     );
   }

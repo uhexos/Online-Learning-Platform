@@ -17,6 +17,7 @@ export class TutorCourses extends Component {
   }
 
   componentDidMount() {
+    // TODO modify this to use the profile api route instead of retriving every course
     fetch("http://localhost:8000/api/courses", {
       method: "GET",
       headers: {
