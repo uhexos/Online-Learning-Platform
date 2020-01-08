@@ -36,8 +36,6 @@ class App extends React.Component {
             <Route path="/profile" component={ProfilePage} />
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/admin" component={Admin} />
-            <Route path="/courses/:id/lesson/new" component={AddLesson} />
-            {/* <Route path="profile" component={Profile} /> */}
             <Route path="*" component={NoMatch} />
             
           </Switch>
