@@ -95,7 +95,7 @@ export class TutorCourses extends Component {
                           <Link to={`/courses/${item.id}/lessons/0`}>
                             <Button color="primary">View Course </Button>
                           </Link>
-                          <Link to={`/admin/courses/${item.id}/lessons/new`} style={{ marginLeft: "20px" }}>
+                          <Link to={`/admin/courses/${item.id}/lessons/new`} style={{ marginLeft: "5px" }}>
                             <Button color="success">Add Lesson</Button>
                           </Link>
                         </CardBody>
