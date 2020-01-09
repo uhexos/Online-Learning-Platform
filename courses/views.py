@@ -73,5 +73,5 @@ class CustomUserDetail(generics.RetrieveUpdateDestroyAPIView):
 class UserProfileView(APIView):
     # see the profile of the logged in user.
     def get(self, request):
-        serializer = CustomUserSerializer(request.user)
+        serializer = CustomUserSerializer(request.user,context={'request':request})
         return Response(serializer.data)

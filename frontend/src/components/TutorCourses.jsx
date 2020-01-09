@@ -17,8 +17,8 @@ export class TutorCourses extends Component {
   }
 
   componentDidMount() {
-    // TODO modify this to use the profile api route instead of retriving every course
-    fetch("http://localhost:8000/api/courses", {
+    // reworked to use the profile api endpoint so that we dont have to call for every course in the db unnecessarily.
+    fetch("http://localhost:8000/api/profile", {
       method: "GET",
       headers: {
         Authorization: `JWT ${localStorage.getItem("token")}`
@@ -31,11 +31,12 @@ export class TutorCourses extends Component {
         return res.json();
       })
       .then(
-        result => {
+        user => {
           this.setState({
             isLoaded: true,
             // take only the courses made by the user and toss the rest away
-            items: result.filter(item => this.currentUserCourse(item.owner.username))
+            // items: result.filter(item => this.currentUserCourse(item.owner.username))
+            items: user.courses
           });
         },
         // Note: it's important to handle errors here
@@ -49,15 +50,6 @@ export class TutorCourses extends Component {
         }
       );
   }
-
-  currentUserCourse = item => {
-    // take user name as variable and compare against local storage 
-    const currentUser = localStorage.getItem("username")
-    if (item === currentUser) {
-      return true;
-    }
-  }
-
 
   render() {
     let { error, isLoaded, items } = this.state;
@@ -77,12 +69,9 @@ export class TutorCourses extends Component {
             <h5 className="title">Loading courses...</h5>
           ) : (
               <Container>
-                {console.log("entered MY COURSES")}
-
                 <Row className="mt-5">
                   {items.map(item => (
                     <Col sm="6" md="4" key={item.id}>
-                      {/* {this.currentUserCourse(item.owner.username) ? ( */}
                       <Card className="shadow mb-3">
                         <CardImg top src={item.thumbnail} alt="course thumbnail" />
                         <CardBody>
@@ -98,7 +87,6 @@ export class TutorCourses extends Component {
                           </Link>
                         </CardBody>
                       </Card>
-                      {/* // ) : null } */}
                     </Col>
 
 
