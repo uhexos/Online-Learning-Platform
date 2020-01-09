@@ -19,8 +19,6 @@ class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class CourseList(generics.ListCreateAPIView):
     queryset = Course.objects.all()
-    serializer_class = CourseSerializer
-
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
