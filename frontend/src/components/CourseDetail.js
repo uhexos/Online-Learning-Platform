@@ -23,19 +23,7 @@ export class CourseDetail extends Component {
     }
 
     componentDidMount() {
-        //get all lesson id's from the selected course
-        fetch(`http://127.0.0.1:8000/api/courses/${this.props.match.params.id}`, {
-            method: 'GET',
-            headers: {
-                Authorization: `JWT ${jwtkey}`
-            }
-        })
-            .then(res => res.json())
-            .then((course) => {
-                this.setState({
-                    course: course,
-                });
-            });
+        
         //get all lessons their name, video url and descriptions etc from the api, 
         fetch(`http://127.0.0.1:8000/api/courses/${this.props.match.params.id}/lessons/`, {
             method: 'GET',

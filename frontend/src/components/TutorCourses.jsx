@@ -50,7 +50,7 @@ export class TutorCourses extends Component {
         }
       );
   }
-
+  // TODO rework view course button to be an edit button.
   render() {
     let { error, isLoaded, items } = this.state;
 
