@@ -56,6 +56,7 @@ export class AddCourse extends Component {
     }).then(res => {
       if (res.ok) {
         this.setState({ visible: true });
+        document.getElementById('add-course').reset()
       }
       return res.json();
     });
@@ -73,7 +74,7 @@ export class AddCourse extends Component {
             >
               Course created successfully.
             </Alert>
-            <Form>
+            <Form id="add-course">
               <FormGroup>
                 <Label for="courseTitle">Title</Label>
                 <Input
