@@ -28,7 +28,23 @@ class CartDetail(generics.RetrieveUpdateDestroyAPIView):
         self.request
         return obj
 
-    def perform_update(self, serializer):
-        item_serializer = ItemSerializer(data=self.request.data)
-        item_serializer.is_valid(raise_exception=True)
-        item_serializer.save()
+    # def perform_update(self, serializer):
+    #     item_serializer = ItemSerializer(data=self.request.data)
+    #     item_serializer.is_valid(raise_exception=True)
+    #     item_serializer.save()
+
+
+class ItemCreate(generics.CreateAPIView):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
+
+    def perform_create(self, serializer):
+        queryset = self.get_queryset().filter(cart__owner=self.request.user,
+                                              course_id=self.request.data['course_id'])
+        if queryset.exists():
+            obj = get_object_or_404(queryset)
+            obj.quantity = self.request.data['quantity']
+            obj.save()
+        else:
+            cart = Cart.objects.get(owner=self.request.user)
+            serializer.save(cart=cart)

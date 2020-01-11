@@ -19,6 +19,8 @@ class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class CourseList(generics.ListCreateAPIView):
     queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
@@ -39,14 +41,10 @@ class LessonList(generics.ListCreateAPIView):
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
 
-    def get_object(self):
+    def get_queryset(self):
        # GET PK FROM URL USING KWARGS TO URL DEFINTIIION
-        pk = self.kwargs['pk']
-        queryset = self.get_queryset()
-        queryset = queryset.filter(course_id=pk)
-        obj = get_object_or_404(queryset)
-        self.check_object_permissions(self.request, obj)
-        return obj
+        course_id = self.kwargs['pk']
+        return Lesson.objects.filter(course__id=course_id)
 
     def perform_create(self, serializer):
         course = Course.objects.get(id=self.kwargs['pk'])
