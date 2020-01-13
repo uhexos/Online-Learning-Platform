@@ -3,8 +3,32 @@ import Container from 'reactstrap/lib/Container'
 import Row from 'reactstrap/lib/Row'
 import { Col, Card, CardBody, CardHeader, Form, FormGroup, Label, Input, Button } from 'reactstrap'
 import CardTitle from 'reactstrap/lib/CardTitle'
+import Alert from 'reactstrap/lib/Alert'
 
 export class AddCategory extends Component {
+    state = { errors: null, errorVisible: false }
+    onDismiss = () => this.setState({ errors: null });
+    makeErrors = (p) => {
+        // p = json object containing error
+        let message = '';
+        //convert json to js object 
+        var p = JSON.parse(p);
+        for (var key in p) {
+            if (p.hasOwnProperty(key)) {
+                message += `${key} ->  ${p[key]}`;
+            }
+        }
+        return (
+            <Alert
+                color="warning"
+                className="shadow"
+                isOpen={this.state.errors ? true : false}
+                toggle={this.onDismiss}
+            >
+                <b>{message}</b>
+            </Alert>
+        )
+    }
     saveCategory = () => {
         let formData = new FormData();
         let title = document.getElementById('categoryTitle').value;
@@ -21,14 +45,20 @@ export class AddCategory extends Component {
             }
         })
             .then(res => {
-                if (res.ok) {
-                    document.getElementById("create-category-form").reset();
-                    return res.json();
+                if (!res.ok) {
+                    throw res
                 }
-            }, (error) => {
-                console.log(error);
+                document.getElementById("create-category-form").reset();
+                this.onDismiss()//remove previous error message if succesful
+                return res.json();
+            })
+            .catch(err => {
+                err.text().then(errorMessage => {
+                    this.setState({ errors: errorMessage })
+                })
             });
     }
+
     render() {
         return (
             <div>
@@ -44,6 +74,7 @@ export class AddCategory extends Component {
                                     </CardTitle>
                                 </CardHeader>
                                 <CardBody>
+                                    {this.state.errors ? (this.makeErrors(this.state.errors)) : null}
                                     <Form id="create-category-form">
                                         <FormGroup>
                                             <Label for="categoryTitle">Title</Label>

@@ -21,7 +21,7 @@ class Course(models.Model):
     rating = models.IntegerField(default=0)
     thumbnail = models.ImageField(
         help_text='Enter course thumbnail', null=True, upload_to='course_thumbnails',default='default_course_img.jpg')
-    price = models.DecimalField(max_digits=8, decimal_places=2, default="0.0")
+    price = models.DecimalField(null=False,max_digits=8, decimal_places=2)
 
     def __str__(self):
         return self.title

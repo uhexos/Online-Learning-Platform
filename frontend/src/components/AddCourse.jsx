@@ -7,9 +7,30 @@ import CardBody from "reactstrap/lib/CardBody";
 import Alert from "reactstrap/lib/Alert";
 
 export class AddCourse extends Component {
-  onDismiss = () => this.setState({ visible: false });
-
-  state = { categories: null, loading: false, visible: false };
+  onDismiss = () => this.setState({ errors:null,visible: false });
+  state = { categories: null, loading: false, visible: false, errors: null };
+  
+  makeErrors = (p) => {
+    // p = json object containing our errors
+    let message = '';
+    //convert json to js object 
+    var p = JSON.parse(p);
+    for (var key in p) {
+      if (p.hasOwnProperty(key)) {
+        message += `-> ${key}: ${p[key]}`;
+      }
+    }
+    return (
+      <Alert
+        color="warning"
+        className="shadow"
+        isOpen={this.state.errors?true:false}
+        toggle={this.onDismiss}
+      >
+        <b>{message}</b>
+      </Alert>
+    )
+  }
   componentDidMount() {
     fetch("http://localhost:8000/api/categories", {
       method: "get",
@@ -57,9 +78,15 @@ export class AddCourse extends Component {
       if (res.ok) {
         this.setState({ visible: true });
         document.getElementById('add-course').reset()
+        return res.json();
       }
-      return res.json();
-    });
+      throw res
+
+    }).catch(err => {
+      err.text().then(errorMessage => {
+        this.setState({ errors: errorMessage, visible: false })
+      })
+    });;
   };
   render() {
     return (
@@ -74,6 +101,8 @@ export class AddCourse extends Component {
             >
               Course created successfully.
             </Alert>
+            {this.state.errors ? (this.makeErrors(this.state.errors)) : null}
+
             <Form id="add-course">
               <FormGroup>
                 <Label for="courseTitle">Title</Label>
