@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import AddCategory from './AddCategory'
 import { Container, Col, Card, CardHeader, CardTitle, Form, FormGroup, Label, Input, CardBody, Button } from 'reactstrap';
 import Row from 'reactstrap/lib/Row';
 

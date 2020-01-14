@@ -3,32 +3,11 @@ import Container from 'reactstrap/lib/Container'
 import Row from 'reactstrap/lib/Row'
 import { Col, Card, CardBody, CardHeader, Form, FormGroup, Label, Input, Button } from 'reactstrap'
 import CardTitle from 'reactstrap/lib/CardTitle'
-import Alert from 'reactstrap/lib/Alert'
+import FormAlert from "./FormAlert";
 
 export class AddCategory extends Component {
-    state = { errors: null, errorVisible: false }
-    onDismiss = () => this.setState({ errors: null });
-    makeErrors = (p) => {
-        // p = json object containing error
-        let message = '';
-        //convert json to js object 
-        var p = JSON.parse(p);
-        for (var key in p) {
-            if (p.hasOwnProperty(key)) {
-                message += `${key} ->  ${p[key]}`;
-            }
-        }
-        return (
-            <Alert
-                color="warning"
-                className="shadow"
-                isOpen={this.state.errors ? true : false}
-                toggle={this.onDismiss}
-            >
-                <b>{message}</b>
-            </Alert>
-        )
-    }
+    state = { errors: null }
+
     saveCategory = () => {
         let formData = new FormData();
         let title = document.getElementById('categoryTitle').value;
@@ -74,8 +53,8 @@ export class AddCategory extends Component {
                                     </CardTitle>
                                 </CardHeader>
                                 <CardBody>
-                                    {this.state.errors ? (this.makeErrors(this.state.errors)) : null}
                                     <Form id="create-category-form">
+                                        {this.state.errors ? <FormAlert visible={true} messageObject={this.state.errors} /> : null}
                                         <FormGroup>
                                             <Label for="categoryTitle">Title</Label>
                                             <Input type="text" id="categoryTitle" />

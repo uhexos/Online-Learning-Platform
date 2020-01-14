@@ -38,13 +38,16 @@ import {
 import Alert from "reactstrap/lib/Alert";
 import AdminNavbar from '../components/AdminNavbar';
 import SimpleFooter from '../components/SimpleFooter';
+import { UserConsumer } from "../UserContext";
 
 class Login extends React.Component {
-  state ={loginError:false}; 
+  state = { loginError: false };
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
-    this.refs.main.scrollTop = 0;
+    // this.refs.main.scrollTop = 0;
+    let main = document.querySelector("main")
+    main.scrollTop = 0
   }
   //user arrow functions to autobind component to this, setState wont work if you dont use arrow syntax
   userLogin = () => {
@@ -71,8 +74,7 @@ class Login extends React.Component {
         } else {
           this.setState({ loginError: false });
           //store a value to the user computer to use on all pages expires after 1 hours check settings.py for current duration
-          localStorage.setItem('token',result.token);
-          console.log("token",result.token)
+          localStorage.setItem('token', result.token);
           localStorage.setItem('username', username);
           this.props.history.push(`/courses/`);
         }
@@ -80,143 +82,147 @@ class Login extends React.Component {
   };
   render() {
     return (
-      <>
-        <AdminNavbar></AdminNavbar>
-        <main ref="main">
-          <section className="section section-shaped section-lg">
-            <div className="shape shape-style-1 bg-gradient-default">
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-            </div>
-            <Container className="pt-lg-md">
-              <Row className="justify-content-center">
-                
-                <Col lg="5">
-                  <Card className="bg-secondary shadow border-0">
-                    <CardHeader className="bg-white pb-5">
-                      <div className="text-muted text-center mb-3">
-                        <small>Sign in with</small>
-                      </div>
-                      <div className="btn-wrapper text-center">
-                        <Button
-                          className="btn-neutral btn-icon"
-                          color="default"
-                          href="#pablo"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <span className="btn-inner--icon mr-1">
-                            <img
-                              alt="..."
-                              src={require("../assets/img/github.svg")}
-                            />
-                          </span>
-                          <span className="btn-inner--text">Github</span>
-                        </Button>
-                        <Button
-                          className="btn-neutral btn-icon ml-1"
-                          color="default"
-                          href="#pablo"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <span className="btn-inner--icon mr-1">
-                            <img
-                              alt="..."
-                              src={require("../assets/img/google.svg")}
-                            />
-                          </span>
-                          <span className="btn-inner--text">Google</span>
-                        </Button>
-                      </div>
-                    </CardHeader>
-                    <CardBody className="px-lg-5 py-lg-5">
-                      <div className="text-center text-muted mb-4">
-                        <small>Or sign in with credentials</small>
-                      </div>
-                      <Alert color="warning" isOpen={this.state.loginError}>Wrong Username or password</Alert>
-                      <Form role="form">
-                        <FormGroup className="mb-3">
-                          <InputGroup className="input-group-alternative">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                              <i className="tim-icons icon-email-85" />                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input placeholder="Username" type="text" id="username"/>
-                          </InputGroup>
-                        </FormGroup>
-                        <FormGroup>
-                          <InputGroup className="input-group-alternative">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                              <i className="tim-icons icon-lock-circle" />
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                              placeholder="Password"
-                              type="password"
-                              autoComplete="off"
-                              id="password"
-                            />
-                          </InputGroup>
-                        </FormGroup>
-                        <div className="custom-control custom-control-alternative custom-checkbox">
-                          <input
-                            className="custom-control-input"
-                            id=" customCheckLogin"
-                            type="checkbox"
-                          />
-                          <label
-                            className="custom-control-label"
-                            htmlFor=" customCheckLogin"
-                          >
-                            <span>Remember me</span>
-                          </label>
+      <UserConsumer>
+        {(context) => (<>
+          {console.log("context",context)}
+          <AdminNavbar></AdminNavbar>
+          <main id="main">
+            <section className="section section-shaped section-lg">
+              <div className="shape shape-style-1 bg-gradient-default">
+                <span />
+                <span />
+                <span />
+                <span />
+                <span />
+                <span />
+                <span />
+                <span />
+              </div>
+              <Container className="pt-lg-md">
+                <Row className="justify-content-center">
+                  <Col lg="5">
+                    <Card className="bg-secondary shadow border-0">
+                      <CardHeader className="bg-white pb-5">
+                        <div className="text-muted text-center mb-3">
+                          <small>Sign in with</small>
                         </div>
-                        <div className="text-center">
+                        <div className="btn-wrapper text-center">
                           <Button
-                            className="my-4"
-                            color="primary"
-                            type="button"
-                            onClick={this.userLogin}
+                            className="btn-neutral btn-icon"
+                            color="default"
+                            href="#pablo"
+                            onClick={e => e.preventDefault()}
                           >
-                            Sign in
+                            <span className="btn-inner--icon mr-1">
+                              <img
+                                alt="..."
+                                src={require("../assets/img/github.svg")}
+                              />
+                            </span>
+                            <span className="btn-inner--text">Github</span>
+                          </Button>
+                          <Button
+                            className="btn-neutral btn-icon ml-1"
+                            color="default"
+                            href="#pablo"
+                            onClick={e => e.preventDefault()}
+                          >
+                            <span className="btn-inner--icon mr-1">
+                              <img
+                                alt="..."
+                                src={require("../assets/img/google.svg")}
+                              />
+                            </span>
+                            <span className="btn-inner--text">Google</span>
                           </Button>
                         </div>
-                      </Form>
-                    </CardBody>
-                  </Card>
-                  <Row className="mt-3">
-                    <Col xs="6">
-                      <a
-                        className="text-light"
-                        href="#pablo"
-                        onClick={e => e.preventDefault()}
-                      >
-                        <small>Forgot password?</small>
-                      </a>
-                    </Col>
-                    <Col className="text-right" xs="6">
-                      <a
-                        className="text-light"
-                        href="#pablo"
-                        onClick={e => e.preventDefault()}
-                      >
-                        <small>Create new account</small>
-                      </a>
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
-            </Container>
-          </section>
-        </main>
-        <SimpleFooter></SimpleFooter>
-      </>
+                      </CardHeader>
+                      <CardBody className="px-lg-5 py-lg-5">
+                        <div className="text-center text-muted mb-4">
+                          <small>Or sign in with credentials</small>
+                        </div>
+                        <Alert color="warning" isOpen={this.state.loginError}>Wrong Username or password</Alert>
+                        <Form role="form">
+                          <FormGroup className="mb-3">
+                            <InputGroup className="input-group-alternative">
+                              <InputGroupAddon addonType="prepend">
+                                <InputGroupText>
+                                  <i className="tim-icons icon-email-85" />                              </InputGroupText>
+                              </InputGroupAddon>
+                              <Input placeholder="Username" type="text" id="username" />
+                            </InputGroup>
+                          </FormGroup>
+                          <FormGroup>
+                            <InputGroup className="input-group-alternative">
+                              <InputGroupAddon addonType="prepend">
+                                <InputGroupText>
+                                  <i className="tim-icons icon-lock-circle" />
+                                </InputGroupText>
+                              </InputGroupAddon>
+                              <Input
+                                placeholder="Password"
+                                type="password"
+                                autoComplete="off"
+                                id="password"
+                              />
+                            </InputGroup>
+                          </FormGroup>
+                          <div className="custom-control custom-control-alternative custom-checkbox">
+                            <input
+                              className="custom-control-input"
+                              id=" customCheckLogin"
+                              type="checkbox"
+                            />
+                            <label
+                              className="custom-control-label"
+                              htmlFor=" customCheckLogin"
+                            >
+                              <span>Remember me</span>
+                            </label>
+                          </div>
+                          <div className="text-center">
+                            <Button
+                              className="my-4"
+                              color="primary"
+                              type="button"
+                              onClick={this.userLogin}
+                            >
+                              Sign in
+                        </Button>
+                          </div>
+                        </Form>
+                      </CardBody>
+                    </Card>
+                    <Row className="mt-3">
+                      <Col xs="6">
+                        <a
+                          className="text-light"
+                          href="#pablo"
+                          onClick={e => e.preventDefault()}
+                        >
+                          <small>Forgot password?</small>
+                        </a>
+                      </Col>
+                      <Col className="text-right" xs="6">
+                        <a
+                          className="text-light"
+                          href="#pablo"
+                          onClick={e => e.preventDefault()}
+                        >
+                          <small>Create new account</small>
+                        </a>
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+              </Container>
+            </section>
+          </main>
+          <SimpleFooter></SimpleFooter>
+        </>)
+        }
+      </UserConsumer>
+
     );
   }
 }

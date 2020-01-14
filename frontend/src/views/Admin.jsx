@@ -13,6 +13,7 @@ import TutorCourses from "../components/TutorCourses";
 import NoMatch from './NoMatch';
 import CategoryList from '../components/CategoryList';
 import CategoryDetail from '../components/CategoryDetail';
+import { UserConsumer } from '../UserContext';
 
 export class Admin extends Component {
 
@@ -52,10 +53,15 @@ export class Admin extends Component {
         return (
             <div>
                 <div>
-                    <AdminNavbar
-                        {...this.props}
-                        brandText=""
-                    />
+                    <UserConsumer>
+                        {(context) => (
+                        <AdminNavbar
+                            {...this.props}
+                            brandText=""
+                            context={context}
+                        />)}
+                    </UserConsumer>
+
                     <Sidebar
                         {...this.props}
                         routes={routes}
@@ -75,8 +81,7 @@ export class Admin extends Component {
                                 <Route path="/admin/courses/:id/lessons/new" component={AddLesson} />
                                 <Route path="/admin/categories" exact component={CategoryList} />
                                 <Route path="/admin/categories/new" exact component={AddCategory} />
-                                <Route path="/admin/categories/:id"  component={CategoryDetail} />
-                                
+                                <Route path="/admin/categories/:id" component={CategoryDetail} />
                                 <Route path="*" component={NoMatch} />
                             </Switch>
                             <AdminFooter />

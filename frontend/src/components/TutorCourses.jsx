@@ -3,8 +3,8 @@ import Container from "reactstrap/lib/Container";
 import { Card, CardImg, CardBody, CardTitle, Button } from 'reactstrap';
 import Row from 'reactstrap/lib/Row';
 import Col from 'reactstrap/lib/Col';
-import { Route, Link } from 'react-router-dom';
-import AddLesson from '../views/AddLesson';
+import {Link } from 'react-router-dom';
+
 
 export class TutorCourses extends Component {
   constructor(props) {
