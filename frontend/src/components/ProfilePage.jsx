@@ -36,6 +36,7 @@ import UserHeader from "./Headers/UserHeader";
 import Container from "reactstrap/lib/Container";
 import Label from "reactstrap/lib/Label";
 import UserContext, { UserConsumer } from "../UserContext";
+import auth from "../auth";
 
 class UserProfile extends React.Component {
   static contextType = UserContext
@@ -53,10 +54,11 @@ class UserProfile extends React.Component {
         Authorization: `JWT ${localStorage.getItem("token")}`
       }
     })
+      .then(res => auth.checkLoginstatus(res))
       .then(res => res.json())
       .then(data => {
         this.setState({ user: data, loading: false });
-        context.updateValue(this.state.user);
+        context.updateValue('user', this.state.user);
         // console.log('user',context)
       });
   }
@@ -89,7 +91,7 @@ class UserProfile extends React.Component {
             <h5 className="title">No such  user profile... </h5>
           ) : (
               <Container className="content" fluid>
-                {console.log('***********',context)}
+                {console.log('***********', context)}
                 <UserHeader name={this.state.user.username} />
                 <Row className="mt-2">
                   <Col lg="8" className="order-xl-2 mb-3">

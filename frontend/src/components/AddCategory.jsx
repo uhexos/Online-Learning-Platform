@@ -4,6 +4,7 @@ import Row from 'reactstrap/lib/Row'
 import { Col, Card, CardBody, CardHeader, Form, FormGroup, Label, Input, Button } from 'reactstrap'
 import CardTitle from 'reactstrap/lib/CardTitle'
 import FormAlert from "./FormAlert";
+import auth from '../auth'
 
 export class AddCategory extends Component {
     state = { errors: null }
@@ -23,6 +24,7 @@ export class AddCategory extends Component {
                 authorization: `JWT ${localStorage.getItem('token')}`
             }
         })
+            .then(res => auth.checkLoginstatus(res))
             .then(res => {
                 if (!res.ok) {
                     throw res

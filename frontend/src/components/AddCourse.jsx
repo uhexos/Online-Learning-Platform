@@ -6,6 +6,7 @@ import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
 import CardBody from "reactstrap/lib/CardBody";
 import Alert from "reactstrap/lib/Alert";
 import FormAlert from "./FormAlert";
+import auth from "../auth";
 
 export class AddCourse extends Component {
   onDismiss = () => this.setState({ visible: false });
@@ -18,6 +19,7 @@ export class AddCourse extends Component {
         Authorization: `JWT ${localStorage.getItem("token")}`
       }
     })
+      .then(res => auth.checkLoginstatus(res))
       .then(res => {
         if (!res.ok) {
           return { test: "ok" };
@@ -54,7 +56,9 @@ export class AddCourse extends Component {
       headers: {
         Authorization: `JWT ${localStorage.getItem("token")}`,
       }
-    }).then(res => {
+    })
+    .then(res => auth.checkLoginstatus(res))
+    .then(res => {
       if (res.ok) {
         this.setState({ visible: true });
         document.getElementById('add-course').reset()

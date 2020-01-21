@@ -6,10 +6,9 @@ import AdminNavbar from './AdminNavbar';
 import SimpleFooter from "./SimpleFooter.jsx";
 
 import { Container, Row, Col } from 'reactstrap/lib';
+import auth from '../auth';
 
-let jwtkey = localStorage.getItem('token');
 export class CourseDetail extends Component {
-
     constructor(props) {
         super(props);
         // Bind the this context to the handler function
@@ -20,6 +19,8 @@ export class CourseDetail extends Component {
             },
             lessons: [],
         };
+        this.jwtkey = localStorage.getItem('token');
+
     }
 
     componentDidMount() {
@@ -27,9 +28,10 @@ export class CourseDetail extends Component {
         fetch(`http://127.0.0.1:8000/api/courses/${this.props.match.params.id}/lessons/`, {
             method: 'GET',
             headers: {
-                Authorization: `JWT ${jwtkey}`
+                Authorization: `JWT ${this.jwtkey}`
             }
         })
+            .then(res => auth.checkLoginstatus(res))
             .then(res => res.json())
             .then((lessons) => {
                 this.setState({

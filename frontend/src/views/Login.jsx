@@ -38,16 +38,34 @@ import {
 import Alert from "reactstrap/lib/Alert";
 import AdminNavbar from '../components/AdminNavbar';
 import SimpleFooter from '../components/SimpleFooter';
-import { UserConsumer } from "../UserContext";
+import UserContext, { UserConsumer } from "../UserContext";
 
 class Login extends React.Component {
   state = { loginError: false };
+  static contextType = UserContext
+
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     // this.refs.main.scrollTop = 0;
     let main = document.querySelector("main")
     main.scrollTop = 0
+  }
+  getProfile = () => {
+    const context = this.context
+    console.log("context profile", context)
+    fetch("http://localhost:8000/api/profile", {
+      method: "GET",
+      headers: {
+        Authorization: `JWT ${localStorage.getItem("token")}`
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        context.updateValue('user', data);
+        context.updateValue('isLoggedIn', true);
+        console.log("final", context)
+      });
   }
   //user arrow functions to autobind component to this, setState wont work if you dont use arrow syntax
   userLogin = () => {
@@ -76,15 +94,19 @@ class Login extends React.Component {
           //store a value to the user computer to use on all pages expires after 1 hours check settings.py for current duration
           localStorage.setItem('token', result.token);
           localStorage.setItem('username', username);
-          this.props.history.push(`/courses/`);
+          this.getProfile();
+          this.props.history.push(this.props.location.state ? this.props.location.state.from.pathname : `/courses/`);
+          // this.props.history.push(this.props.location.state.from.pathname || `/courses/`);
         }
       });
   };
+
   render() {
     return (
       <UserConsumer>
         {(context) => (<>
-          {console.log("context",context)}
+          {/* {this.getProfile()} */}
+          {console.log(this.props.location)}
           <AdminNavbar></AdminNavbar>
           <main id="main">
             <section className="section section-shaped section-lg">

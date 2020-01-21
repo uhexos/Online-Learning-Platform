@@ -15,6 +15,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 // import Sidebar from './Sidebar'
 import CoursePurchasePage from './views/CoursePurchasePage';
 import { UserProvider } from './UserContext';
+import { ProtectedRoute } from './protected.route';
 // core components
 // import SimpleFooter from "./components/SimpleFooter.jsx";
 class App extends React.Component {
@@ -22,11 +23,11 @@ class App extends React.Component {
     super(props);
     this.state = {
       user: {},
+      isLoggedIn: false,
     };
   }
-  updateValue = (val) => {
-    this.setState({ user: val });
-    // console.log("updated user",this.state.user)
+  updateValue = (key,val) => {
+    this.setState({ [key]: val });
   }
   render() {
     return (
@@ -39,12 +40,12 @@ class App extends React.Component {
               {/* TODO redirect courses/id to courses/id/lesson/0 */}
               <Route path="/courses/" exact component={CoursesList} />
               <Route path="/courses/:id/purchase/" component={CoursePurchasePage} />
-              <Route path="/courses/:id/lessons/:lid" component={CourseDetail} />
+              <ProtectedRoute path="/courses/:id/lessons/:lid" component={CourseDetail} />
               <Route path="/register" component={Register} />
               <Route path="/login" component={Login} />
               <Route path="/profile" component={ProfilePage} />
-              <Route path="/dashboard" component={Dashboard} />
-              <Route path="/admin" component={Admin} />
+              {/* <Route path="/dashboard" component={Dashboard} /> */}
+              <ProtectedRoute path="/admin" component={Admin} />
               <Route path="*" component={NoMatch} />
 
             </Switch>

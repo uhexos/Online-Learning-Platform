@@ -3,7 +3,8 @@ import Container from "reactstrap/lib/Container";
 import { Card, CardImg, CardBody, CardTitle, Button } from 'reactstrap';
 import Row from 'reactstrap/lib/Row';
 import Col from 'reactstrap/lib/Col';
-import {Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import auth from '../auth';
 
 
 export class TutorCourses extends Component {
@@ -24,6 +25,7 @@ export class TutorCourses extends Component {
         Authorization: `JWT ${localStorage.getItem("token")}`
       }
     })
+      .then(res => auth.checkLoginstatus(res))
       .then(res => {
         if (!res.ok) {
           throw Error(res.statusText);

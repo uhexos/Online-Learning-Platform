@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import CardTitle from 'reactstrap/lib/CardTitle'
 import Col from 'reactstrap/lib/Col';
 import Modals from './NotificationModal';
+import auth from '../auth';
 
 export class CategoryList extends Component {
     state = { categories: [] }
@@ -14,6 +15,8 @@ export class CategoryList extends Component {
                 authorization: `JWT ${localStorage.getItem('token')}`
             }
         })
+            .then(res => auth.checkLoginstatus(res))
+
             .then(res => {
                 if (!res.ok) {
                     return { test: "ok" };
@@ -32,11 +35,14 @@ export class CategoryList extends Component {
                 authorization: `JWT ${localStorage.getItem('token')}`
             }
         })
+            .then(res => auth.checkLoginstatus(res))
             .then(() => {
                 // remove the just deleted category from the state and update state without making another api call.
-                this.setState({categories: this.state.categories.filter((category) =>{ 
-                    return category['id'] !==  category_id
-                })});
+                this.setState({
+                    categories: this.state.categories.filter((category) => {
+                        return category['id'] !== category_id
+                    })
+                });
             })
 
     }
