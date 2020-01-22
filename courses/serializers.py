@@ -15,7 +15,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
                   "date_joined",
                   "is_tutor",
                   "about",
-                  "courses"]
+                  "courses",
+                  'password']
         # exclude = ["groups"]
         extra_kwargs = {'password': {'write_only': True}}
         depth = 1

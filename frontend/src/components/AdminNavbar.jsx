@@ -15,6 +15,8 @@ import {
   // NavbarText
 } from "reactstrap";
 import { NavLink as RRNavLink } from "react-router-dom";
+import { UserConsumer } from "../UserContext";
+import auth from "../auth";
 
 const AdminNavbar = props => {
   const [isOpen, setIsOpen] = useState(false);
@@ -62,15 +64,32 @@ const AdminNavbar = props => {
                 <DropdownItem>Reset</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
-            <NavItem>
-              <NavLink tag={RRNavLink} to="/login" onClick={toggle}>Login</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink tag={RRNavLink} to="/register" onClick={toggle}>Register</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink tag={RRNavLink} to="/admin" onClick={toggle}>Dashboard</NavLink>
-            </NavItem>
+            <UserConsumer>
+              {(context) => (
+                <>
+                  {context.state.isLoggedIn ? (
+                    <>
+                      <NavItem>
+                        <NavLink tag={RRNavLink} to="/admin" onClick={toggle}>Dashboard</NavLink>
+                      </NavItem>
+                      <NavItem>
+                        <NavLink tag={RRNavLink} to="#" onClick={auth.logout}>Log Out</NavLink>
+                      </NavItem>
+                    </>
+                  ) :
+                    <>
+                      <NavItem>
+                        <NavLink tag={RRNavLink} to="/login" onClick={toggle}>Login</NavLink>
+                      </NavItem>
+                      <NavItem>
+                        <NavLink tag={RRNavLink} to="/register" onClick={toggle}>Register</NavLink>
+                      </NavItem>
+                    </>}
+
+
+                </>)}
+            </UserConsumer>
+
           </Nav>
           {/* <NavbarText>Simple Text</NavbarText> */}
         </Collapse>

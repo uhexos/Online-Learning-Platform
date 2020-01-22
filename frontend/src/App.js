@@ -21,17 +21,18 @@ import { ProtectedRoute } from './protected.route';
 class App extends React.Component {
   constructor(props) {
     super(props);
+    // if a user object already exists use that one instead otherwise set as empty 
     this.state = {
-      user: {},
-      isLoggedIn: false,
+      user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')): {},
+      isLoggedIn: localStorage.getItem('user') ? true : false,
     };
   }
-  updateValue = (key,val) => {
+  updateValue = (key, val) => {
     this.setState({ [key]: val });
   }
   render() {
     return (
-      <UserProvider value={{state:this.state,updateValue: this.updateValue,}}>
+      <UserProvider value={{ state: this.state, updateValue: this.updateValue, }}>
         <div>
           <Router>
             {/* <AdminNavbar></AdminNavbar> */}

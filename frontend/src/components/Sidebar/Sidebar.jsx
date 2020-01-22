@@ -51,6 +51,7 @@ import {
   Row,
   Col
 } from "reactstrap";
+import { UserConsumer } from "../../UserContext";
 
 var ps;
 
@@ -83,22 +84,22 @@ class Sidebar extends React.Component {
     return routes.map((prop, key) => {
       return (
         <div key={key}>
-            {prop.name != 'Add Lessons' ? (
-                <NavItem >
-                <NavLink
-                  to={prop.layout + prop.path}
-                  tag={NavLinkRRD}
-                  onClick={this.closeCollapse}
-                  activeClassName="active"
-                >
-                  <i className={prop.icon} />
-                  {prop.name}
-                </NavLink>
-              </NavItem>
-            ): null}
+          {prop.name != 'Add Lessons' ? (
+            <NavItem >
+              <NavLink
+                to={prop.layout + prop.path}
+                tag={NavLinkRRD}
+                onClick={this.closeCollapse}
+                activeClassName="active"
+              >
+                <i className={prop.icon} />
+                {prop.name}
+              </NavLink>
+            </NavItem>
+          ) : null}
         </div>
-        
-        
+
+
       );
     });
   };
@@ -132,7 +133,7 @@ class Sidebar extends React.Component {
             <span className="navbar-toggler-icon" />
           </button>
           <Link to="/"><h1>Home</h1></Link>
-          
+
           {/* Collapse */}
           <Collapse navbar isOpen={this.state.collapseOpen}>
             {/* Collapse header */}
@@ -145,10 +146,10 @@ class Sidebar extends React.Component {
                         <img alt={logo.imgAlt} src={logo.imgSrc} />
                       </Link>
                     ) : (
-                      <a href={logo.outterLink}>
-                        <img alt={logo.imgAlt} src={logo.imgSrc} />
-                      </a>
-                    )}
+                        <a href={logo.outterLink}>
+                          <img alt={logo.imgAlt} src={logo.imgSrc} />
+                        </a>
+                      )}
                   </Col>
                 ) : null}
                 <Col className="collapse-close" xs="6">
@@ -184,28 +185,36 @@ class Sidebar extends React.Component {
             {/* Divider */}
             <hr className="my-3" />
             {/* Heading */}
-            <h6 className="navbar-heading text-muted">Admininstrator Menu</h6>
-            {/* Navigation */}
-            <Nav className="mb-md-3" navbar>
-              <NavItem>
-                <NavLink to="/admin/categories/new" tag={NavLinkRRD}>
-                  <i className="ni ni-spaceship" />
-                  Add Category
+            <UserConsumer>
+              {(context) => (
+                !context.state.user.is_staff ? null : (
+                  <>
+                    <h6 className="navbar-heading text-muted">Admininstrator Menu</h6>
+                    {/* Navigation */}
+                    <Nav className="mb-md-3" navbar>
+                      <NavItem>
+                        <NavLink to="/admin/categories/new" tag={NavLinkRRD}>
+                          <i className="ni ni-spaceship" />
+                          Add Category
                 </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink to="/admin/categories" tag={NavLinkRRD}>
-                  <i className="ni ni-palette" />
-                  View Categories
+                      </NavItem>
+                      <NavItem>
+                        <NavLink to="/admin/categories" tag={NavLinkRRD}>
+                          <i className="ni ni-palette" />
+                          View Categories
                 </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/documentation/alerts?ref=adr-admin-sidebar">
-                  <i className="ni ni-ui-04" />
-                  Components
+                      </NavItem>
+                      <NavItem>
+                        <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/documentation/alerts?ref=adr-admin-sidebar">
+                          <i className="ni ni-ui-04" />
+                          Components
                 </NavLink>
-              </NavItem>
-            </Nav>
+                      </NavItem>
+                    </Nav>
+                  </>)
+              )}
+            </UserConsumer>
+
           </Collapse>
         </Container>
       </Navbar>

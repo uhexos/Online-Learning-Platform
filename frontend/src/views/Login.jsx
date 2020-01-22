@@ -53,7 +53,6 @@ class Login extends React.Component {
   }
   getProfile = () => {
     const context = this.context
-    console.log("context profile", context)
     fetch("http://localhost:8000/api/profile", {
       method: "GET",
       headers: {
@@ -63,8 +62,9 @@ class Login extends React.Component {
       .then(res => res.json())
       .then(data => {
         context.updateValue('user', data);
+        // TODO pick only relevant items to store in the context rather than the entire user object 
+        localStorage.setItem('user', JSON.stringify(data));
         context.updateValue('isLoggedIn', true);
-        console.log("final", context)
       });
   }
   //user arrow functions to autobind component to this, setState wont work if you dont use arrow syntax

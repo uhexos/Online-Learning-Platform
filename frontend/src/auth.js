@@ -9,13 +9,15 @@ class Auth {
         console.log('logout done')
         this.logout();
         window.location.reload();
-    
       }
     }
     return response;
   }
   logout() {
-    localStorage.removeItem('token')
+    // TODO redirect to sign out page
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.reload();
   }
 
   isAuthenticated() {
