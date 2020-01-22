@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import CoursesList from "./components/CoursesList";
 import CourseDetail from "./components/CourseDetail";
+import Homepage from "./components/Homepage";
 // import AdminNavbar from './components/AdminNavbar';
 // import RegisterPage from './components/RegisterPage'
 // import LoginPage from './components/LoginPage'
@@ -26,9 +27,10 @@ class App extends React.Component {
         <Router>
           {/* <AdminNavbar></AdminNavbar> */}
           <Switch>
-            <Route path="/" exact={true} component={CoursesList} />
+            <Route path="/" component={Homepage} exact />
+            {/* <Route path="/" component={CoursesList} /> */}
             {/* TODO redirect courses/id to courses/id/lesson/0 */}
-            <Route path="/courses/" exact component={CoursesList} />
+            <Route path="/courses/" component={CoursesList} />
             <Route path="/courses/:id/purchase/" component={CoursePurchasePage} />
             <Route path="/courses/:id/lessons/:lid" component={CourseDetail} />
             <Route path="/register" component={Register} />
@@ -37,7 +39,7 @@ class App extends React.Component {
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/admin" component={Admin} />
             <Route path="*" component={NoMatch} />
-            
+                     
           </Switch>
           {/* <SimpleFooter /> */}
         </Router>
