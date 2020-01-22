@@ -1,11 +1,26 @@
 from rest_framework import serializers
 from .models import *
 
+
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
-        model  = CustomUser
-        fields = '__all__'
-    
+        model = CustomUser
+        fields = ["id",
+                  "username",
+                  "first_name",
+                  "last_name",
+                  "email",
+                  "is_staff",
+                  "is_active",
+                  "date_joined",
+                  "is_tutor",
+                  "about",
+                  "courses",
+                  'password']
+        # exclude = ["groups"]
+        extra_kwargs = {'password': {'write_only': True}}
+        depth = 1
+
     def create(self, validated_data):
         user = CustomUser(
             email=validated_data['email'],
@@ -14,7 +29,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
-        
+
+
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
@@ -25,12 +41,18 @@ class CategorySerializer(serializers.ModelSerializer):
 class CourseSerializer(serializers.ModelSerializer):
     lessons = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     # owner = serializers.PrimaryKeyRelatedField(read_only=True)
-    rating = serializers.ReadOnlyField()
     owner = CustomUserSerializer(read_only=True)
+
     class Meta:
         model = Course
         # fields = ['id', 'title', 'description', 'category', 'owner', 'lessons']
         fields = '__all__'
+
+    def get_thumbnail_url(self, user_account):
+        # make url absolute
+        request = self.context.get('request')
+        thumbnail_url = user_account.thumbnail.url
+        return request.build_absolute_uri(thumbnail_url)
 
 
 class LessonSerializer(serializers.ModelSerializer):
@@ -40,4 +62,3 @@ class LessonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lesson
         fields = '__all__'
-

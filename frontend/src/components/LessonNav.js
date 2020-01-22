@@ -3,7 +3,8 @@ import { Nav, NavItem } from 'reactstrap';
 import Card from 'reactstrap/lib/Card';
 import CardBody from 'reactstrap/lib/CardBody';
 import CardTitle from 'reactstrap/lib/CardTitle';
-import { Link } from "react-router-dom";
+import { NavLink as RRNavlink } from "react-router-dom";
+import NavLink from 'reactstrap/lib/NavLink';
 class LessonNav extends React.Component {
   // produces a list of all lessons to be rendered in sidebar 
   render() {
@@ -12,9 +13,9 @@ class LessonNav extends React.Component {
     const printLesson = () => (
       this.props.lessons.map((lesson, index) => (
         <NavItem key={lesson.id} >
-          <Link to={`/courses/${lesson.course}/lessons/${index}`}>
-            <i className="tim-icons icon-email-85" />{lesson.title}
-          </Link>
+          <NavLink tag={RRNavlink} to={`/courses/${lesson.course}/lessons/${index}`} activeClassName="active">
+            <i className="ni ni-button-play" /><b>Lesson {index}</b>: {lesson.title}
+          </NavLink>
         </NavItem>
       ))
     )
@@ -22,15 +23,14 @@ class LessonNav extends React.Component {
       <div>
         <Card className="shadow">
           <CardBody>
-            <CardTitle>
-              Lessons
+            <CardTitle className="text-center">
+              Course Outline
             </CardTitle>
-            <Nav vertical>
+            <Nav vertical id="lesson-nav" >
               {/* check if lessons is not empty and print lessons */}
               {this.props.lessons[0] ? printLesson() : null}
             </Nav>
           </CardBody>
-
         </Card>
       </div>
     );

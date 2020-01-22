@@ -1,10 +1,11 @@
 from django.shortcuts import redirect
-from rest_framework import generics,permissions
+from rest_framework import generics, permissions
 from .models import *
 from .serializers import *
-from .permissions import IsOwnerOrReadOnly,IsSuperUser
+from .permissions import IsOwnerOrReadOnly, IsSuperUser
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 
 class CategoryList(generics.ListCreateAPIView):
     queryset = Category.objects.all()
@@ -25,22 +26,25 @@ class CourseList(generics.ListCreateAPIView):
 
 
 class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
-    # queryset = Course.objects.all()
+    queryset = Course.objects.all()
     serializer_class = CourseSerializer
 
     def get_object(self):
-        # print(self.request.user)
-        return Course.objects.get(id=self.kwargs['pk'])
+        queryset = self.get_queryset()
+        queryset = queryset.filter(id=self.kwargs['pk'])
+        obj = get_object_or_404(queryset)
+        self.check_object_permissions(self.request, obj)
+        return obj
 
 
 class LessonList(generics.ListCreateAPIView):
     serializer_class = LessonSerializer
+    queryset = Lesson.objects.all()
 
     def get_queryset(self):
        # GET PK FROM URL USING KWARGS TO URL DEFINTIIION
-        pk = self.kwargs['pk']
-        qs = Lesson.objects.filter(course_id=pk)
-        return qs
+        course_id = self.kwargs['pk']
+        return Lesson.objects.filter(course__id=course_id)
 
     def perform_create(self, serializer):
         course = Course.objects.get(id=self.kwargs['pk'])
@@ -66,12 +70,14 @@ class CustomUserList(generics.ListCreateAPIView):
 
 class CustomUserDetail(generics.RetrieveUpdateDestroyAPIView):
     # see any user profile
-    permission_classes = [IsOwnerOrReadOnly|IsSuperUser]
+    permission_classes = [IsOwnerOrReadOnly | IsSuperUser]
     serializer_class = CustomUserSerializer
     queryset = CustomUser.objects.all()
+
 
 class UserProfileView(APIView):
     # see the profile of the logged in user.
     def get(self, request):
-        serializer = CustomUserSerializer(request.user)
+        serializer = CustomUserSerializer(
+            request.user, context={'request': request})
         return Response(serializer.data)

@@ -13,7 +13,6 @@ export class LessonDetail extends Component {
         return (
             <Card>
                 {/* {console.log("lesson details",this.props.lesson)} */}
-            {console.log("hit")}
                 <CardBody className="shadow">
                     <CardTitle>
                         <h1>{this.props.lesson.title}</h1>

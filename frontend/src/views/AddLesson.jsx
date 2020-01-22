@@ -6,6 +6,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import Container from 'reactstrap/lib/Container';
 import Row from 'reactstrap/lib/Row';
+import auth from '../auth';
 
 
 export class AddLesson extends Component {
@@ -29,7 +30,9 @@ export class AddLesson extends Component {
             headers: {
                 'Authorization': `JWT ${localStorage.getItem("token")}`,
             }
-        }).then(res => {
+        })
+        .then(res => auth.checkLoginstatus(res))
+        .then(res => {
             if (res.ok) {
                 this.setState({ visible: true });
             }

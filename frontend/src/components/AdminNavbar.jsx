@@ -12,10 +12,12 @@ import {
   DropdownMenu,
   DropdownItem,
   Col,
-  Button
   // NavbarText
 } from "reactstrap";
 import { NavLink as RRNavLink } from "react-router-dom";
+import { UserConsumer } from "../UserContext";
+import auth from "../auth";
+
 const AdminNavbar = props => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -28,50 +30,66 @@ const AdminNavbar = props => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
-            {isOpen ? (
+            <div className="navbar-collapse-header d-md-none">
               <NavItem>
-                <Col className="text-right" >
-                  <Button
-                    color="danger"
-                    size="sm"
-                    aria-expanded={isOpen}
-                    className=""
+                <Col className="collapse-close" xs="12">
+                  <button
+                    className="navbar-toggler"
+                    type="button"
                     onClick={toggle}
                   >
-                    <i className="tim-icons icon-simple-remove" />
-                  </Button>
+                    <span />
+                    <span />
+                  </button>
                 </Col>
               </NavItem>
-            ) : null}
-
+            </div>
+            {/* both reactstrap and react router have a component called Navlink this is the format to use both correctly*/}
             <NavItem>
-              <NavLink tag={RRNavLink} to="/courses/">
+              <NavLink tag={RRNavLink} to="/courses/" onClick={toggle}>
                 Explore
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="">My Courses</NavLink>
+              <NavLink href="" onClick={toggle}>My Courses</NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
                 Options
               </DropdownToggle>
-              <DropdownMenu right>
+              <DropdownMenu right onClick={toggle}>
                 <DropdownItem>Option 1</DropdownItem>
                 <DropdownItem>Option 2</DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>Reset</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
-            <NavItem>
-              <NavLink href="/login">Login</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="/register">Register</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="/admin">Dashboard</NavLink>
-            </NavItem>
+            <UserConsumer>
+              {(context) => (
+                <>
+                  {context.state.isLoggedIn ? (
+                    <>
+                      <NavItem>
+                        <NavLink tag={RRNavLink} to="/admin" onClick={toggle}>Dashboard</NavLink>
+                      </NavItem>
+                      <NavItem>
+                        <NavLink tag={RRNavLink} to="#" onClick={auth.logout}>Log Out</NavLink>
+                      </NavItem>
+                    </>
+                  ) :
+                    <>
+                      <NavItem>
+                        <NavLink tag={RRNavLink} to="/login" onClick={toggle}>Login</NavLink>
+                      </NavItem>
+                      <NavItem>
+                        <NavLink tag={RRNavLink} to="/register" onClick={toggle}>Register</NavLink>
+                      </NavItem>
+                    </>}
+
+
+                </>)}
+            </UserConsumer>
+
           </Nav>
           {/* <NavbarText>Simple Text</NavbarText> */}
         </Collapse>

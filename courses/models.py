@@ -4,7 +4,7 @@ from datetime import date
 from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
-
+# TODO use imagekit to resize thumbnail upon upload 
 class Course(models.Model):
     title = models.CharField(max_length=150, help_text='Enter course title')
     owner = models.ForeignKey(
@@ -20,8 +20,8 @@ class Course(models.Model):
     is_live = models.BooleanField(default=0)
     rating = models.IntegerField(default=0)
     thumbnail = models.ImageField(
-        help_text='Enter course thumbnail', null=True, upload_to='course_thumbnails')
-    price = models.DecimalField(max_digits=8, decimal_places=2, default="0.0")
+        help_text='Enter course thumbnail', null=True, upload_to='course_thumbnails',default='default_course_img.jpg')
+    price = models.DecimalField(null=False,max_digits=8, decimal_places=2)
 
     def __str__(self):
         return self.title

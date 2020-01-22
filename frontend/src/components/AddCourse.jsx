@@ -5,11 +5,13 @@ import { Row, Col } from "reactstrap";
 import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
 import CardBody from "reactstrap/lib/CardBody";
 import Alert from "reactstrap/lib/Alert";
+import FormAlert from "./FormAlert";
+import auth from "../auth";
 
 export class AddCourse extends Component {
   onDismiss = () => this.setState({ visible: false });
+  state = { categories: null, loading: false, visible: false, errors: null };
 
-  state = { categories: null, loading: false, visible: false };
   componentDidMount() {
     fetch("http://localhost:8000/api/categories", {
       method: "get",
@@ -17,6 +19,7 @@ export class AddCourse extends Component {
         Authorization: `JWT ${localStorage.getItem("token")}`
       }
     })
+      .then(res => auth.checkLoginstatus(res))
       .then(res => {
         if (!res.ok) {
           return { test: "ok" };
@@ -53,11 +56,20 @@ export class AddCourse extends Component {
       headers: {
         Authorization: `JWT ${localStorage.getItem("token")}`,
       }
-    }).then(res => {
+    })
+    .then(res => auth.checkLoginstatus(res))
+    .then(res => {
       if (res.ok) {
         this.setState({ visible: true });
+        document.getElementById('add-course').reset()
+        return res.json();
       }
-      return res.json();
+      throw res
+
+    }).catch(err => {
+      err.text().then(errorMessage => {
+        this.setState({ errors: errorMessage, visible: false })
+      })
     });
   };
   render() {
@@ -73,7 +85,8 @@ export class AddCourse extends Component {
             >
               Course created successfully.
             </Alert>
-            <Form>
+            {this.state.errors ? <FormAlert visible={true} messageObject={this.state.errors} /> : null}
+            <Form id="add-course">
               <FormGroup>
                 <Label for="courseTitle">Title</Label>
                 <Input

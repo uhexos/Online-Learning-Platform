@@ -3,8 +3,12 @@ import Container from 'reactstrap/lib/Container'
 import Row from 'reactstrap/lib/Row'
 import { Col, Card, CardBody, CardHeader, Form, FormGroup, Label, Input, Button } from 'reactstrap'
 import CardTitle from 'reactstrap/lib/CardTitle'
+import FormAlert from "./FormAlert";
+import auth from '../auth'
 
 export class AddCategory extends Component {
+    state = { errors: null }
+
     saveCategory = () => {
         let formData = new FormData();
         let title = document.getElementById('categoryTitle').value;
@@ -20,15 +24,22 @@ export class AddCategory extends Component {
                 authorization: `JWT ${localStorage.getItem('token')}`
             }
         })
+            .then(res => auth.checkLoginstatus(res))
             .then(res => {
-                if (res.ok) {
-                    document.getElementById("create-category-form").reset();
-                    return res.json();
+                if (!res.ok) {
+                    throw res
                 }
-            }, (error) => {
-                console.log(error);
+                document.getElementById("create-category-form").reset();
+                this.onDismiss()//remove previous error message if succesful
+                return res.json();
+            })
+            .catch(err => {
+                err.text().then(errorMessage => {
+                    this.setState({ errors: errorMessage })
+                })
             });
     }
+
     render() {
         return (
             <div>
@@ -45,6 +56,7 @@ export class AddCategory extends Component {
                                 </CardHeader>
                                 <CardBody>
                                     <Form id="create-category-form">
+                                        {this.state.errors ? <FormAlert visible={true} messageObject={this.state.errors} /> : null}
                                         <FormGroup>
                                             <Label for="categoryTitle">Title</Label>
                                             <Input type="text" id="categoryTitle" />

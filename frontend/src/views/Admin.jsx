@@ -13,6 +13,8 @@ import TutorCourses from "../components/TutorCourses";
 import NoMatch from './NoMatch';
 import CategoryList from '../components/CategoryList';
 import CategoryDetail from '../components/CategoryDetail';
+import { UserConsumer } from '../UserContext';
+import { ProtectedRoute } from '../protected.route';
 
 export class Admin extends Component {
 
@@ -52,10 +54,15 @@ export class Admin extends Component {
         return (
             <div>
                 <div>
-                    <AdminNavbar
-                        {...this.props}
-                        brandText=""
-                    />
+                    <UserConsumer>
+                        {(context) => (
+                        <AdminNavbar
+                            {...this.props}
+                            brandText=""
+                            context={context}
+                        />)}
+                    </UserConsumer>
+
                     <Sidebar
                         {...this.props}
                         routes={routes}
@@ -68,16 +75,15 @@ export class Admin extends Component {
                     <div className="main-content" ref="mainContent">
                         <Container fluid>
                             <Switch>
-                                <Route path="/admin" exact component={Index} />
-                                <Route path="/admin/profile" exact component={Profile} />
-                                <Route path="/admin/courses" exact component={TutorCourses} />
-                                <Route path="/admin/courses/new" component={AddCourse} />
-                                <Route path="/admin/courses/:id/lessons/new" component={AddLesson} />
-                                <Route path="/admin/categories" exact component={CategoryList} />
-                                <Route path="/admin/categories/new" exact component={AddCategory} />
-                                <Route path="/admin/categories/:id"  component={CategoryDetail} />
-                                
-                                <Route path="*" component={NoMatch} />
+                                <ProtectedRoute path="/admin/profile" exact component={Profile} />
+                                <ProtectedRoute path="/admin/courses" exact component={TutorCourses} />
+                                <ProtectedRoute path="/admin" exact component={Index}  />
+                                <ProtectedRoute path="/admin/courses/new" component={AddCourse} />
+                                <ProtectedRoute path="/admin/courses/:id/lessons/new" component={AddLesson} />
+                                <ProtectedRoute path="/admin/categories" exact component={CategoryList} />
+                                <ProtectedRoute path="/admin/categories/new" exact component={AddCategory} />
+                                <ProtectedRoute path="/admin/categories/:id" component={CategoryDetail} />
+                                <ProtectedRoute path="*" component={NoMatch} />
                             </Switch>
                             <AdminFooter />
                         </Container>

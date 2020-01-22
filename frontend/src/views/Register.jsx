@@ -53,7 +53,7 @@ class Register extends React.Component {
 
     }
   }
-
+// TODO fix this to fill user firstname and lastname, the _ is missing in the fetch data
   handleSubmit = (event) => {
     event.preventDefault()
     const data = this.state
@@ -66,7 +66,7 @@ class Register extends React.Component {
   }
 
   handleInputChange = (event) =>{
-    // console.log(event.target.value)
+    console.log(event.target.name,event.target.value)
     this.setState({
       [event.target.name]: event.target.value
     })
@@ -80,7 +80,6 @@ class Register extends React.Component {
   }
 
   
-
 
   render() {
     return (

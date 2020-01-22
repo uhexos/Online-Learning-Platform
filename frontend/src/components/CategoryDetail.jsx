@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import AddCategory from './AddCategory'
 import { Container, Col, Card, CardHeader, CardTitle, Form, FormGroup, Label, Input, CardBody, Button } from 'reactstrap';
 import Row from 'reactstrap/lib/Row';
+import auth from '../auth';
 
 export class CategoryDetail extends Component {
     state = { category: {} }
@@ -19,6 +19,8 @@ export class CategoryDetail extends Component {
                 authorization: `JWT ${localStorage.getItem('token')}`
             }
         })
+            .then(res => auth.checkLoginstatus(res))
+
             .then(res => {
                 if (res.ok) {
                     document.getElementById("create-category-form").reset();
@@ -66,7 +68,7 @@ export class CategoryDetail extends Component {
                                         </FormGroup>
                                         <FormGroup>
                                             <Label for="categortDescription" >Description</Label>
-                                            <Input type="textarea" id="categoryDescription" defaultValue={this.state.category.description}/>
+                                            <Input type="textarea" id="categoryDescription" defaultValue={this.state.category.description} />
                                         </FormGroup>
                                         <FormGroup>
                                             <Button
