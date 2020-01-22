@@ -30,7 +30,7 @@ export class Admin extends Component {
             },
             {
                 path: "/courses",
-                name: "My Courses",
+                name: "View Courses",
                 icon: "ni ni-pin-3 text-orange",
                 component: TutorCourses,
                 layout: "/admin"

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import HomeNavbar from './HomeNavbar';
 import SimpleFooter from './SimpleFooter';
+import AdminNavbar from './AdminNavbar';
 
 export class Homepage extends Component {
     render() {
         return (
             <div>
-                <HomeNavbar />
+                <AdminNavbar />
                 <div className="container">
                     <h1>Home page</h1>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.<br></br>

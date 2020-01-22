@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
+
 class CategoryList(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
@@ -75,9 +76,10 @@ class CustomUserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = CustomUser.objects.all()
 
 
-class UserProfileView(APIView):
+class UserProfileView(generics.RetrieveUpdateAPIView):
     # see the profile of the logged in user.
-    def get(self, request):
-        serializer = CustomUserSerializer(
-            request.user, context={'request': request})
-        return Response(serializer.data)
+    serializer_class = CustomUserSerializer
+    queryset = CustomUser.objects.all()
+
+    def get_object(self):
+        return CustomUser.objects.get(id=self.request.user.id)
