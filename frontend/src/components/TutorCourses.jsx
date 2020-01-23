@@ -13,7 +13,7 @@ export class TutorCourses extends Component {
     this.state = {
       error: null,
       isLoaded: false,
-      items: null
+      owner: {}
     };
   }
 
@@ -36,9 +36,7 @@ export class TutorCourses extends Component {
         user => {
           this.setState({
             isLoaded: true,
-            // take only the courses made by the user and toss the rest away
-            // items: result.filter(item => this.currentUserCourse(item.owner.username))
-            items: user.courses
+            owner: user 
           });
         },
         // Note: it's important to handle errors here
@@ -54,9 +52,9 @@ export class TutorCourses extends Component {
   }
   // TODO rework view course button to be an edit button.
   render() {
-    let { error, isLoaded, items } = this.state;
+    let { error, isLoaded,owner } = this.state;
 
-    if (items === null) {
+    if (owner.courses === null) {
       return <p>loading!!! </p>
 
     }
@@ -67,22 +65,22 @@ export class TutorCourses extends Component {
         <div>
 
           {/* //check if we have any items before mapping. */}
-          {!isLoaded || items == null ? (
+          {!isLoaded || owner.courses == null ? (
             <h5 className="title">Loading courses...</h5>
           ) : (
               <Container>
                 <Row className="mt-5">
-                  {items == 0 ? (
+                  {owner.courses == 0 ? (
                     <p>You do not have any courses yet.</p>
                   ): null}
-                  {items.map(item => (
+                  {owner.courses.map(item => (
                     <Col sm="6" md="4" key={item.id}>
                       <Card className="shadow mb-3">
                         <CardImg top src={item.thumbnail} alt="course thumbnail" />
                         <CardBody>
                           <CardTitle>
                             <h5>{item.title}</h5>
-                            <p><span>By </span>{item.owner.username}</p>
+                            <p><span>By </span>{owner.username}</p>
                           </CardTitle>
                           <Link to={`/courses/${item.id}/lessons/0`}>
                             <Button color="primary">View Course </Button>

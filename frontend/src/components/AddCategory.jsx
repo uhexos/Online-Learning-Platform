@@ -30,7 +30,6 @@ export class AddCategory extends Component {
                     throw res
                 }
                 document.getElementById("create-category-form").reset();
-                this.onDismiss()//remove previous error message if succesful
                 return res.json();
             })
             .catch(err => {
