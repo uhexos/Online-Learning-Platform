@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import SimpleFooter from './SimpleFooter';
-import AdminNavbar from './AdminNavbar';
+import HomeNavbar from './HomeNavbar';
 
 export class Homepage extends Component {
     render() {
