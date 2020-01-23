@@ -8,14 +8,25 @@ import AdminNavbar from './AdminNavbar';
 import SimpleFooter from './SimpleFooter';
 // import Sidebar from './Sidebar'
 
+
+function isSearched(searchTerm) {
+  return function(item) {
+    return item.title.toLowerCase().includes(searchTerm.toLowerCase());
+  }
+}
+
+
 class CoursesList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       error: null,
       isLoaded: false,
-      items: null
+      items: null,
+      searchTerm: ''
     };
+    this.searchResult = this.searchResult.bind(this);
+    this.onSearchChange = this.onSearchChange.bind(this);
   }
 
   componentDidMount() {
@@ -50,6 +61,16 @@ class CoursesList extends React.Component {
       );
   }
 
+  searchResult(event) {
+    const isNotTitle = item => item.title !== event.target.value;
+    const updatedItems = this.state.items.filter(isNotTitle);
+    this.setState({ items: updatedItems });
+  }
+
+  onSearchChange(event) {
+    this.setState({searchTerm: event.target.value});
+  }
+
   render() {
     const { error, isLoaded, items } = this.state;
     if (error) {
@@ -58,6 +79,22 @@ class CoursesList extends React.Component {
       return (
         <div>
           <AdminNavbar></AdminNavbar>
+          <Container>
+            <Row className="mt-5">
+              <Col sm="6">
+                <div style={{ marginLeft:'150px' }}>
+                  <input type="text" className="form-control" placeholder="search" onChange={this.onSearchChange} />
+                </div>
+              </Col>
+              {/* <Col sm="2">
+                <div style={{ marginLeft:'10px' }}>
+                  <button className="btn btn-success" 
+                  onClick={ () => this.searchResult(this.state.searchTerm) }>Search</button>
+                </div>
+              </Col> */}
+            </Row>
+          </Container>
+          
 
           {/* //check if we have any items before mapping. */}
           {!isLoaded || items == null ? (
@@ -65,7 +102,7 @@ class CoursesList extends React.Component {
           ) : (
               <Container>
                 <Row className="mt-5">
-                  {items.map(item => (
+                  {items.filter(isSearched(this.state.searchTerm)).map(item => (
                     <Col sm="6" md="4" key={item.id}>
                       <Card className="shadow mb-3">
                         <CardImg top src={item.thumbnail} alt="course thumbnail" />

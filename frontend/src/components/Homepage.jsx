@@ -7,18 +7,29 @@ export class Homepage extends Component {
         return (
             <div>
                 <HomeNavbar />
-                <div className="container">
-                    <h1>Home page</h1>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.<br></br>
-                    Consequatur totam quos doloremque numquam fugiat officiis placeat <br></br>
-                    consectetur tempore dolores illo deserunt ab exercitationem quisquam, 
-                    recusandae sequi necessitatibus, eius quaerat quibusdam.
+                <div className="container-fluid" style={cont1}>
+                   <div className="col-md-6">
+                       <p style={{ color:'#fff',fontSize:'50px', 
+                            paddingTop:'50px' }}>Your course to prepare for university.</p>
+                       <p style={{ color:'#fff  ',fontSize:'20px' }}>
+                           Build the basic skills you need before you enter university from 
+                           lecturers in various universities.
+                        </p>
+                   </div>
                 </div>
                 <SimpleFooter />
                 
             </div>
         )
     }
+}
+
+const cont1 = {
+    // backgroundImage: "url('../imgs/auth_bg.jpg')",
+    backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('../imgs/auth_bg.jpg')",
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    height:'400px',
 }
 
 export default Homepage;
