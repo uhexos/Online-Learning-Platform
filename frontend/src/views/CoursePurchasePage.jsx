@@ -9,7 +9,7 @@ import CardTitle from "reactstrap/lib/CardTitle";
 import CardText from "reactstrap/lib/CardText";
 import Button from "reactstrap/lib/Button";
 import CourseAccordian from "../components/CourseAccordian";
-
+import TopNavBar from "./TopNavBar.jsx"
 export class CoursePurchasePage extends Component {
   state = { isLoaded: false, error: null, course: null };
   componentDidMount() {
@@ -39,6 +39,7 @@ export class CoursePurchasePage extends Component {
   render() {
     return (
       <>
+      <TopNavBar/>
         {!this.state.isLoaded ? (
           <h5>Loading details ...</h5>
         ) : (

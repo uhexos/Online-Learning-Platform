@@ -72,15 +72,14 @@ class Login extends React.Component {
     //take user auth from the form and store our jwt token into local storage
     let username = document.getElementById("username").value;
     let password = document.getElementById("password").value;
-    const data = { username: username, password: password };
-
+    // const data = { username: username, password: password };
+    let formdata = new FormData()
+    formdata.append('username',username);
+    formdata.append('password',password);
     // TODO handle fetch errors and add feedback to form
     fetch(`http://127.0.0.1:8000/auth/`, {
       method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json"
-      }
+      body: formdata,
     })
       .then(res => res.json())
       .then(result => {

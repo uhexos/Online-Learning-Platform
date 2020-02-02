@@ -18,7 +18,7 @@ import { NavLink as RRNavLink } from "react-router-dom";
 import { UserConsumer } from "../UserContext";
 import auth from "../auth";
 
-const AdminNavbar = props => {
+const TopNavBar = props => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -101,4 +101,4 @@ const AdminNavbar = props => {
   );
 };
 
-export default AdminNavbar;
+export default TopNavBar;

@@ -105,10 +105,10 @@ export class Checkout extends Component {
                                 <p className="font-italic mb-4">Shipping and additional costs are calculated based on values you have entered.</p>
                                 <ul className="list-unstyled mb-4">
                                     <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Order Subtotal </strong><strong>${this.state.total}</strong></li>
-                                    <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Shipping and handling</strong><strong>$10.00</strong></li>
+                                    {/* <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Shipping and handling</strong><strong>$10.00</strong></li> */}
                                     <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Tax</strong><strong>$0.00</strong></li>
                                     <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Total</strong>
-                                        <h5 className="font-weight-bold">$400.00</h5>
+                                        <h5 className="font-weight-bold">${this.state.total}</h5>
                                     </li>
                                 </ul><a href="#" className="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</a>
                             </div>
