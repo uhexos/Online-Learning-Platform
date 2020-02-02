@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import SimpleFooter from './SimpleFooter';
-import HomeNavbar from './HomeNavbar';
+import TopNavBar from './TopNavBar';
 
 export class Homepage extends Component {
     render() {
         return (
             <div>
-                <HomeNavbar />
+                <TopNavBar/>
                 <div className="container-fluid" style={cont1}>
                    <div className="col-md-6">
                        <p style={{ color:'#fff',fontSize:'50px', 

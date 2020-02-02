@@ -3,12 +3,13 @@ import './App.css';
 import CoursesList from "./components/CoursesList";
 import CourseDetail from "./components/CourseDetail";
 import Homepage from "./components/Homepage";
+import Checkout from "./components/Checkout";
 // import AdminNavbar from './components/AdminNavbar';
 // import RegisterPage from './components/RegisterPage'
 // import LoginPage from './components/LoginPage'
 import Login from './views/Login'
 import Register from './views/Register'
-import Dashboard from './views/Dashboard'
+// import Dashboard from './views/Dashboard' //removing this breaks the admin side so don't
 import Admin from './views/Admin'
 import ProfilePage from './components/ProfilePage'
 import NoMatch from './views/NoMatch'
@@ -49,6 +50,7 @@ class App extends React.Component {
               <Route path="/profile" component={ProfilePage} />
               {/* <Route path="/dashboard" component={Dashboard} /> */}
               <ProtectedRoute path="/admin" component={Admin} />
+              <ProtectedRoute path="/cart" component={Checkout} />
               <Route path="*" component={NoMatch} />
 
             </Switch>

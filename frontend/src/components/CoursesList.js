@@ -4,7 +4,7 @@ import Container from 'reactstrap/lib/Container';
 import Row from 'reactstrap/lib/Row';
 import Col from 'reactstrap/lib/Col';
 import { Link } from 'react-router-dom';
-import AdminNavbar from './AdminNavbar';
+import TopNavBar from './TopNavBar';
 import SimpleFooter from './SimpleFooter';
 // import Sidebar from './Sidebar'
 
@@ -78,7 +78,7 @@ class CoursesList extends React.Component {
     } else {
       return (
         <div>
-          <AdminNavbar></AdminNavbar>
+          <TopNavBar></TopNavBar>
           <Container>
             <Row className="mt-5">
               <Col sm="6">

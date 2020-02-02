@@ -36,7 +36,7 @@ import {
 
 // core components
 import Alert from "reactstrap/lib/Alert";
-import AdminNavbar from '../components/AdminNavbar';
+import TopNavBar from '../components/TopNavBar';
 import SimpleFooter from '../components/SimpleFooter';
 import UserContext, { UserConsumer } from "../UserContext";
 
@@ -107,7 +107,7 @@ class Login extends React.Component {
         {(context) => (<>
           {/* {this.getProfile()} */}
           {console.log(this.props.location)}
-          <AdminNavbar></AdminNavbar>
+          <TopNavBar></TopNavBar>
           <main id="main">
             <section className="section section-shaped section-lg">
               <div className="shape shape-style-1 bg-gradient-default">
@@ -169,7 +169,7 @@ class Login extends React.Component {
                             <InputGroup className="input-group-alternative">
                               <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
-                                  <i className="tim-icons icon-email-85" />                              </InputGroupText>
+                                  <i className="ni ni-email-83 text-primary" />                              </InputGroupText>
                               </InputGroupAddon>
                               <Input placeholder="Username" type="text" id="username" />
                             </InputGroup>
@@ -178,7 +178,7 @@ class Login extends React.Component {
                             <InputGroup className="input-group-alternative">
                               <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
-                                  <i className="tim-icons icon-lock-circle" />
+                                  <i className="ni ni-lock-circle-open text-primary" />
                                 </InputGroupText>
                               </InputGroupAddon>
                               <Input

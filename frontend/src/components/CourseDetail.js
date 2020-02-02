@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 // import Vertical from "./Vertical" 
 import LessonNav from './LessonNav';
 import LessonDetail from './LessonDetail';
-import AdminNavbar from './AdminNavbar';
+import AdminNavbar from './TopNavBar';
 import SimpleFooter from "./SimpleFooter.jsx";
 
 import { Container, Row, Col } from 'reactstrap/lib';

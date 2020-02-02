@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import Sidebar from '../components/Sidebar/Sidebar'
-import { Route, Switch } from "react-router-dom";
+// import Sidebar from '../components/Sidebar/Sidebar'
+import {  Switch } from "react-router-dom";
 import Container from 'reactstrap/lib/Container';
 import AddLesson from './AddLesson';
 import Index from "./Index.jsx";
 import AddCourse from '../components/AddCourse';
 import AddCategory from '../components/AddCategory';
-import AdminNavbar from "../components/Navbars/AdminNavbar";
-import AdminFooter from "../components/Footers/AdminFooter";
+// import AdminNavbar from "../components/Navbars/AdminNavbar";
+// import AdminFooter from "../components/Footers/AdminFooter";
 import Profile from "../components/ProfilePage";
 import TutorCourses from "../components/TutorCourses";
 import NoMatch from './NoMatch';
@@ -16,6 +16,14 @@ import CategoryDetail from '../components/CategoryDetail';
 import { UserConsumer } from '../UserContext';
 import { ProtectedRoute } from '../protected.route';
 
+import "../assets/vendor/nucleo/css/nucleo.css";
+import "../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css";
+import "../assets/scss/argon-dashboard-react.scss";
+
+// core components
+import AdminNavbar from "../components/Navbars/AdminNavbar.jsx";
+import AdminFooter from "../components/Footers/AdminFooter.jsx";
+import Sidebar from '../components/Sidebar/Sidebar';
 export class Admin extends Component {
 
     render() {

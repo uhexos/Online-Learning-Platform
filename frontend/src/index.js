@@ -8,7 +8,7 @@ import './assets/css/argon-design-system-react.min.css';
 import './custom.css'
 
 import "./assets/vendor/nucleo/css/nucleo.css";
-// import "./assets/vendor/@fortawesome/fontawesome-free/css/all.min.css";
+import "./assets/vendor/@fortawesome/fontawesome-free/css/all.min.css";
 // import "./assets/scss/argon-dashboard-react.scss";
 
 
