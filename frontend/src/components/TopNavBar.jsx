@@ -51,7 +51,7 @@ const TopNavBar = props => {
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={RRNavLink} to="/courses/" onClick={toggle}>My Courses</NavLink>
+              <NavLink tag={RRNavLink} to="/mycourses/" onClick={toggle}>My Courses</NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>

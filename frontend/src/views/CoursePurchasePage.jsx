@@ -63,7 +63,6 @@ export class CoursePurchasePage extends Component {
           <h5>Loading details ...</h5>
         ) : (
           <Container fluid>
-            {console.log(this.state.course)}
             <Row>
               <Col lg="3">
                 <Card className="mt-4 shadow ">

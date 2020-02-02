@@ -131,15 +131,11 @@ class CoursesList extends React.Component {
                           </CardTitle>
 
                           <Row>
-                            <Col xs="9" md="8" >
+                            <Col>
                               <Link to={`/courses/${item.id}/lessons/0`}>
-                                <Button color="primary">View Course </Button>
+                                <Button color="primary" block>View Course </Button>
                               </Link>
                             </Col>
-                            <Col xs="3" md="4" className="text-right">
-                              <Button color="link" onClick={()=> this.addToCart(item.id)}><i className="fa fa-cart-plus fa-lg"></i></Button>
-                            </Col>
-
                           </Row>
 
                         </CardBody>

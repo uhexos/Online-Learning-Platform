@@ -126,18 +126,21 @@ class CoursesList extends React.Component {
                         <CardImg top src={item.thumbnail} alt="course thumbnail" />
                         <CardBody>
                           <CardTitle>
-                            <h5>{item.title}</h5>
+                            <h4>{item.title}</h4>
+                            <h5 className="text-warning">
+                              ${item.price}
+                            </h5>
                             <p><span>By </span>{item.owner.username}</p>
                           </CardTitle>
 
                           <Row>
                             <Col xs="9" md="8" >
                               <Link to={`/courses/purchase/${item.id}`}>
-                                <Button color="primary">Buy Course </Button>
+                                <Button color="primary">Learn More... </Button>
                               </Link>
                             </Col>
                             <Col xs="3" md="4" className="text-right">
-                              <Button color="link" onClick={()=> this.addToCart(item.id)}><i className="fa fa-cart-plus fa-lg"></i></Button>
+                              <Button color="link" onClick={() => this.addToCart(item.id)}><i className="fa fa-cart-plus fa-lg"></i></Button>
                             </Col>
 
                           </Row>
