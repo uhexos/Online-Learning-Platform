@@ -36,10 +36,10 @@ export class CourseAccordian extends Component {
   render() {
     return (
       <Accordion allowZeroExpanded className="my-4  card shadow">
-        {this.state.lessons.map(lesson => (
+        {this.state.lessons.map((lesson,index) => (
           <AccordionItem className="card" key={lesson.id}>
             <AccordionItemHeading className="card-header">
-              <AccordionItemButton> {lesson.title}</AccordionItemButton>
+              <AccordionItemButton>Lesson {index}: {lesson.title}</AccordionItemButton>
             </AccordionItemHeading>
             <AccordionItemPanel className="card-body">
               <p>{lesson.description}</p>

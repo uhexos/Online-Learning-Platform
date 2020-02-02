@@ -9,7 +9,7 @@ import CardTitle from "reactstrap/lib/CardTitle";
 import CardText from "reactstrap/lib/CardText";
 import Button from "reactstrap/lib/Button";
 import CourseAccordian from "../components/CourseAccordian";
-import TopNavBar from "./TopNavBar.jsx"
+import TopNavBar from "../components/TopNavBar.jsx"
 export class CoursePurchasePage extends Component {
   state = { isLoaded: false, error: null, course: null };
   componentDidMount() {
@@ -36,6 +36,25 @@ export class CoursePurchasePage extends Component {
         }
       );
   }
+  addToCart = (id) => {
+    // TODO add animations or an alert that show it was added successfully
+    let formdata = new FormData();
+    formdata.append("course", parseInt(id));
+    fetch("http://localhost:8000/api/cart/add/", {
+      method: "POST",
+      body: formdata,
+      headers: {
+        Authorization: `JWT ${localStorage.getItem("token")}`
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          console.log('successfully added to cart')
+        }
+        return res.json();
+      })
+
+  }
   render() {
     return (
       <>
@@ -61,8 +80,8 @@ export class CoursePurchasePage extends Component {
                       <li>Priority email support</li>
                       <li>Life time <i className="fa fa-universal-access" aria-hidden="true"></i></li>
                     </ul>
-                    <Button color="danger" size="lg" block>
-                      Buy Course
+                    <Button color="danger" size="lg" block onClick={()=> this.addToCart(this.state.course.id)}>
+                      Add to Cart
                     </Button>
                   </CardBody>
                 </Card>
@@ -79,10 +98,10 @@ export class CoursePurchasePage extends Component {
                       <CardTitle>
                         <h3>{this.state.course.title}</h3>
                         <small className="text-muted">
-                          Instructor:{" "}
+                          Instructor:
                           {this.state.course.owner.first_name +
                             " " +
-                            this.state.course.owner.last_name}
+                            this.state.course.owner.last_name && this.state.course.owner.username}
                         </small>
                       </CardTitle>
                       <h4 className="text-warning">
@@ -93,7 +112,7 @@ export class CoursePurchasePage extends Component {
                       <span className="text-warning">★ ★ ★ ★ ☆ </span>
                       rating 
                     </CardTitle>
-                    <CourseAccordian courseID={this.props.match.params.id} />
+                    <CourseAccordian courseID={this.state.course.id} />
                   </CardBody>
                 </Card>
                 {/* <!-- /.card --> */}

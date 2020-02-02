@@ -132,7 +132,7 @@ class CoursesList extends React.Component {
 
                           <Row>
                             <Col xs="9" md="8" >
-                              <Link to={`/courses/${item.id}/lessons/0`}>
+                              <Link to={`/courses/purchase/${item.id}`}>
                                 <Button color="primary">Buy Course </Button>
                               </Link>
                             </Col>
