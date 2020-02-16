@@ -10,6 +10,7 @@ import CardText from "reactstrap/lib/CardText";
 import Button from "reactstrap/lib/Button";
 import CourseAccordian from "../components/CourseAccordian";
 import TopNavBar from "../components/TopNavBar.jsx"
+import Comments from "./Comments";
 export class CoursePurchasePage extends Component {
   state = { isLoaded: false, error: null, course: null };
   componentDidMount() {
@@ -58,107 +59,73 @@ export class CoursePurchasePage extends Component {
   render() {
     return (
       <>
-      <TopNavBar/>
+        <TopNavBar />
         {!this.state.isLoaded ? (
           <h5>Loading details ...</h5>
         ) : (
-          <Container fluid>
-            <Row>
-              <Col lg="3">
-                <Card className="mt-4 shadow ">
-                  {/* <CardHeader>
+            <Container fluid>
+              <Row>
+                <Col lg="3">
+                  <Card className="mt-4 shadow ">
+                    {/* <CardHeader>
                 <h4 className="my-0 text-center font-weight-normal">Pro</h4>
               </CardHeader> */}
-                  <CardBody>
-                    <CardTitle>
-                      <h1 className="card-title text-center pricing-card-title">
-                        ${this.state.course.price}
-                      </h1>
-                    </CardTitle>
-                    <ul className="list-unstyled text-center mt-3 mb-4">
-                      <li>Priority email support</li>
-                      <li>Life time <i className="fa fa-universal-access" aria-hidden="true"></i></li>
-                    </ul>
-                    <Button color="danger" size="lg" block onClick={()=> this.addToCart(this.state.course.id)}>
-                      Add to Cart
-                    </Button>
-                  </CardBody>
-                </Card>
-              </Col>
-              <Col lg="9">
-                <Card className="mt-4 shadow">
-                  <img
-                    className="card-img-top img-fluid"
-                    src="http://placehold.it/900x400"
-                    alt=""
-                  />
-                  <CardBody>
-                    <CardTitle>
+                    <CardBody>
                       <CardTitle>
-                        <h3>{this.state.course.title}</h3>
-                        <small className="text-muted">
-                          Instructor:
-                          {this.state.course.owner.first_name +
-                            " " +
-                            this.state.course.owner.last_name && this.state.course.owner.username}
-                        </small>
+                        <h1 className="card-title text-center pricing-card-title">
+                          ${this.state.course.price}
+                        </h1>
                       </CardTitle>
-                      <h4 className="text-warning">
-                        ${this.state.course.price}
-                      </h4>
-                      <CardText>{this.state.course.description}</CardText>
-                      {/* TODO implement */}
-                      <span className="text-warning">★ ★ ★ ★ ☆ </span>
-                      rating 
+                      <ul className="list-unstyled text-center mt-3 mb-4">
+                        <li>Priority email support</li>
+                        <li>Life time <i className="fa fa-universal-access" aria-hidden="true"></i></li>
+                      </ul>
+                      <Button color="danger" size="lg" block onClick={() => this.addToCart(this.state.course.id)}>
+                        Add to Cart
+                    </Button>
+                    </CardBody>
+                  </Card>
+                </Col>
+                <Col lg="9">
+                  <Card className="mt-4 shadow">
+                    <img
+                      className="card-img-top img-fluid"
+                      src="http://placehold.it/900x400"
+                      alt=""
+                    />
+                    <CardBody>
+                      <CardTitle>
+                        <CardTitle>
+                          <h3>{this.state.course.title}</h3>
+                          <small className="text-muted">
+                            Instructor:
+                          {this.state.course.owner.first_name +
+                              " " +
+                              this.state.course.owner.last_name && this.state.course.owner.username}
+                          </small>
+                        </CardTitle>
+                        <h4 className="text-warning">
+                          ${this.state.course.price}
+                        </h4>
+                        <CardText>{this.state.course.description}</CardText>
+                        {/* TODO implement */}
+                        <span className="text-warning">★ ★ ★ ★ ☆ </span>
+                        rating
                     </CardTitle>
-                    <CourseAccordian courseID={this.state.course.id} />
-                  </CardBody>
-                </Card>
-                {/* <!-- /.card --> */}
-                 {/* TODO implement comments stuff */}
-                <Card className="my-4 shadow">
-                  <CardHeader>Product Reviews</CardHeader>
-                  <CardBody>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Omnis et enim aperiam inventore, similique necessitatibus
-                      neque non! Doloribus, modi sapiente laboriosam aperiam
-                      fugiat laborum. Sequi mollitia, necessitatibus quae sint
-                      natus.
-                    </p>
-                    <small className="text-muted">
-                      Posted by Anonymous on 3/1/17
-                    </small>
-                    <hr />
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Omnis et enim aperiam inventore, similique necessitatibus
-                      neque non! Doloribus, modi sapiente laboriosam aperiam
-                      fugiat laborum. Sequi mollitia, necessitatibus quae sint
-                      natus.
-                    </p>
-                    <small className="text-muted">
-                      Posted by Anonymous on 3/1/17
-                    </small>
-                    <hr />
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Omnis et enim aperiam inventore, similique necessitatibus
-                      neque non! Doloribus, modi sapiente laboriosam aperiam
-                      fugiat laborum. Sequi mollitia, necessitatibus quae sint
-                      natus.
-                    </p>
-                    <small className="text-muted">
-                      Posted by Anonymous on 3/1/17
-                    </small>
-                    <hr />
-                    <button className="btn btn-success">Leave a Review</button>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
-          </Container>
-        )}
+                      <CourseAccordian courseID={this.state.course.id} />
+                    </CardBody>
+                  </Card>
+                  {/* <!-- /.card --> */}
+                  {/* TODO implement comments stuff */}
+                  <Card className="my-4 shadow">
+                    <CardBody className="">
+                      <Comments url={`http://localhost:8000/api/courses/${this.props.match.params.id}/`} article_id={this.props.match.params.id} article_title={this.state.course.title}></Comments>
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
+            </Container>
+          )}
       </>
     );
   }

@@ -63,17 +63,6 @@ class EnrolledCourses(models.Model):
     course = models.ForeignKey('Course', on_delete=models.CASCADE)
 
 
-class Comments(models.Model):
-    text = models.TextField()
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL,
-                              on_delete=models.CASCADE)
-    lesson = models.ForeignKey('Lesson', on_delete=models.CASCADE)
-    date = models.DateField()
-
-    def __str__(self):
-        return self.text
-
-
 class CustomUser(AbstractUser):
     is_tutor = models.BooleanField(default=False, null=True)
     about = models.TextField(null=True, blank=True)

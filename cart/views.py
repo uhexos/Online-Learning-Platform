@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from courses.models import Course
 from .cart_exceptions import ItemAlreadyExists
 
-
+ 
 class CartList(generics.CreateAPIView):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer

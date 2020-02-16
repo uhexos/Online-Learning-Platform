@@ -7,6 +7,7 @@
     "@ckeditor/ckeditor5-react": "^2.0.0",
     "axios": "^0.19.0",
     "chart.js": "^2.9.3",
+    "disqus-react": "^1.0.7",
     "node-sass": "^4.13.0",
     "perfect-scrollbar": "^1.4.0",
     "react": "^16.12.0",
