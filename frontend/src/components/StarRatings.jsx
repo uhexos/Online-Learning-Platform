@@ -24,7 +24,7 @@ export class StarRatings extends Component {
     createStars = (numberOfStars) => {
         let stars = []
         for (var i = 0; i < Math.floor(numberOfStars); i++) {
-            stars.push(<i class="fa fa-star" key={i} aria-hidden="true"></i>)
+            stars.push(<i class="fa fa-star text-warning" key={i} aria-hidden="true"></i>)
         }
         // check for remainder and print half star to represent it
         if (numberOfStars - Math.floor(numberOfStars) != 0) {
@@ -76,7 +76,7 @@ export class StarRatings extends Component {
 
     render() {
         return (
-            <div>
+            <div className="py-2">
                 {this.createStars(this.props.stars)}
                 <>
                     {/* Button trigger modal */}

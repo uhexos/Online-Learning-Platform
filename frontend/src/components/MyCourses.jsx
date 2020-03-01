@@ -6,6 +6,7 @@ import Col from 'reactstrap/lib/Col';
 import { Link } from 'react-router-dom';
 import TopNavBar from './TopNavBar';
 import SimpleFooter from './SimpleFooter';
+import StarRatings from './StarRatings';
 
 // this will serve as the explore page check mycourses.jsx for new courses page 
 function isSearched(searchTerm) {
@@ -128,8 +129,8 @@ class CoursesList extends React.Component {
                           <CardTitle>
                             <h5>{item.title}</h5>
                             <p><span>By </span>{item.owner.username}</p>
+                            <StarRatings stars={item.rating.score__avg} course_id={item.id}/>
                           </CardTitle>
-
                           <Row>
                             <Col>
                               <Link to={`/courses/${item.id}/lessons/0`}>
