@@ -6,18 +6,18 @@ TODO make homepage
 make all courses page -- done 
 make single course page -- done
 
-make User profile page
-build user serialiser and api endpoints
-setup video uploads
+make User profile page --done
+build user serialiser and api endpoints --done
+setup video uploads --done
 
 find admin template -- done creativetim black admin dash
-integrate admin template
+integrate admin template --done
 
-find video player 
-integrate video player 
+find video player --skipped
+integrate video player --skipped
 
-find conversion library (ffmpeg)
-integrate conversion library 
+find conversion library (ffmpeg) --skipped
+integrate conversion library --skipped
 
 make course detail page 
     fix side bar --done
@@ -26,7 +26,7 @@ make course detail page
     render out the html --done
 
 setup route to explore -- done 
-setup route to my courses
+setup route to my courses --done
 
 Critical**** fix bug where videos dont get deleted from the folder if they are changed 
 ensure all media gets deleted as appropriate.

@@ -83,3 +83,11 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         return CustomUser.objects.get(id=self.request.user.id)
+
+class CourseRatingCreateView(generics.CreateAPIView):
+    serializer_class = CourseRatingSerializer
+    queryset = CourseRating.objects.all()
+
+    def perform_create(self, serializer):
+        course = Course.objects.get(id=self.kwargs['pk'])
+        serializer.save(owner=self.request.user, course=course)

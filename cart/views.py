@@ -25,6 +25,7 @@ class CartDetail(generics.RetrieveAPIView):
 
     def get_object(self):
         queryset = self.get_queryset().filter(owner=self.request.user)
+        # TODO find a way to trigger cart/new if user cart doesnt exist already 
         obj = get_object_or_404(queryset)
         self.check_object_permissions(self.request, obj)
         return obj

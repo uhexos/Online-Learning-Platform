@@ -4,7 +4,9 @@ from datetime import date
 from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
-# TODO use imagekit to resize thumbnail upon upload 
+# TODO use imagekit to resize thumbnail upon upload
+
+
 class Course(models.Model):
     title = models.CharField(max_length=150, help_text='Enter course title')
     owner = models.ForeignKey(
@@ -18,10 +20,9 @@ class Course(models.Model):
     category = models.ForeignKey(
         'Category', on_delete=models.CASCADE, related_name='category')
     is_live = models.BooleanField(default=0)
-    rating = models.IntegerField(default=0)
     thumbnail = models.ImageField(
-        help_text='Enter course thumbnail', null=True, upload_to='course_thumbnails',default='default_course_img.jpg')
-    price = models.DecimalField(null=False,max_digits=8, decimal_places=2)
+        help_text='Enter course thumbnail', null=True, upload_to='course_thumbnails', default='default_course_img.jpg')
+    price = models.DecimalField(null=False, max_digits=8, decimal_places=2)
 
     def __str__(self):
         return self.title
@@ -71,3 +72,10 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
+
+
+class CourseRating(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
+    course = models.ForeignKey('Course', on_delete=models.CASCADE,related_name="rating")
+    score = models.IntegerField(default=0)
