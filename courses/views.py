@@ -84,6 +84,7 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         return CustomUser.objects.get(id=self.request.user.id)
 
+
 class CourseRatingCreateView(generics.CreateAPIView):
     serializer_class = CourseRatingSerializer
     queryset = CourseRating.objects.all()
@@ -91,3 +92,16 @@ class CourseRatingCreateView(generics.CreateAPIView):
     def perform_create(self, serializer):
         course = Course.objects.get(id=self.kwargs['pk'])
         serializer.save(owner=self.request.user, course=course)
+
+
+# post rating if no previous vote
+class CourseRatingDetailsView(generics.RetrieveUpdateAPIView):
+    serializer_class = CourseRatingSerializer
+    queryset = CourseRating.objects.all()
+
+    def get_object(self):
+       # GET PK FROM URL USING KWARGS TO URL DEFINTIIION
+        course_pk = self.kwargs['pk']
+        owner = self.request.user
+        return CourseRating.objects.get(course=course_pk, owner=owner)
+# put rating if previous vote

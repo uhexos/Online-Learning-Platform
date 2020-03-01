@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import CourseRatingCreateView, UserProfileView, CategoryList,CategoryDetail,CourseList,CourseDetail,LessonDetail,LessonList,CustomUserList,CustomUserDetail
+from .views import CourseRatingDetailsView, CourseRatingCreateView, UserProfileView, CategoryList,CategoryDetail,CourseList,CourseDetail,LessonDetail,LessonList,CustomUserList,CustomUserDetail
 
 
 urlpatterns = [
@@ -12,5 +12,6 @@ urlpatterns = [
     path('users/', CustomUserList.as_view(),name='user-list'),
     path('users/<int:pk>/', CustomUserDetail.as_view(),name='user-detail'),
     path('profile/', UserProfileView.as_view(),name='user-profile'),
-    path('courses/<int:pk>/rating/', CourseRatingCreateView.as_view(),name='user-rating'),
+    path('courses/<int:pk>/rating/new/', CourseRatingCreateView.as_view(),name='user-rating'),
+    path('courses/<int:pk>/rating/', CourseRatingDetailsView.as_view(),name='user-rating-detail'),
 ]

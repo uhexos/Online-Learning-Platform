@@ -75,7 +75,14 @@ class CustomUser(AbstractUser):
 
 
 class CourseRating(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.CASCADE)
-    course = models.ForeignKey('Course', on_delete=models.CASCADE,related_name="rating")
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL,
+                              on_delete=models.CASCADE)
+    course = models.ForeignKey(
+        'Course', on_delete=models.CASCADE, related_name="rating")
     score = models.IntegerField(default=0)
+
+    class Meta:
+        unique_together = ('owner', 'course',)
+
+    def __str__(self):
+        return self.score

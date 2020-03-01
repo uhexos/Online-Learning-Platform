@@ -11,6 +11,7 @@ import Button from "reactstrap/lib/Button";
 import CourseAccordian from "../components/CourseAccordian";
 import TopNavBar from "../components/TopNavBar.jsx"
 import Comments from "./Comments";
+import StarRatings from "../components/StarRatings";
 export class CoursePurchasePage extends Component {
   state = { isLoaded: false, error: null, course: null };
   componentDidMount() {
@@ -37,18 +38,7 @@ export class CoursePurchasePage extends Component {
         }
       );
   }
-  createStars = () =>{
-    let stars = []
-    for(var i = 0; i <  Math.floor(this.state.course.rating.score__avg); i++){
-      console.log('making',  this.state.course.rating.score__avg)
-      stars.push(<i class="fa fa-star" key={i} aria-hidden="true"></i>)
-    }
-    // check for remainder and print half star to represent it
-    if (this.state.course.rating.score__avg - Math.floor(this.state.course.rating.score__avg) != 0){
-      stars.push(<i class="fa fa-star-half" key={i} aria-hidden="true"></i>)
-    } 
-    return stars
-  }
+ 
   addToCart = (id) => {
     // TODO add animations or an alert that show it was added successfully
     let formdata = new FormData();
@@ -121,7 +111,7 @@ export class CoursePurchasePage extends Component {
                         </h4>
                         <CardText>{this.state.course.description}</CardText>
                         {/* TODO implement */}
-                          <span className="text-warning">{this.createStars()}</span>
+                          <span className="text-warning"><StarRatings stars={this.state.course.rating.score__avg} course_id={this.props.match.params.id}/></span>
                         rating
                     </CardTitle>
                       <CourseAccordian courseID={this.state.course.id} />

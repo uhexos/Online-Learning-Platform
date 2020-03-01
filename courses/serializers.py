@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import *
 from django.db.models import Avg
+from rest_framework.validators import UniqueTogetherValidator
 
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -37,17 +38,18 @@ class CategorySerializer(serializers.ModelSerializer):
         # fields = ['id', 'title', 'create_date']
         fields = '__all__'
 
+
 class CourseRatingSerializer(serializers.ModelSerializer):
     owner = serializers.PrimaryKeyRelatedField(read_only=True)
     course = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = CourseRating
-        fields = ['rating','course','owner']
+        fields = ['score', 'course', 'owner']
+
 
 class CourseSerializer(serializers.ModelSerializer):
     lessons = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-    # owner = serializers.PrimaryKeyRelatedField(read_only=True)
     owner = CustomUserSerializer(read_only=True)
     rating = serializers.SerializerMethodField()
 
@@ -62,8 +64,9 @@ class CourseSerializer(serializers.ModelSerializer):
         thumbnail_url = user_account.thumbnail.url
         return request.build_absolute_uri(thumbnail_url)
 
-    def get_rating(self,obj):
+    def get_rating(self, obj):
         return obj.rating.aggregate(Avg('score'))
+
 
 class LessonSerializer(serializers.ModelSerializer):
     owner = serializers.PrimaryKeyRelatedField(read_only=True)
@@ -72,5 +75,3 @@ class LessonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lesson
         fields = '__all__'
-
-
