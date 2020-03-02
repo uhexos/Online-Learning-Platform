@@ -12,6 +12,7 @@ import CourseAccordian from "../components/CourseAccordian";
 import TopNavBar from "../components/TopNavBar.jsx"
 import Comments from "./Comments";
 import StarRatings from "../components/StarRatings";
+
 export class CoursePurchasePage extends Component {
   state = { isLoaded: false, error: null, course: null };
   componentDidMount() {

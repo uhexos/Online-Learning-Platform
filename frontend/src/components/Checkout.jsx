@@ -1,11 +1,25 @@
+// doesnt work at at fix this mess
+
 import React, { Component } from 'react'
 import Container from 'reactstrap/lib/Container'
 import { Row, Col, Table, Button } from 'reactstrap'
 import AdminNavbar from './TopNavBar'
 import auth from '../auth'
-
+import { RaveProvider, RavePaymentButton } from "react-ravepayment";
+const config = {
+    txref: "",
+    customer_email: "",
+    amount: 0,
+    PBFPubKey: "FLWPUBK_TEST-8916fcc2b01e16ac3eb7d38fb4c9872c-X",
+    meta: [{
+        metaname: "cart",
+        metavalue: ""
+    }],
+    onSuccess: () => { },
+    onClose: () => { }
+};
 export class Checkout extends Component {
-    state = { cart: { items: [] }, total: 0 }
+    state = { cart: { items: [] }, total: 0, config: {} }
     componentDidMount() {
         fetch("http://localhost:8000/api/cart/", {
             method: "GET",
@@ -18,7 +32,16 @@ export class Checkout extends Component {
             .then(res => {
                 this.setState({ cart: res });
                 this.getTotalPrice()
+                let user = JSON.parse(localStorage.getItem('user'));
+                console.log(this.state.cart.items);
+                config.txref = `cart-${this.state.cart.id}-${user.id}`;
+                config.customer_email = user.email;
+                config.amount = this.state.total
+                config.meta[0].metavalue = this.state.cart.id;
+                config.onSuccess = () => this.verifyCheckout();
+                this.setState({ config: config })
             })
+
     }
     getTotalPrice = () => {
         let tmpPrice = 0.0;
@@ -36,15 +59,28 @@ export class Checkout extends Component {
             .then(res => auth.checkLoginstatus(res))
             .then(res => {
                 if (res.ok) {
-                    const cart = {...this.state.cart}
-                    const items = this.state.cart.items.filter(item=>item.id !== id);
+                    const cart = { ...this.state.cart }
+                    const items = this.state.cart.items.filter(item => item.id !== id);
                     cart.items = items;
                     // console.log("deleted",cart)
                     // console.log("undeleted",this.state.cart.items)
-                    this.setState({cart:cart});
+                    this.setState({ cart: cart });
                     this.getTotalPrice();
                 }
             })
+    }
+    verifyCheckout = () => {
+        let formData = new FormData()
+        formData.append('txref', this.state.config.txref)
+        fetch("http://localhost:8000/api/cart/verify/", {
+            method: 'post',
+            body: formData,
+            headers: {
+                authorization: `JWT ${localStorage.getItem('token')}`
+            }
+        })
+            .then(res => auth.checkLoginstatus(res))
+            .then(res => console.log("enrolled success"))
     }
 
     render() {
@@ -75,7 +111,7 @@ export class Checkout extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {this.state.cart.items.map((item,index) => (
+                                        {this.state.cart.items.map((item, index) => (
                                             <tr key={item.id}>
                                                 {/* {this.state.cart.total += item.course.price} */}
                                                 <th scope="row" className="border-0">
@@ -110,7 +146,11 @@ export class Checkout extends Component {
                                     <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Total</strong>
                                         <h5 className="font-weight-bold">${this.state.total}</h5>
                                     </li>
-                                </ul><a href="#" className="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</a>
+                                </ul>
+                                {/* <a href="#" className="btn btn-dark rounded-pill py-2 btn-block" onClick={this.completeCheckout}>Procceed to checkout</a> */}
+                                <RaveProvider {...this.state.config}>
+                                    <RavePaymentButton className="btn btn-dark rounded-pill py-2 btn-block">Pay</RavePaymentButton>
+                                </RaveProvider>
                             </div>
                         </Col>
                     </Row>

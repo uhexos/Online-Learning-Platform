@@ -4,7 +4,6 @@ from .models import *
 from .serializers import *
 from .permissions import IsOwnerOrReadOnly, IsSuperUser
 from rest_framework.views import APIView
-from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
 
@@ -105,3 +104,5 @@ class CourseRatingDetailsView(generics.RetrieveUpdateAPIView):
         owner = self.request.user
         return CourseRating.objects.get(course=course_pk, owner=owner)
 # put rating if previous vote
+
+# class VerifyPaymentView(api)

@@ -2,10 +2,15 @@ from rest_framework import generics, permissions
 from .models import *
 from .serializers import *
 from django.shortcuts import get_object_or_404
-from courses.models import Course
+from courses.models import Course,EnrolledCourses
 from .cart_exceptions import ItemAlreadyExists
+import requests
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from django.db.models import Sum
+from django.http import HttpResponse, JsonResponse
 
- 
+
 class CartList(generics.CreateAPIView):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
@@ -25,7 +30,7 @@ class CartDetail(generics.RetrieveAPIView):
 
     def get_object(self):
         queryset = self.get_queryset().filter(owner=self.request.user)
-        # TODO find a way to trigger cart/new if user cart doesnt exist already 
+        # TODO find a way to trigger cart/new if user cart doesnt exist already
         obj = get_object_or_404(queryset)
         self.check_object_permissions(self.request, obj)
         return obj
@@ -54,3 +59,34 @@ class ItemCreate(generics.ListCreateAPIView):
 class ItemDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
+
+
+class VerifyPaymentView(APIView):
+    def post(self, request, format=None):
+        data = {
+            # this is the reference from the payment button response after customer paid.
+            "txref": request.data['txref'],
+            # this is the secret key of the pay button generated
+            "SECKEY": "FLWSECK_TEST-e853b5a5070cf5635c15276446b26aed-X"
+        }
+        url = "https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/verify"
+        response = requests.post(url, data=data)
+        response = response.json()
+        if response['status'] == 'success':
+          # confirm that the amount for that transaction is the amount you wanted to charge
+            if response['data']['chargecode'] == '00':
+                sum = Cart.objects.filter(id=response['data']['meta'][0]['metavalue']).aggregate(
+                    Sum('items__course__price'))
+                if response['data']['amount'] >= sum['items__course__price__sum']:
+                    print("Payment successful then give value")
+                    cart = Cart.objects.get(id=response['data']['meta'][0]['metavalue'])
+                    items = cart.items.all()
+                    for item in items:
+                        print("**1")
+                        course = Course.objects.get(id = item.course_id)
+                        enrolled = EnrolledCourses(
+                            user=self.request.user, course=course)
+                        enrolled.save()
+                    return HttpResponse(status=200)
+
+        return HttpResponse(status=400)
