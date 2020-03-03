@@ -61,7 +61,7 @@ class Category(models.Model):
 class EnrolledCourses(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
-    course = models.ForeignKey('Course', on_delete=models.CASCADE)
+    course = models.ForeignKey('Course', on_delete=models.CASCADE,related_name="bought_courses")
 
 
 class CustomUser(AbstractUser):

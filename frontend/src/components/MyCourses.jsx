@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import TopNavBar from './TopNavBar';
 import SimpleFooter from './SimpleFooter';
 import StarRatings from './StarRatings';
+import auth from '../auth';
 
 // this will serve as the explore page check mycourses.jsx for new courses page 
 function isSearched(searchTerm) {
@@ -30,12 +31,13 @@ class CoursesList extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:8000/api/courses", {
+    fetch("http://localhost:8000/api/courses/bought", {
       method: "GET",
       headers: {
         Authorization: `JWT ${localStorage.getItem("token")}`
       }
     })
+    .then(res => auth.checkLoginstatus(res))
       .then(res => {
         if (!res.ok) {
           throw Error(res.statusText);
@@ -48,6 +50,7 @@ class CoursesList extends React.Component {
             isLoaded: true,
             items: result
           });
+          console.log('item',this.state.items)
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
@@ -71,25 +74,7 @@ class CoursesList extends React.Component {
     this.setState({ searchTerm: event.target.value });
   }
 
-  addToCart = (id) => {
-    // TODO add animations or an alert that show it was added successfully
-    let formdata = new FormData();
-    formdata.append("course", parseInt(id));
-    fetch("http://localhost:8000/api/cart/add/", {
-      method: "POST",
-      body: formdata,
-      headers: {
-        Authorization: `JWT ${localStorage.getItem("token")}`
-      }
-    })
-      .then(res => {
-        if (!res.ok) {
-          console.log('successfully added to cart')
-        }
-        return res.json();
-      })
-
-  }
+  
   render() {
     const { error, isLoaded, items } = this.state;
     if (error) {

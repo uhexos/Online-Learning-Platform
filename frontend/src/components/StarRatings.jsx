@@ -24,11 +24,11 @@ export class StarRatings extends Component {
     createStars = (numberOfStars) => {
         let stars = []
         for (var i = 0; i < Math.floor(numberOfStars); i++) {
-            stars.push(<i class="fa fa-star text-warning" key={i} aria-hidden="true"></i>)
+            stars.push(<i className="fa fa-star text-warning" key={i} aria-hidden="true"></i>)
         }
         // check for remainder and print half star to represent it
         if (numberOfStars - Math.floor(numberOfStars) != 0) {
-            stars.push(<i class="fa fa-star-half" key={i} aria-hidden="true"></i>)
+            stars.push(<i className="fa fa-star-half text-warning" key={6} aria-hidden="true"></i>)
         }
         return stars
     }
@@ -44,8 +44,9 @@ export class StarRatings extends Component {
                 'Authorization': `JWT ${localStorage.getItem("token")}`,
             }
         })
-        .then(res => auth.checkLoginstatus(res))
-        .then(res => res.json())
+            .then(res => auth.checkLoginstatus(res))
+            .then(res => res.json())
+        this.toggleModal("exampleModal")
     }
 
     updateRating = () => {
@@ -59,8 +60,10 @@ export class StarRatings extends Component {
                 'Authorization': `JWT ${localStorage.getItem("token")}`,
             }
         })
-        .then(res => auth.checkLoginstatus(res))
-        .then(res => res.json())
+            .then(res => auth.checkLoginstatus(res))
+            .then(res => res.json())
+            .then(res => console.log(res))
+        this.toggleModal("exampleModal")
     }
     componentDidMount = () => {
         fetch(`http://localhost:8000/api/courses/${this.props.course_id}/rating/`, {
@@ -80,14 +83,23 @@ export class StarRatings extends Component {
                 {this.createStars(this.props.stars)}
                 <>
                     {/* Button trigger modal */}
-                    <Button
-                        color="warning"
-                        type="button"
-                        size="sm"
-                        onClick={() => this.toggleModal("exampleModal")}
-                    >
-                        Rate
-        </Button>
+                    {this.state.user_rating ?
+                        (<Button
+                            color="warning"
+                            type="button"
+                            size="sm"
+                            onClick={() => this.toggleModal("exampleModal")}
+                        >
+                            Rated
+                    </Button>) : (<Button
+                            color="warning"
+                            type="button"
+                            size="sm"
+                            onClick={() => this.toggleModal("exampleModal")}
+                        >
+                            Rate
+        </Button>)}
+
                     {/* Modal */}
                     <Modal
                         className="modal-dialog-centered"

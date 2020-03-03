@@ -5,7 +5,8 @@ from .serializers import *
 from .permissions import IsOwnerOrReadOnly, IsSuperUser
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
-
+from django.db.models import Q
+from django.http import Http404
 
 class CategoryList(generics.ListCreateAPIView):
     queryset = Category.objects.all()
@@ -20,6 +21,10 @@ class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
 class CourseList(generics.ListCreateAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
+
+    def get_queryset(self):
+        #return only items that the user hasnt already purchased the ~Q is used for negation here.
+        return Course.objects.filter(~Q(bought_courses__user=self.request.user))
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -102,7 +107,17 @@ class CourseRatingDetailsView(generics.RetrieveUpdateAPIView):
        # GET PK FROM URL USING KWARGS TO URL DEFINTIIION
         course_pk = self.kwargs['pk']
         owner = self.request.user
-        return CourseRating.objects.get(course=course_pk, owner=owner)
+        try:
+            obj = CourseRating.objects.get(course=course_pk, owner=owner)
+        except CourseRating.DoesNotExist:
+            raise Http404("No MyModel matches the given query.")
+        return obj
 # put rating if previous vote
 
-# class VerifyPaymentView(api)
+
+class BoughtCoursesList(generics.ListAPIView):
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+
+    def get_queryset(self):
+        return Course.objects.filter(bought_courses__user=self.request.user)

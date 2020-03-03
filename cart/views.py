@@ -61,7 +61,7 @@ class ItemDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class VerifyPaymentView(APIView):
-    # TODO remember to add a way of removing old carts either delete em or add a field that indocates used which ever is easier.
+    # TODO prevent users from buying the same item twice
     def post(self, request, format=None):
         data = {
             # this is the reference from the payment button response after customer paid.
