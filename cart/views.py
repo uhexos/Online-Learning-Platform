@@ -30,7 +30,6 @@ class CartDetail(generics.RetrieveAPIView):
 
     def get_object(self):
         queryset = self.get_queryset().filter(owner=self.request.user)
-        # TODO find a way to trigger cart/new if user cart doesnt exist already
         obj = get_object_or_404(queryset)
         self.check_object_permissions(self.request, obj)
         return obj
@@ -62,6 +61,7 @@ class ItemDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class VerifyPaymentView(APIView):
+    # TODO remember to add a way of removing old carts either delete em or add a field that indocates used which ever is easier.
     def post(self, request, format=None):
         data = {
             # this is the reference from the payment button response after customer paid.
@@ -87,6 +87,7 @@ class VerifyPaymentView(APIView):
                         enrolled = EnrolledCourses(
                             user=self.request.user, course=course)
                         enrolled.save()
+                    items.delete()
                     return HttpResponse(status=200)
 
         return HttpResponse(status=400)

@@ -24,7 +24,6 @@ class Item(models.Model):
     cart = models.ForeignKey(Cart, verbose_name=_(
         'cart'), on_delete=models.CASCADE, related_name='items')
     quantity = models.PositiveIntegerField(verbose_name=_('quantity'))
-    # product as generic relation
     course = models.ForeignKey(
         Course, on_delete=models.CASCADE)
 

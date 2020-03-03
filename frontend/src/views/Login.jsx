@@ -39,6 +39,7 @@ import Alert from "reactstrap/lib/Alert";
 import TopNavBar from '../components/TopNavBar';
 import SimpleFooter from '../components/SimpleFooter';
 import UserContext, { UserConsumer } from "../UserContext";
+import auth from "../auth";
 
 class Login extends React.Component {
   state = { loginError: false };
@@ -67,6 +68,19 @@ class Login extends React.Component {
         context.updateValue('isLoggedIn', true);
       });
   }
+
+  prepCart = () => {
+    // this function atrempts to create a cart for the user as soon as the user logs in 
+    // logic in the back prevents duplicate carts from being created for a user.
+    fetch("http://localhost:8000/api/cart/new/", {
+      method: "POST",
+      headers: {
+        authorization: `JWT ${localStorage.getItem('token')}`
+      }
+    })
+      .then(res => auth.checkLoginstatus(res))
+      .then(res => res.json())
+  }
   //user arrow functions to autobind component to this, setState wont work if you dont use arrow syntax
   userLogin = () => {
     //take user auth from the form and store our jwt token into local storage
@@ -74,8 +88,8 @@ class Login extends React.Component {
     let password = document.getElementById("password").value;
     // const data = { username: username, password: password };
     let formdata = new FormData()
-    formdata.append('username',username);
-    formdata.append('password',password);
+    formdata.append('username', username);
+    formdata.append('password', password);
     // TODO handle fetch errors and add feedback to form
     fetch(`http://127.0.0.1:8000/auth/`, {
       method: "POST",
@@ -94,6 +108,7 @@ class Login extends React.Component {
           localStorage.setItem('token', result.token);
           localStorage.setItem('username', username);
           this.getProfile();
+          this.prepCart();
           this.props.history.push(this.props.location.state ? this.props.location.state.from.pathname : `/courses/`);
           // this.props.history.push(this.props.location.state.from.pathname || `/courses/`);
         }
@@ -105,7 +120,6 @@ class Login extends React.Component {
       <UserConsumer>
         {(context) => (<>
           {/* {this.getProfile()} */}
-          {console.log(this.props.location)}
           <TopNavBar></TopNavBar>
           <main id="main">
             <section className="section section-shaped section-lg">
