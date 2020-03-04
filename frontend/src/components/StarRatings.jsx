@@ -122,7 +122,7 @@ export class StarRatings extends Component {
                         </div>
                         <div className="modal-body">
                             <Col sm={12}>
-                                <Input type="select" name="select" id="ratingdropdown">
+                                <Input type="select" className="custom-select" name="select" id="ratingdropdown">
                                     <option>1</option>
                                     <option>2</option>
                                     <option>3</option>

@@ -1,13 +1,22 @@
 import React from 'react';
-import { Card, CardImg, CardBody, CardTitle, Button, Input, InputGroup, InputGroupAddon, Spinner } from 'reactstrap';
+import { Card, CardImg, CardBody, CardTitle, Button, CardGroup } from 'reactstrap';
 import Container from 'reactstrap/lib/Container';
 import Row from 'reactstrap/lib/Row';
 import Col from 'reactstrap/lib/Col';
 import { Link } from 'react-router-dom';
 import TopNavBar from './TopNavBar';
 import SimpleFooter from './SimpleFooter';
+import StarRatings from './StarRatings';
+import auth from '../auth';
 
 // this will serve as the explore page check mycourses.jsx for new courses page 
+function isSearched(searchTerm) {
+  return function (item) {
+    return item.title.toLowerCase().includes(searchTerm.toLowerCase());
+  }
+}
+
+
 class CoursesList extends React.Component {
   constructor(props) {
     super(props);
@@ -15,17 +24,20 @@ class CoursesList extends React.Component {
       error: null,
       isLoaded: false,
       items: null,
-      showSearchSpinner: false
+      searchTerm: ''
     };
+    this.searchResult = this.searchResult.bind(this);
+    this.onSearchChange = this.onSearchChange.bind(this);
   }
 
   componentDidMount() {
-    fetch("http://localhost:8000/api/courses", {
+    fetch("http://localhost:8000/api/courses/bought", {
       method: "GET",
       headers: {
         Authorization: `JWT ${localStorage.getItem("token")}`
       }
     })
+    .then(res => auth.checkLoginstatus(res))
       .then(res => {
         if (!res.ok) {
           throw Error(res.statusText);
@@ -38,6 +50,7 @@ class CoursesList extends React.Component {
             isLoaded: true,
             items: result
           });
+          console.log('item',this.state.items)
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
@@ -51,60 +64,17 @@ class CoursesList extends React.Component {
       );
   }
 
-  searchCourses = () => {
-    this.setState({ showSearchSpinner: true })
-    let query = document.getElementById('search').value
-    fetch(`http://localhost:8000/api/courses/?search=${query}`, {
-      method: "GET",
-      headers: {
-        Authorization: `JWT ${localStorage.getItem("token")}`
-      }
-    })
-      .then(res => {
-        if (!res.ok) {
-          throw Error(res.statusText);
-        }
-        return res.json();
-      })
-      .then(
-        result => {
-          this.setState({
-            isLoaded: true,
-            items: result,
-            showSearchSpinner: false
-          });
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        error => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      );
+  searchResult(event) {
+    const isNotTitle = item => item.title !== event.target.value;
+    const updatedItems = this.state.items.filter(isNotTitle);
+    this.setState({ items: updatedItems });
   }
 
-  addToCart = (id) => {
-    // TODO add animations or an alert that show it was added successfully
-    let formdata = new FormData();
-    formdata.append("course", parseInt(id));
-    fetch("http://localhost:8000/api/cart/add/", {
-      method: "POST",
-      body: formdata,
-      headers: {
-        Authorization: `JWT ${localStorage.getItem("token")}`
-      }
-    })
-      .then(res => {
-        if (!res.ok) {
-          console.log('successfully added to cart')
-        }
-        return res.json();
-      })
-
+  onSearchChange(event) {
+    this.setState({ searchTerm: event.target.value });
   }
+
+  
   render() {
     const { error, isLoaded, items } = this.state;
     if (error) {
@@ -115,15 +85,10 @@ class CoursesList extends React.Component {
           <TopNavBar></TopNavBar>
           <Container>
             <Row className="mt-5">
-              <Col sm="12" md="6" lg="4">
-              {this.state.showSearchSpinner ? <Spinner color="primary" toggle /> : null}
-                <InputGroup>
-                  <Input type="text" placeholder="Search" id="search" />
-                  <InputGroupAddon addonType="append">
-                    <Button color="primary" onClick={this.searchCourses}><i className="fa fa-search" aria-hidden="true"></i></Button>
-                  </InputGroupAddon>
-                </InputGroup>
-
+              <Col sm="6">
+                <div style={{ marginLeft: '150px' }}>
+                  <input type="text" className="form-control" placeholder="search" onChange={this.onSearchChange} />
+                </div>
               </Col>
               {/* <Col sm="2">
                 <div style={{ marginLeft:'10px' }}>
@@ -141,29 +106,22 @@ class CoursesList extends React.Component {
           ) : (
               <Container>
                 <Row className="mt-5">
-                  {items.map(item => (
+                  {items.filter(isSearched(this.state.searchTerm)).map(item => (
                     <Col sm="6" md="4" key={item.id}>
                       <Card className="shadow mb-3">
                         <CardImg top src={item.thumbnail} alt="course thumbnail" />
                         <CardBody>
                           <CardTitle>
-                            <h4>{item.title}</h4>
-                            <h5 className="text-warning">
-                              ${item.price}
-                            </h5>
+                            <h5>{item.title}</h5>
                             <p><span>By </span>{item.owner.username}</p>
+                            <StarRatings stars={item.rating.score__avg} course_id={item.id}/>
                           </CardTitle>
-
                           <Row>
-                            <Col xs="9" md="8" >
-                              <Link to={`/courses/purchase/${item.id}`}>
-                                <Button color="primary">Learn More... </Button>
+                            <Col>
+                              <Link to={`/courses/${item.id}/lessons/0`}>
+                                <Button color="primary" block>View Course </Button>
                               </Link>
                             </Col>
-                            <Col xs="3" md="4" className="text-right">
-                              <Button color="link" onClick={() => this.addToCart(item.id)}><i className="fa fa-cart-plus fa-lg"></i></Button>
-                            </Col>
-
                           </Row>
 
                         </CardBody>

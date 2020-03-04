@@ -7,6 +7,9 @@ from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from django.http import Http404
+# from django.contrib.postgres.search import SearchVector
+from rest_framework import filters
+
 
 class CategoryList(generics.ListCreateAPIView):
     queryset = Category.objects.all()
@@ -21,9 +24,11 @@ class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
 class CourseList(generics.ListCreateAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['owner__username', 'title', 'description']
 
     def get_queryset(self):
-        #return only items that the user hasnt already purchased the ~Q is used for negation here.
+        # return only items that the user hasnt already purchased the ~Q is used for negation here.
         return Course.objects.filter(~Q(bought_courses__user=self.request.user))
 
     def perform_create(self, serializer):
