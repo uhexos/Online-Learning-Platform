@@ -114,7 +114,7 @@ class CoursesList extends React.Component {
                           <CardTitle>
                             <h5>{item.title}</h5>
                             <p><span>By </span>{item.owner.username}</p>
-                            <StarRatings stars={item.rating.score__avg} course_id={item.id}/>
+                            <StarRatings stars={item.rating.average} course_id={item.id}/>
                           </CardTitle>
                           <Row>
                             <Col>

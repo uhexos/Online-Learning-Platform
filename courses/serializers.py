@@ -65,7 +65,7 @@ class CourseSerializer(serializers.ModelSerializer):
         return request.build_absolute_uri(thumbnail_url)
 
     def get_rating(self, obj):
-        return obj.rating.aggregate(Avg('score'))
+        return obj.rating.aggregate(average=Avg('score'))
 
 
 class LessonSerializer(serializers.ModelSerializer):

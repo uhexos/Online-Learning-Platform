@@ -6,6 +6,7 @@ import Col from 'reactstrap/lib/Col';
 import { Link } from 'react-router-dom';
 import TopNavBar from './TopNavBar';
 import SimpleFooter from './SimpleFooter';
+import AdvancedSearch from './advancedSearch';
 
 // this will serve as the explore page check mycourses.jsx for new courses page 
 class CoursesList extends React.Component {
@@ -123,7 +124,7 @@ class CoursesList extends React.Component {
                     <Button color="primary" onClick={this.searchCourses}><i className="fa fa-search" aria-hidden="true"></i></Button>
                   </InputGroupAddon>
                 </InputGroup>
-
+                <AdvancedSearch/>
               </Col>
               {/* <Col sm="2">
                 <div style={{ marginLeft:'10px' }}>
