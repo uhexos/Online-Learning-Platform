@@ -1,23 +1,112 @@
 import React, { Component } from 'react'
-import { Collapse, Button, CardBody, Card } from 'reactstrap';
+import { Collapse, Button, CardBody, Card, Form, FormGroup, Label, Input, CustomInput } from 'reactstrap';
+import auth from '../auth';
 
 export class AdvancedSearch extends Component {
-    state = {isOpen:false}
+    state = { isOpen: false, categories: [] }
 
-    toggle = () => this.setState({isOpen:!this.state.isOpen});
+    toggle = () => this.setState({ isOpen: !this.state.isOpen });
+    searchCoursesAdvanced = () => {
+        let query = document.getElementById('search').value
+        let arr = [];
+        let max_price_element = document.getElementById('max_price');
+        let min_price_element = document.getElementById('min_price');
+        let category_element = document.getElementById('category');
+        let min_rating_element = document.getElementById('rating');
+
+        //make sure min is less than max before sending off 
+        if (parseFloat(min_price_element.value) > parseFloat(max_price_element.value)) {
+            console.log('swapping')
+            let temp = min_price_element.value;
+            min_price_element.value = max_price_element.value;
+            max_price_element.value = temp;
+        }
+
+        arr.push(max_price_element);
+        arr.push(min_price_element);
+        arr.push(category_element);
+        arr.push(min_rating_element);
+
+        let filters = "";
+        for (let index = 0; index < arr.length; index++) {
+            let item = arr[index];
+            if (item.value != "") {
+                filters += `${item.name}=${item.value}&`
+            }
+        }
+        let url = "";
+        url = query ? `http://localhost:8000/api/courses/?search=${query}&${filters}` : `http://localhost:8000/api/courses/?${filters}`
+        console.log(url)
+
+        fetch(url, {
+            method: "GET",
+            headers: {
+                Authorization: `JWT ${localStorage.getItem("token")}`
+            }
+        })
+            .then(res => auth.checkLoginstatus(res))
+            .then(res => res.json())
+            .then(res => this.props.updateItems(res))
+    }
+    componentDidMount() {
+        fetch('http://localhost:8000/api/categories', {
+            method: "get",
+            headers: {
+                authorization: `JWT ${localStorage.getItem('token')}`
+            }
+        })
+            .then(res => auth.checkLoginstatus(res))
+
+            .then(res => {
+                if (!res.ok) {
+                    return { test: "ok" };
+                }
+                return res.json();
+            })
+            .then(data => {
+                this.setState({ categories: data });
+            });
+    }
+
     render() {
         return (
             <div>
-
                 <Button color="primary" size="sm" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Options</Button>
                 <Collapse isOpen={this.state.isOpen}>
                     <Card>
                         <CardBody>
-                            Anim pariatur cliche reprehenderit,
-                             enim eiusmod high life accusamus terry richardson ad squid. Nihil
-                             anim keffiyeh helvetica, craft beer labore wes anderson cred
-                             nesciunt sapiente ea proident.
-          </CardBody>
+                            <Form inline>
+                                <FormGroup>
+                                    <Label for="category" hidden>Category</Label>
+                                    <CustomInput type="select" id="category" name="category">
+                                        <option value="">Category</option>
+                                        {this.state.categories.map(category => <option key={category.id} value={category.id}>{category.title}</option>
+                                        )}
+                                    </CustomInput>
+                                </FormGroup>
+
+                                <FormGroup>
+                                    <Label for="min_price" hidden>Min Price</Label>
+                                    <Input type="number" name="min_price" id="min_price" placeholder="Min Price" />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="max_price" hidden>max Price</Label>
+                                    <Input type="number" name="max_price" id="max_price" placeholder="Max Price" />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="rating" hidden>Rating</Label>
+                                    <CustomInput type="select" id="rating" name="min_rating">
+                                        <option value="">Min Rating</option>
+                                        <option value='1' > 1 star</option>
+                                        <option value='2'> 2 stars</option>
+                                        <option value='3'> 3 stars</option>
+                                        <option value='4'> 4 stars</option>
+                                        <option value='5'> 5 stars</option>
+                                    </CustomInput>
+                                </FormGroup>
+                                <Button type="button" onClick={this.searchCoursesAdvanced}>Submit</Button>
+                            </Form>
+                        </CardBody>
                     </Card>
                 </Collapse>
             </div>

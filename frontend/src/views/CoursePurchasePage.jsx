@@ -112,7 +112,7 @@ export class CoursePurchasePage extends Component {
                         </h4>
                         <CardText>{this.state.course.description}</CardText>
                         {/* TODO implement */}
-                          <span className="text-warning"><StarRatings stars={this.state.course.rating.average} course_id={this.props.match.params.id}/></span>
+                          <span className="text-warning"><StarRatings stars={this.state.course.rating.average} course_id={this.props.match.params.id} rate={false}/></span>
                         rating
                     </CardTitle>
                       <CourseAccordian courseID={this.state.course.id} />

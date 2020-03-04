@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import TopNavBar from './TopNavBar';
 import SimpleFooter from './SimpleFooter';
 import AdvancedSearch from './advancedSearch';
+import StarRatings from './StarRatings';
 
 // this will serve as the explore page check mycourses.jsx for new courses page 
 class CoursesList extends React.Component {
@@ -76,15 +77,11 @@ class CoursesList extends React.Component {
           });
         },
         // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        error => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
       );
+  }
+  updateItems = (newItems) =>{
+    console.log('updating')
+    this.setState({items:newItems})
   }
 
   addToCart = (id) => {
@@ -117,14 +114,17 @@ class CoursesList extends React.Component {
           <Container>
             <Row className="mt-5">
               <Col sm="12" md="6" lg="4">
-              {this.state.showSearchSpinner ? <Spinner color="primary" toggle /> : null}
+              {this.state.showSearchSpinner ? <Spinner color="primary"  /> : null}
                 <InputGroup>
                   <Input type="text" placeholder="Search" id="search" />
                   <InputGroupAddon addonType="append">
                     <Button color="primary" onClick={this.searchCourses}><i className="fa fa-search" aria-hidden="true"></i></Button>
                   </InputGroupAddon>
                 </InputGroup>
-                <AdvancedSearch/>
+              </Col>
+              <Col  sm={12} md={12}>
+              <AdvancedSearch updateItems = {this.updateItems} />
+
               </Col>
               {/* <Col sm="2">
                 <div style={{ marginLeft:'10px' }}>
@@ -153,6 +153,7 @@ class CoursesList extends React.Component {
                               ${item.price}
                             </h5>
                             <p><span>By </span>{item.owner.username}</p>
+                            <StarRatings stars={item.rating.average} course_id={item.id} rate={false}/>
                           </CardTitle>
 
                           <Row>

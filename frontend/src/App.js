@@ -43,7 +43,7 @@ class App extends React.Component {
               <Route path="/" exact component={Homepage} />
               {/* <Route path="/" exact={true} component={CoursesList} /> */}
               {/* TODO redirect courses/id to courses/id/lesson/0 */}
-              <Route path="/courses/" exact component={CoursesList} />
+              <ProtectedRoute path="/courses/" exact component={CoursesList} />
               <ProtectedRoute path="/mycourses/" exact component={MyCourses} />
               <Route path="/courses/purchase/:id" component={CoursePurchasePage} />
               <ProtectedRoute path="/courses/:id/lessons/:lid" component={CourseDetail} />
