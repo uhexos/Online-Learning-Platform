@@ -8,6 +8,7 @@ import TopNavBar from './TopNavBar';
 import SimpleFooter from './SimpleFooter';
 import AdvancedSearch from './advancedSearch';
 import StarRatings from './StarRatings';
+import Search from './search';
 
 // this will serve as the explore page check mycourses.jsx for new courses page 
 class CoursesList extends React.Component {
@@ -17,7 +18,6 @@ class CoursesList extends React.Component {
       error: null,
       isLoaded: false,
       items: null,
-      showSearchSpinner: false
     };
   }
 
@@ -53,36 +53,12 @@ class CoursesList extends React.Component {
       );
   }
 
-  searchCourses = () => {
-    this.setState({ showSearchSpinner: true })
-    let query = document.getElementById('search').value
-    fetch(`http://localhost:8000/api/courses/?search=${query}`, {
-      method: "GET",
-      headers: {
-        Authorization: `JWT ${localStorage.getItem("token")}`
-      }
-    })
-      .then(res => {
-        if (!res.ok) {
-          throw Error(res.statusText);
-        }
-        return res.json();
-      })
-      .then(
-        result => {
-          this.setState({
-            isLoaded: true,
-            items: result,
-            showSearchSpinner: false
-          });
-        },
-        // Note: it's important to handle errors here
-      );
-  }
-  updateItems = (newItems) =>{
+  
+  updateItems = (newItems) => {
     console.log('updating')
-    this.setState({items:newItems})
+    this.setState({ items: newItems })
   }
+
 
   addToCart = (id) => {
     // TODO add animations or an alert that show it was added successfully
@@ -113,18 +89,9 @@ class CoursesList extends React.Component {
           <TopNavBar></TopNavBar>
           <Container>
             <Row className="mt-5">
-              <Col sm="12" md="6" lg="4">
-              {this.state.showSearchSpinner ? <Spinner color="primary"  /> : null}
-                <InputGroup>
-                  <Input type="text" placeholder="Search" id="search" />
-                  <InputGroupAddon addonType="append">
-                    <Button color="primary" onClick={this.searchCourses}><i className="fa fa-search" aria-hidden="true"></i></Button>
-                  </InputGroupAddon>
-                </InputGroup>
-              </Col>
-              <Col  sm={12} md={12}>
-              <AdvancedSearch updateItems = {this.updateItems} />
-
+              <Col sm={12} md={12}>
+                <Search updateItems={this.updateItems} endpoint="courses"/>
+                <AdvancedSearch updateItems={this.updateItems} endpoint="courses"/>
               </Col>
               {/* <Col sm="2">
                 <div style={{ marginLeft:'10px' }}>
@@ -153,7 +120,7 @@ class CoursesList extends React.Component {
                               ${item.price}
                             </h5>
                             <p><span>By </span>{item.owner.username}</p>
-                            <StarRatings stars={item.rating.average} course_id={item.id} rate={false}/>
+                            <StarRatings stars={item.rating.average} course_id={item.id} rate={false} />
                           </CardTitle>
 
                           <Row>

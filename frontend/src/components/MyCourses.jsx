@@ -8,6 +8,8 @@ import TopNavBar from './TopNavBar';
 import SimpleFooter from './SimpleFooter';
 import StarRatings from './StarRatings';
 import auth from '../auth';
+import Search from './search';
+import AdvancedSearch from './advancedSearch';
 
 // this will serve as the explore page check mycourses.jsx for new courses page 
 function isSearched(searchTerm) {
@@ -37,7 +39,7 @@ class CoursesList extends React.Component {
         Authorization: `JWT ${localStorage.getItem("token")}`
       }
     })
-    .then(res => auth.checkLoginstatus(res))
+      .then(res => auth.checkLoginstatus(res))
       .then(res => {
         if (!res.ok) {
           throw Error(res.statusText);
@@ -50,7 +52,7 @@ class CoursesList extends React.Component {
             isLoaded: true,
             items: result
           });
-          console.log('item',this.state.items)
+          console.log('item', this.state.items)
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
@@ -74,7 +76,11 @@ class CoursesList extends React.Component {
     this.setState({ searchTerm: event.target.value });
   }
 
-  
+  updateItems = (newItems) => {
+    console.log('updating')
+    this.setState({ items: newItems })
+  }
+
   render() {
     const { error, isLoaded, items } = this.state;
     if (error) {
@@ -86,9 +92,8 @@ class CoursesList extends React.Component {
           <Container>
             <Row className="mt-5">
               <Col sm="6">
-                <div style={{ marginLeft: '150px' }}>
-                  <input type="text" className="form-control" placeholder="search" onChange={this.onSearchChange} />
-                </div>
+                <Search updateItems={this.updateItems}  endpoint="courses/bought"/>
+                <AdvancedSearch updateItems={this.updateItems} endpoint="courses/bought"/>
               </Col>
               {/* <Col sm="2">
                 <div style={{ marginLeft:'10px' }}>
@@ -106,7 +111,7 @@ class CoursesList extends React.Component {
           ) : (
               <Container>
                 <Row className="mt-5">
-                  {items.filter(isSearched(this.state.searchTerm)).map(item => (
+                  {items.map(item => (
                     <Col sm="6" md="4" key={item.id}>
                       <Card className="shadow mb-3">
                         <CardImg top src={item.thumbnail} alt="course thumbnail" />
@@ -114,7 +119,7 @@ class CoursesList extends React.Component {
                           <CardTitle>
                             <h5>{item.title}</h5>
                             <p><span>By </span>{item.owner.username}</p>
-                            <StarRatings stars={item.rating.average} course_id={item.id} rate={true}/>
+                            <StarRatings stars={item.rating.average} course_id={item.id} rate={true} />
                           </CardTitle>
                           <Row>
                             <Col>

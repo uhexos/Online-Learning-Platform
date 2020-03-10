@@ -82,8 +82,8 @@ export class TutorCourses extends Component {
                             <h5>{item.title}</h5>
                             <p><span>By </span>{owner.username}</p>
                           </CardTitle>
-                          <Link to={`/courses/${item.id}/lessons/0`}>
-                            <Button color="primary">View Course </Button>
+                          <Link to={`/admin/courses/${item.id}/edit`}>
+                            <Button color="primary">Edit Course </Button>
                           </Link>
                           <Link to={`/admin/courses/${item.id}/lessons/new`} style={{ marginLeft: "5px" }}>
                             <Button color="success">Add Lesson</Button>

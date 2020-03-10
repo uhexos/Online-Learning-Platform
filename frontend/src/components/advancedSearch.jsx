@@ -35,7 +35,7 @@ export class AdvancedSearch extends Component {
             }
         }
         let url = "";
-        url = query ? `http://localhost:8000/api/courses/?search=${query}&${filters}` : `http://localhost:8000/api/courses/?${filters}`
+        url = query ? `http://localhost:8000/api/${this.props.endpoint}/?search=${query}&${filters}` : `http://localhost:8000/api/${this.props.endpoint}/?${filters}`
         console.log(url)
 
         fetch(url, {
@@ -76,7 +76,7 @@ export class AdvancedSearch extends Component {
                     <Card>
                         <CardBody>
                             <Form inline>
-                                <FormGroup>
+                                <FormGroup className="mx-1">
                                     <Label for="category" hidden>Category</Label>
                                     <CustomInput type="select" id="category" name="category">
                                         <option value="">Category</option>
@@ -85,15 +85,15 @@ export class AdvancedSearch extends Component {
                                     </CustomInput>
                                 </FormGroup>
 
-                                <FormGroup>
+                                <FormGroup className="mx-1">
                                     <Label for="min_price" hidden>Min Price</Label>
                                     <Input type="number" name="min_price" id="min_price" placeholder="Min Price" />
                                 </FormGroup>
-                                <FormGroup>
+                                <FormGroup className="mx-1">
                                     <Label for="max_price" hidden>max Price</Label>
                                     <Input type="number" name="max_price" id="max_price" placeholder="Max Price" />
                                 </FormGroup>
-                                <FormGroup>
+                                <FormGroup className="mx-1">
                                     <Label for="rating" hidden>Rating</Label>
                                     <CustomInput type="select" id="rating" name="min_rating">
                                         <option value="">Min Rating</option>
@@ -104,7 +104,7 @@ export class AdvancedSearch extends Component {
                                         <option value='5'> 5 stars</option>
                                     </CustomInput>
                                 </FormGroup>
-                                <Button type="button" onClick={this.searchCoursesAdvanced}>Submit</Button>
+                                <Button color="primary" type="button" onClick={this.searchCoursesAdvanced}><i className="fa fa-search" aria-hidden="true"></i></Button>
                             </Form>
                         </CardBody>
                     </Card>

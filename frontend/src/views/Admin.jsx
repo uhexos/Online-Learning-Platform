@@ -24,6 +24,7 @@ import "../assets/scss/argon-dashboard-react.scss";
 import AdminNavbar from "../components/Navbars/AdminNavbar.jsx";
 import AdminFooter from "../components/Footers/AdminFooter.jsx";
 import Sidebar from '../components/Sidebar/Sidebar';
+import EditTutorCourses from '../components/EditTutorCourses';
 export class Admin extends Component {
 
     render() {
@@ -88,6 +89,7 @@ export class Admin extends Component {
                                 <ProtectedRoute path="/admin" exact component={Index}  />
                                 <ProtectedRoute path="/admin/courses/new" component={AddCourse} />
                                 <ProtectedRoute path="/admin/courses/:id/lessons/new" component={AddLesson} />
+                                <ProtectedRoute path="/admin/courses/:id/edit" component={EditTutorCourses} />
                                 <ProtectedRoute path="/admin/categories" exact component={CategoryList} />
                                 <ProtectedRoute path="/admin/categories/new" exact component={AddCategory} />
                                 <ProtectedRoute path="/admin/categories/:id" component={CategoryDetail} />
