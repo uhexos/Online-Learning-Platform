@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Col, InputGroup, Input, InputGroupAddon, Button, Spinner } from 'reactstrap'
+import { Col, InputGroup, Input, InputGroupAddon, Button, Spinner, Row, InputGroupText } from 'reactstrap'
 
 export class Search extends Component {
     state = {
@@ -32,17 +32,24 @@ export class Search extends Component {
     }
     render() {
         return (
-            <div>
-                <Col>
-                    {this.state.showSearchSpinner ? <Spinner color="primary" /> : null}
-                    <InputGroup>
-                        <Input type="text" placeholder="Search" id="search" />
-                        <InputGroupAddon addonType="append">
-                            <Button color="primary" onClick={this.searchCourses}><i className="fa fa-search" aria-hidden="true"></i></Button>
-                        </InputGroupAddon>
-                    </InputGroup>
-                </Col>
-            </div>
+        
+                <Row>
+                    <Col md = {12} lg ={12}>
+                        <InputGroup>
+                            <InputGroupAddon addonType="prepend">
+                                <InputGroupText>
+                                    {this.state.showSearchSpinner ? <Spinner color="primary" size="sm"/> : null}
+                                </InputGroupText>
+                            </InputGroupAddon>
+                            <Input type="text" placeholder="Search" id="search" />
+                            <InputGroupAddon addonType="append">
+                                <Button color="primary" onClick={this.searchCourses}><i className="fa fa-search" aria-hidden="true"></i></Button>
+                            </InputGroupAddon>
+                        </InputGroup>
+                    </Col>
+                </Row>
+
+            
         )
     }
 }

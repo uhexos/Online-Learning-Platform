@@ -90,18 +90,10 @@ class CoursesList extends React.Component {
         <div>
           <TopNavBar></TopNavBar>
           <Container>
-            <Row className="mt-5">
-              <Col sm="6">
-                <Search updateItems={this.updateItems}  endpoint="courses/bought"/>
-                <AdvancedSearch updateItems={this.updateItems} endpoint="courses/bought"/>
-              </Col>
-              {/* <Col sm="2">
-                <div style={{ marginLeft:'10px' }}>
-                  <button className="btn btn-success" 
-                  onClick={ () => this.searchResult(this.state.searchTerm) }>Search</button>
-                </div>
-              </Col> */}
-            </Row>
+            <div className="mt-5">
+              <Search updateItems={this.updateItems} endpoint="courses/bought" />
+              <AdvancedSearch updateItems={this.updateItems} endpoint="courses/bought" />
+            </div>
           </Container>
 
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Collapse, Button, CardBody, Card, Form, FormGroup, Label, Input, CustomInput } from 'reactstrap';
+import { Collapse, Button, CardBody, Card, Form, FormGroup, Label, Input, CustomInput, Row, Col } from 'reactstrap';
 import auth from '../auth';
 
 export class AdvancedSearch extends Component {
@@ -71,7 +71,11 @@ export class AdvancedSearch extends Component {
     render() {
         return (
             <div>
-                <Button color="primary" size="sm" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Options</Button>
+                <Row>
+                    <Col>
+                        <Button className="float-right mt-2" color="primary" size="sm" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Options</Button>
+                    </Col>
+                </Row>
                 <Collapse isOpen={this.state.isOpen}>
                     <Card>
                         <CardBody>
