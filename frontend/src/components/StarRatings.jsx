@@ -83,7 +83,6 @@ export class StarRatings extends Component {
   };
 
   renderRateButton = () => {
-    console.log("rate button")
     if (this.props.rate) {
       if (this.state.user_rating) {
         return (

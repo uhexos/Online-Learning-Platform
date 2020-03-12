@@ -22,7 +22,12 @@ export class Search extends Component {
             })
             .then(
                 result => {
-                    this.props.updateItems(result)
+                    this.props.updateItems("items",result.results)
+                    this.props.updateItems("count",result.count)
+                    this.props.updateItems("page_size",result.results.length)
+                    this.props.updateItems("next_page",result.next)
+                    this.props.updateItems("previous_page",result.previous)
+
                     this.setState({
                         showSearchSpinner: false
                     });

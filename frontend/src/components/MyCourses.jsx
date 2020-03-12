@@ -10,15 +10,9 @@ import StarRatings from './StarRatings';
 import auth from '../auth';
 import Search from './search';
 import AdvancedSearch from './advancedSearch';
+import CoursePaginator from './CoursePaginator';
 
 // this will serve as the explore page check mycourses.jsx for new courses page 
-function isSearched(searchTerm) {
-  return function (item) {
-    return item.title.toLowerCase().includes(searchTerm.toLowerCase());
-  }
-}
-
-
 class CoursesList extends React.Component {
   constructor(props) {
     super(props);
@@ -26,7 +20,10 @@ class CoursesList extends React.Component {
       error: null,
       isLoaded: false,
       items: null,
-      searchTerm: ''
+      count: 1,
+      page_size: 0,
+      next_page: "#",
+      previous_page: "#",
     };
     this.searchResult = this.searchResult.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
@@ -47,12 +44,15 @@ class CoursesList extends React.Component {
         return res.json();
       })
       .then(
-        result => {
+        res => {
           this.setState({
             isLoaded: true,
-            items: result
+            items: res.results,
+            count: res.count,
+            page_size: res.results.length,
+            next_page: res.next,
+            previous_page: res.previous,
           });
-          console.log('item', this.state.items)
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
@@ -76,9 +76,10 @@ class CoursesList extends React.Component {
     this.setState({ searchTerm: event.target.value });
   }
 
-  updateItems = (newItems) => {
-    console.log('updating')
-    this.setState({ items: newItems })
+  updateItems = (key, value) => {
+    var temp_obj = {};
+    temp_obj[key] = value;
+    this.setState(temp_obj)
   }
 
   render() {
@@ -125,6 +126,11 @@ class CoursesList extends React.Component {
                       </Card>
                     </Col>
                   ))}
+                </Row>
+                <Row>
+                  <Col>
+                    <CoursePaginator count={this.state.count} page_size={this.state.page_size} url="" />
+                  </Col>
                 </Row>
               </Container>
             )}

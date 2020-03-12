@@ -9,6 +9,7 @@ import SimpleFooter from './SimpleFooter';
 import AdvancedSearch from './advancedSearch';
 import StarRatings from './StarRatings';
 import Search from './search';
+import CoursePaginator from './CoursePaginator';
 
 // this will serve as the explore page check mycourses.jsx for new courses page 
 class CoursesList extends React.Component {
@@ -18,11 +19,15 @@ class CoursesList extends React.Component {
       error: null,
       isLoaded: false,
       items: null,
+      count: 1,
+      page_size: 0,
+      next_page: "#",
+      previous_page: "#",
     };
   }
 
   componentDidMount() {
-    fetch("http://localhost:8000/api/courses", {
+    fetch("http://localhost:8000/api/courses/", {
       method: "GET",
       headers: {
         Authorization: `JWT ${localStorage.getItem("token")}`
@@ -38,7 +43,11 @@ class CoursesList extends React.Component {
         result => {
           this.setState({
             isLoaded: true,
-            items: result
+            items: result.results,
+            count: result.count,
+            page_size: result.results.length,
+            next_page: result.next,
+            previous_page: result.previous,
           });
         },
         // Note: it's important to handle errors here
@@ -53,10 +62,11 @@ class CoursesList extends React.Component {
       );
   }
 
-  
-  updateItems = (newItems) => {
-    console.log('updating')
-    this.setState({ items: newItems })
+
+  updateItems = (key, value) => {
+    var temp_obj = {};
+    temp_obj[key] = value;
+    this.setState(temp_obj)
   }
 
 
@@ -90,8 +100,8 @@ class CoursesList extends React.Component {
           <Container>
             <Row className="mt-5">
               <Col sm={12} md={12}>
-                <Search updateItems={this.updateItems} endpoint="courses"/>
-                <AdvancedSearch updateItems={this.updateItems} endpoint="courses"/>
+                <Search updateItems={this.updateItems} endpoint="courses" />
+                <AdvancedSearch updateItems={this.updateItems} endpoint="courses" />
               </Col>
               {/* <Col sm="2">
                 <div style={{ marginLeft:'10px' }}>
@@ -139,6 +149,11 @@ class CoursesList extends React.Component {
                       </Card>
                     </Col>
                   ))}
+                </Row>
+                <Row>
+                  <Col>
+                    <CoursePaginator count={this.state.count} page_size={this.state.page_size} url="" />
+                  </Col>
                 </Row>
               </Container>
             )}

@@ -11,6 +11,13 @@ from django.http import Http404
 from rest_framework import filters
 from .filters import CourseFilter
 from django_filters import rest_framework as filterss
+from rest_framework.pagination import PageNumberPagination
+
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 2
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
 
 
 class CategoryList(generics.ListCreateAPIView):
@@ -29,6 +36,7 @@ class CourseList(generics.ListCreateAPIView):
     filter_backends = [filters.SearchFilter, filterss.DjangoFilterBackend, ]
     search_fields = ['owner__username', 'title', 'description']
     filterset_class = CourseFilter
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         # return only items that the user hasnt already purchased the ~Q is used for negation here.
@@ -129,6 +137,7 @@ class BoughtCoursesList(generics.ListAPIView):
     filter_backends = [filters.SearchFilter, filterss.DjangoFilterBackend, ]
     search_fields = ['owner__username', 'title', 'description']
     filterset_class = CourseFilter
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         return Course.objects.filter(bought_courses__user=self.request.user)

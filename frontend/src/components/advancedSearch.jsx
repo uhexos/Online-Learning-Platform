@@ -36,7 +36,6 @@ export class AdvancedSearch extends Component {
         }
         let url = "";
         url = query ? `http://localhost:8000/api/${this.props.endpoint}/?search=${query}&${filters}` : `http://localhost:8000/api/${this.props.endpoint}/?${filters}`
-        console.log(url)
 
         fetch(url, {
             method: "GET",
@@ -46,7 +45,13 @@ export class AdvancedSearch extends Component {
         })
             .then(res => auth.checkLoginstatus(res))
             .then(res => res.json())
-            .then(res => this.props.updateItems(res))
+            .then(res => {
+                this.props.updateItems("items", res.results)
+                this.props.updateItems("count", res.count)
+                this.props.updateItems("page_size", res.results.length)
+                this.props.updateItems("next_page", res.next)
+                this.props.updateItems("previous_page", res.previous)
+            })
     }
     componentDidMount() {
         fetch('http://localhost:8000/api/categories', {
