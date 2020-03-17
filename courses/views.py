@@ -12,12 +12,23 @@ from rest_framework import filters
 from .filters import CourseFilter
 from django_filters import rest_framework as filterss
 from rest_framework.pagination import PageNumberPagination
-
+from rest_framework.response import Response
+from math import ceil
 
 class StandardResultsSetPagination(PageNumberPagination):
-    page_size = 2
+    page_size = 15
     page_size_query_param = 'page_size'
     max_page_size = 1000
+
+    def get_paginated_response(self, data):
+            return Response({
+                'next': self.get_next_link(),
+                'current':self.page.number,
+                'previous': self.get_previous_link(),
+                'count': self.page.paginator.count,
+                'pages': ceil(self.page.paginator.count/self.page_size),
+                'results': data
+            })
 
 
 class CategoryList(generics.ListCreateAPIView):
@@ -39,7 +50,7 @@ class CourseList(generics.ListCreateAPIView):
     pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
-        # return only items that the user hasnt already purchased the ~Q is used for negation here.
+            # return only items that the user hasnt already purchased the ~Q is used for negation here.
         return Course.objects.filter(~Q(bought_courses__user=self.request.user))
 
     def perform_create(self, serializer):

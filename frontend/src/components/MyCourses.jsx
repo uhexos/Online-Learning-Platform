@@ -52,6 +52,7 @@ class CoursesList extends React.Component {
             page_size: res.results.length,
             next_page: res.next,
             previous_page: res.previous,
+            pages: res.pages,
           });
         },
         // Note: it's important to handle errors here
@@ -129,7 +130,7 @@ class CoursesList extends React.Component {
                 </Row>
                 <Row>
                   <Col>
-                    <CoursePaginator count={this.state.count} page_size={this.state.page_size} url="" />
+                  <CoursePaginator number={this.state.pages} updateItems={this.updateItems} next_page={this.state.next_page} previous_page={this.state.previous_page}/>
                   </Col>
                 </Row>
               </Container>

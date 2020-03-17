@@ -51,6 +51,7 @@ export class AdvancedSearch extends Component {
                 this.props.updateItems("page_size", res.results.length)
                 this.props.updateItems("next_page", res.next)
                 this.props.updateItems("previous_page", res.previous)
+                this.props.updateItems("pages", res.pages)
             })
     }
     componentDidMount() {

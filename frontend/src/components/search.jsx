@@ -27,6 +27,7 @@ export class Search extends Component {
                     this.props.updateItems("page_size",result.results.length)
                     this.props.updateItems("next_page",result.next)
                     this.props.updateItems("previous_page",result.previous)
+                    this.props.updateItems("pages",result.pages)
 
                     this.setState({
                         showSearchSpinner: false

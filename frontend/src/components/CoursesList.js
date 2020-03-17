@@ -27,7 +27,11 @@ class CoursesList extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:8000/api/courses/", {
+  //  let test = new URLSearchParams(this.props.location.search);
+  //  let st = "";
+  //  test.forEach((value,key)=> st+=`${key}=${value}`)
+  //  console.log('test',`http://localhost:8000/api/courses/${st}`)
+    fetch(`http://localhost:8000/api/courses/`, {
       method: "GET",
       headers: {
         Authorization: `JWT ${localStorage.getItem("token")}`
@@ -48,6 +52,7 @@ class CoursesList extends React.Component {
             page_size: result.results.length,
             next_page: result.next,
             previous_page: result.previous,
+            pages:result.pages,
           });
         },
         // Note: it's important to handle errors here
@@ -152,7 +157,9 @@ class CoursesList extends React.Component {
                 </Row>
                 <Row>
                   <Col>
-                    <CoursePaginator count={this.state.count} page_size={this.state.page_size} url="" />
+                  {/* default page size shall be 10 */}
+                  {console.log("goes in",this.state.next_page,this.state.previous_page)}
+                    <CoursePaginator number={this.state.pages} updateItems={this.updateItems} next_page={this.state.next_page} previous_page={this.state.previous_page}/>
                   </Col>
                 </Row>
               </Container>
