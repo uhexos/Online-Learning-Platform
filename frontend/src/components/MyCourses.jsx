@@ -30,7 +30,8 @@ class CoursesList extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:8000/api/courses/bought", {
+    let params = new URLSearchParams(this.props.location.search);
+    fetch(`http://localhost:8000/api/courses/bought/?${params.toString()}`, {
       method: "GET",
       headers: {
         Authorization: `JWT ${localStorage.getItem("token")}`
@@ -53,6 +54,7 @@ class CoursesList extends React.Component {
             next_page: res.next,
             previous_page: res.previous,
             pages: res.pages,
+            current: res.current,
           });
         },
         // Note: it's important to handle errors here
@@ -93,8 +95,8 @@ class CoursesList extends React.Component {
           <TopNavBar></TopNavBar>
           <Container>
             <div className="mt-5">
-              <Search updateItems={this.updateItems} endpoint="courses/bought" />
-              <AdvancedSearch updateItems={this.updateItems} endpoint="courses/bought" />
+              <Search history={this.props.history} updateItems={this.updateItems} endpoint="courses/bought" />
+              <AdvancedSearch  history={this.props.history} updateItems={this.updateItems} endpoint="courses/bought" />
             </div>
           </Container>
 
@@ -130,7 +132,7 @@ class CoursesList extends React.Component {
                 </Row>
                 <Row>
                   <Col>
-                  <CoursePaginator number={this.state.pages} updateItems={this.updateItems} next_page={this.state.next_page} previous_page={this.state.previous_page}/>
+                  <CoursePaginator activepage={this.state.current} number={this.state.pages} updateItems={this.updateItems} next_page={this.state.next_page} previous_page={this.state.previous_page}/>
                   </Col>
                 </Row>
               </Container>

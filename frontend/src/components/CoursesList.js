@@ -23,15 +23,13 @@ class CoursesList extends React.Component {
       page_size: 0,
       next_page: "#",
       previous_page: "#",
+      current:1,
     };
   }
 
   componentDidMount() {
-  //  let test = new URLSearchParams(this.props.location.search);
-  //  let st = "";
-  //  test.forEach((value,key)=> st+=`${key}=${value}`)
-  //  console.log('test',`http://localhost:8000/api/courses/${st}`)
-    fetch(`http://localhost:8000/api/courses/`, {
+   let params = new URLSearchParams(this.props.location.search);
+   fetch(`http://localhost:8000/api/courses/?${params.toString()}`, {
       method: "GET",
       headers: {
         Authorization: `JWT ${localStorage.getItem("token")}`
@@ -53,6 +51,7 @@ class CoursesList extends React.Component {
             next_page: result.next,
             previous_page: result.previous,
             pages:result.pages,
+            current:result.current,
           });
         },
         // Note: it's important to handle errors here
@@ -105,8 +104,8 @@ class CoursesList extends React.Component {
           <Container>
             <Row className="mt-5">
               <Col sm={12} md={12}>
-                <Search updateItems={this.updateItems} endpoint="courses" />
-                <AdvancedSearch updateItems={this.updateItems} endpoint="courses" />
+                <Search history={this.props.history} updateItems={this.updateItems} endpoint="courses" />
+                <AdvancedSearch history={this.props.history} updateItems={this.updateItems} endpoint="courses" />
               </Col>
               {/* <Col sm="2">
                 <div style={{ marginLeft:'10px' }}>
@@ -158,8 +157,7 @@ class CoursesList extends React.Component {
                 <Row>
                   <Col>
                   {/* default page size shall be 10 */}
-                  {console.log("goes in",this.state.next_page,this.state.previous_page)}
-                    <CoursePaginator number={this.state.pages} updateItems={this.updateItems} next_page={this.state.next_page} previous_page={this.state.previous_page}/>
+                    <CoursePaginator activepage={this.state.current} number={this.state.pages} updateItems={this.updateItems} next_page={this.state.next_page} previous_page={this.state.previous_page}/>
                   </Col>
                 </Row>
               </Container>

@@ -28,10 +28,10 @@ export class Search extends Component {
                     this.props.updateItems("next_page",result.next)
                     this.props.updateItems("previous_page",result.previous)
                     this.props.updateItems("pages",result.pages)
-
                     this.setState({
                         showSearchSpinner: false
                     });
+                    this.props.history.push(`?search=${query}`)
                 },
                 // Note: it's important to handle errors here
             );

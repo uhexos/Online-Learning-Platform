@@ -52,6 +52,9 @@ export class AdvancedSearch extends Component {
                 this.props.updateItems("next_page", res.next)
                 this.props.updateItems("previous_page", res.previous)
                 this.props.updateItems("pages", res.pages)
+                console.log('filters',`?search=${query}&${filters}`)
+                this.props.history.push(query ? `?search=${query}&${filters}` : `?${filters}`)
+
             })
     }
     componentDidMount() {
