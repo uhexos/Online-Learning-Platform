@@ -23,13 +23,13 @@ class CoursesList extends React.Component {
       page_size: 0,
       next_page: "#",
       previous_page: "#",
-      current:1,
+      current: 1,
     };
   }
 
   componentDidMount() {
-   let params = new URLSearchParams(this.props.location.search);
-   fetch(`http://localhost:8000/api/courses/?${params.toString()}`, {
+    let params = new URLSearchParams(this.props.location.search);
+    fetch(`http://localhost:8000/api/courses/?${params.toString()}`, {
       method: "GET",
       headers: {
         Authorization: `JWT ${localStorage.getItem("token")}`
@@ -50,8 +50,8 @@ class CoursesList extends React.Component {
             page_size: result.results.length,
             next_page: result.next,
             previous_page: result.previous,
-            pages:result.pages,
-            current:result.current,
+            pages: result.pages,
+            current: result.current,
           });
         },
         // Note: it's important to handle errors here
@@ -156,8 +156,8 @@ class CoursesList extends React.Component {
                 </Row>
                 <Row>
                   <Col>
-                  {/* default page size shall be 10 */}
-                    <CoursePaginator activepage={this.state.current} number={this.state.pages} updateItems={this.updateItems} next_page={this.state.next_page} previous_page={this.state.previous_page}/>
+                    {/* default page size shall be 10 */}
+                    <CoursePaginator activepage={this.state.current} number={this.state.pages} updateItems={this.updateItems} next_page={this.state.next_page} previous_page={this.state.previous_page} />
                   </Col>
                 </Row>
               </Container>
