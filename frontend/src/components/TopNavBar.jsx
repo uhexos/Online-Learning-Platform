@@ -53,7 +53,7 @@ const TopNavBar = props => {
             <NavItem>
               <NavLink tag={RRNavLink} to="/mycourses/" onClick={toggle}>My Courses</NavLink>
             </NavItem>
-            <UncontrolledDropdown nav inNavbar>
+            {/* <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
                 Options
               </DropdownToggle>
@@ -63,7 +63,7 @@ const TopNavBar = props => {
                 <DropdownItem divider />
                 <DropdownItem>Reset</DropdownItem>
               </DropdownMenu>
-            </UncontrolledDropdown>
+            </UncontrolledDropdown> */}
             <UserConsumer>
               {(context) => (
                 <>

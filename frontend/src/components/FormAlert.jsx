@@ -7,6 +7,7 @@ export class FormAlert extends Component {
         // p = json object containing our errors
         let messagesArray = []
         //convert json to js object 
+        console.log("p is ", p )
         p = JSON.parse(p);
         for (var key in p) {
             if (p.hasOwnProperty(key)) {

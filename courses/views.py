@@ -51,7 +51,7 @@ class CourseList(generics.ListCreateAPIView):
 
     def get_queryset(self):
             # return only items that the user hasnt already purchased the ~Q is used for negation here.
-        return Course.objects.filter(~Q(bought_courses__user=self.request.user))
+        return Course.objects.filter(~Q(bought_courses__user=self.request.user) , Q(is_live=True))
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
