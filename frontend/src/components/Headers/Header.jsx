@@ -21,6 +21,81 @@ import React from "react";
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
 
 class Header extends React.Component {
+  state = { salesTotal: 0, salesPercentage: 0 };
+
+  getSalesTotal = () => {
+    let total = 0;
+    this.props.data.map(sale => {
+      let saleDate = new Date(sale.pub_date);
+      let today = new Date();
+      if (
+        saleDate.getMonth() == today.getMonth() &&
+        saleDate.getYear() == today.getYear()
+      ) {
+        total += parseFloat(sale.course.price);
+      }
+    });
+    return total;
+  };
+  getSalesDifference = () => {
+    let total = 0;
+    let lastMonthTotal = 0;
+    this.props.data.map(sale => {
+      let saleDate = new Date(sale.pub_date);
+      let today = new Date();
+      if (
+        saleDate.getMonth() == today.getMonth() &&
+        saleDate.getYear() == today.getYear()
+      ) {
+        total += parseFloat(sale.course.price);
+      } else if (
+        saleDate.getMonth() == today.getMonth() - 1 &&
+        saleDate.getYear() == today.getYear()
+      ) {
+        lastMonthTotal += parseFloat(sale.course.price);
+      }
+    });
+    return ((total - lastMonthTotal) / lastMonthTotal) * 100;
+  };
+  getTotalNumberOfSales = () => {
+    return this.props.data.length;
+  };
+  getSalesNumberDifference = () => {
+    let total = 0;
+    let lastMonthTotal = 0;
+    this.props.data.map(sale => {
+      let saleDate = new Date(sale.pub_date);
+      let today = new Date();
+      if (
+        saleDate.getMonth() == today.getMonth() &&
+        saleDate.getYear() == today.getYear()
+      ) {
+        total += 1;
+      } else if (
+        saleDate.getMonth() == today.getMonth() - 1 &&
+        saleDate.getYear() == today.getYear()
+      ) {
+        lastMonthTotal += 1;
+      }
+    });
+    return ((total - lastMonthTotal) / lastMonthTotal) * 100;
+  };
+
+  getNewSales = () => {
+    let total = 0;
+    this.props.data.map(sale => {
+      let saleDate = new Date(sale.pub_date);
+      let today = new Date();
+      if (
+        saleDate.getMonth() == today.getMonth() &&
+        saleDate.getYear() == today.getYear()
+      ) {
+        total += 1;
+      }
+    });
+    return total;
+  };
+
   render() {
     return (
       <>
@@ -29,7 +104,7 @@ class Header extends React.Component {
             <div className="header-body">
               {/* Card stats */}
               <Row>
-                <Col lg="6" xl="3">
+                <Col lg="6" xl="4">
                   <Card className="card-stats mb-4 mb-xl-0">
                     <CardBody>
                       <Row>
@@ -38,10 +113,10 @@ class Header extends React.Component {
                             tag="h5"
                             className="text-uppercase text-muted mb-0"
                           >
-                            Total Students
+                            All time Sales
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
-                            350,897
+                            {this.getTotalNumberOfSales()}
                           </span>
                         </div>
                         <Col className="col-auto">
@@ -51,15 +126,13 @@ class Header extends React.Component {
                         </Col>
                       </Row>
                       <p className="mt-3 mb-0 text-muted text-sm">
-                        <span className="text-success mr-2">
-                          <i className="fa fa-arrow-up" /> 3.48%
-                        </span>{" "}
-                        <span className="text-nowrap">Since last month</span>
+                        <span className="text-success mr-2"></span>{" "}
+                        <span className="text-nowrap">All sales ever</span>
                       </p>
                     </CardBody>
                   </Card>
                 </Col>
-                <Col lg="6" xl="3">
+                <Col lg="6" xl="4">
                   <Card className="card-stats mb-4 mb-xl-0">
                     <CardBody>
                       <Row>
@@ -68,10 +141,10 @@ class Header extends React.Component {
                             tag="h5"
                             className="text-uppercase text-muted mb-0"
                           >
-                            New students
+                            Number of Sales this month
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
-                            2,356
+                            {this.getNewSales()}
                           </span>
                         </div>
                         <Col className="col-auto">
@@ -81,15 +154,22 @@ class Header extends React.Component {
                         </Col>
                       </Row>
                       <p className="mt-3 mb-0 text-muted text-sm">
-                        <span className="text-danger mr-2">
-                          <i className="fas fa-arrow-down" /> 3.48%
+                        <span className={`text-${this.getSalesNumberDifference() > 0?"success":"warning"} mr-2`}>
+                          <i
+                            className={`fas fa-arrow-${
+                              this.getSalesNumberDifference() > 0
+                                ? "up"
+                                : "down"
+                            }`}
+                          />{" "}
+                          {Math.abs(this.getSalesNumberDifference())}%
                         </span>{" "}
-                        <span className="text-nowrap">Since last week</span>
+                        <span className="text-nowrap">Since last month</span>
                       </p>
                     </CardBody>
                   </Card>
                 </Col>
-                <Col lg="6" xl="3">
+                <Col lg="6" xl="4">
                   <Card className="card-stats mb-4 mb-xl-0">
                     <CardBody>
                       <Row>
@@ -100,7 +180,9 @@ class Header extends React.Component {
                           >
                             Sales
                           </CardTitle>
-                          <span className="h2 font-weight-bold mb-0">924</span>
+                          <span className="h2 font-weight-bold mb-0">
+                            GHS {this.getSalesTotal()}
+                          </span>
                         </div>
                         <Col className="col-auto">
                           <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
@@ -109,15 +191,20 @@ class Header extends React.Component {
                         </Col>
                       </Row>
                       <p className="mt-3 mb-0 text-muted text-sm">
-                        <span className="text-warning mr-2">
-                          <i className="fas fa-arrow-down" /> 1.10%
+                        <span className={`text-${this.getSalesDifference() > 0?"success":"warning"}`}>
+                          <i
+                            className={`fas fa-arrow-${
+                              this.getSalesDifference() > 0 ? "up" : "down"
+                            }`}
+                          />{" "}
+                          {Math.abs(this.getSalesDifference())}%
                         </span>{" "}
-                        <span className="text-nowrap">Since yesterday</span>
+                        <span className="text-nowrap">Since last month</span>
                       </p>
                     </CardBody>
                   </Card>
                 </Col>
-                <Col lg="6" xl="3">
+                {/* <Col lg="6" xl="3">
                   <Card className="card-stats mb-4 mb-xl-0">
                     <CardBody>
                       <Row>
@@ -146,7 +233,7 @@ class Header extends React.Component {
                       </p>
                     </CardBody>
                   </Card>
-                </Col>
+                </Col> */}
               </Row>
             </div>
           </Container>

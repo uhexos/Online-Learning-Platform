@@ -3,7 +3,7 @@ from rest_framework import generics, permissions
 from courses.models import EnrolledCourses
 from .serializers import  SalesSerializer
 # Create your views here.
-
+from django.db.models import Sum
 
 class SalesList(generics.ListAPIView):
     queryset = EnrolledCourses.objects.all()

@@ -98,7 +98,7 @@ class Index extends React.Component {
   }
   fillChart = choice => {
     let yearData = Array(12).fill(0); //month totals
-    let monthData = Array(31).fill(0);  //daily totals
+    let monthData = Array(31).fill(0); //daily totals
 
     // fill the array with the total sales for each month of the year
     this.state.sales.map(sale => {
@@ -120,7 +120,7 @@ class Index extends React.Component {
           : (monthData[saleDate.getDate() - 1] = parseFloat(sale.course.price));
       }
     });
-    console.log(monthData);
+    // console.log(monthData);
     let test = {
       year: canvas => {
         return {
@@ -192,11 +192,46 @@ class Index extends React.Component {
     };
     return test[choice];
   };
+
+  getTableRows = () => {
+    let arr = {};
+    //group sales by course id and make a course price an accumulator
+    this.state.sales.map(sale => {
+      if (sale.course) {
+        if (sale.course.id in arr) {
+          arr[sale.course.id].price =
+            parseFloat(arr[sale.course.id].price) +
+            parseFloat(sale.course.price);
+          arr[sale.course.id].count += 1;
+        } else {
+          //function was originally incorrectly modifying the actual state. This create a deep copy of the object. ie is totally different
+          arr[sale.course.id] = JSON.parse(JSON.stringify(sale.course));
+          arr[sale.course.id].count = 0;
+        }
+      }
+    });
+    // console.log(this.state.sales)
+
+    return Object.values(arr).map(groupedSaleData => {
+      if (groupedSaleData.count != 0) {
+        return (
+          <tr key={groupedSaleData.id}>
+            <td>
+              <i className="text-success mr-3" /> {groupedSaleData.id}
+            </td>
+            <th scope="row">{groupedSaleData.title}</th>
+            <td>{groupedSaleData.price}</td>
+            <td>{groupedSaleData.count}</td>
+          </tr>
+        );
+      }
+    });
+  };
   render() {
     return (
       <>
-      {/* contains cards at top of template */}
-        <Header /> 
+        {/* contains cards at top of template */}
+        <Header data={this.state.sales} />
         {/* Page content */}
         <Container className="mt--7" fluid>
           <Row>
@@ -279,7 +314,7 @@ class Index extends React.Component {
             </Col> */}
           </Row>
           <Row className="mt-5">
-            <Col className="mb-5 mb-xl-0" xl="8">
+            <Col className="mb-5 mb-xl-0" xl="12">
               <Card className="shadow">
                 <CardHeader className="border-0">
                   <Row className="align-items-center">
@@ -301,63 +336,17 @@ class Index extends React.Component {
                 <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">
                     <tr>
-                      <th scope="col">Page name</th>
-                      <th scope="col">Visitors</th>
-                      <th scope="col">Unique users</th>
-                      <th scope="col">Bounce rate</th>
+                      <th scope="col">Course id</th>
+                      <th scope="col">Course name</th>
+                      <th scope="col">Total Sales Amount</th>
+                      <th scope="col">Copies Sold</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">/argon/</th>
-                      <td>4,569</td>
-                      <td>340</td>
-                      <td>
-                        <i className="fas fa-arrow-up text-success mr-3" />{" "}
-                        46,53%
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">/argon/index.html</th>
-                      <td>3,985</td>
-                      <td>319</td>
-                      <td>
-                        <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                        46,53%
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">/argon/charts.html</th>
-                      <td>3,513</td>
-                      <td>294</td>
-                      <td>
-                        <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                        36,49%
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">/argon/tables.html</th>
-                      <td>2,050</td>
-                      <td>147</td>
-                      <td>
-                        <i className="fas fa-arrow-up text-success mr-3" />{" "}
-                        50,87%
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">/argon/profile.html</th>
-                      <td>1,795</td>
-                      <td>190</td>
-                      <td>
-                        <i className="fas fa-arrow-down text-danger mr-3" />{" "}
-                        46,53%
-                      </td>
-                    </tr>
-                  </tbody>
+                  <tbody>{this.getTableRows()}</tbody>
                 </Table>
               </Card>
             </Col>
-            <Col xl="4">
+            {/* <Col xl="4">
               <Card className="shadow">
                 <CardHeader className="border-0">
                   <Row className="align-items-center">
@@ -464,7 +453,7 @@ class Index extends React.Component {
                   </tbody>
                 </Table>
               </Card>
-            </Col>
+            </Col> */}
           </Row>
         </Container>
       </>
