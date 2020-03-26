@@ -64,6 +64,7 @@ class EnrolledCourses(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE,related_name="enrolled_course")
     course = models.ForeignKey('Course', on_delete=models.CASCADE,related_name="bought_courses")
+    pub_date = models.DateField(null=True, default=date.today)
 
 
 class CustomUser(AbstractUser):

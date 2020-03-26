@@ -47,18 +47,20 @@ import {
 } from "../variables/charts.jsx";
 
 import Header from "../components/Headers/Header.jsx";
+import auth from "../auth.js";
 
 class Index extends React.Component {
   state = {
     activeNav: 1,
-    chartExample1Data: "data1"
+    chartExample1Data: "year",
+    sales: []
   };
   toggleNavs = (e, index) => {
     e.preventDefault();
     this.setState({
       activeNav: index,
       chartExample1Data:
-        this.state.chartExample1Data === "data1" ? "data2" : "data1"
+        this.state.chartExample1Data === "year" ? "month" : "year"
     });
     let wow = () => {
       console.log(this.state);
@@ -71,15 +73,134 @@ class Index extends React.Component {
     if (window.Chart) {
       parseOptions(Chart, chartOptions());
     }
+
+    fetch("http://localhost:8000/api/reports/sales", {
+      method: "GET",
+      headers: {
+        authorization: `JWT ${localStorage.getItem("token")}`
+      }
+    })
+      .then(res => auth.checkLoginstatus(res))
+      .then(res => {
+        if (!res.ok) {
+          throw res;
+        }
+        return res.json();
+      })
+      .then(sales => {
+        this.setState({ sales: sales });
+      })
+      .catch(err => {
+        err.text().then(errorMessage => {
+          this.setState({ errors: errorMessage });
+        });
+      });
   }
+  fillChart = choice => {
+    let yearData = Array(12).fill(0); //month totals
+    let monthData = Array(31).fill(0);  //daily totals
+
+    // fill the array with the total sales for each month of the year
+    this.state.sales.map(sale => {
+      var saleDate = new Date(sale.pub_date);
+      var today = new Date();
+      yearData[saleDate.getMonth()]
+        ? (yearData[saleDate.getMonth()] += parseFloat(sale.course.price)) //value already in position
+        : (yearData[saleDate.getMonth()] = parseFloat(sale.course.price)); //first value to enter position
+
+      // fill the array with the total sales for each day of the month
+      // console.log( aleDate.getFullYear)
+      if (
+        today.getMonth() == saleDate.getMonth() &&
+        today.getFullYear() == saleDate.getFullYear()
+      ) {
+        // remove 1 from everydate to keep it in line with array index ie 30 becomes index 29
+        monthData[saleDate.getDate() - 1]
+          ? (monthData[saleDate.getDate() - 1] += parseFloat(sale.course.price))
+          : (monthData[saleDate.getDate() - 1] = parseFloat(sale.course.price));
+      }
+    });
+    console.log(monthData);
+    let test = {
+      year: canvas => {
+        return {
+          labels: [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+          ],
+          datasets: [
+            {
+              label: "Performance",
+              data: yearData
+            }
+          ]
+        };
+      },
+      month: canvas => {
+        return {
+          labels: [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31
+          ],
+          datasets: [
+            {
+              label: "Performance",
+              data: monthData
+            }
+          ]
+        };
+      }
+    };
+    return test[choice];
+  };
   render() {
     return (
       <>
-        <Header />
+      {/* contains cards at top of template */}
+        <Header /> 
         {/* Page content */}
         <Container className="mt--7" fluid>
           <Row>
-            <Col className="mb-5 mb-xl-0" xl="8">
+            <Col className="mb-5 mb-xl-0" xl="12">
               <Card className="bg-gradient-default shadow">
                 <CardHeader className="bg-transparent">
                   <Row className="align-items-center">
@@ -87,7 +208,7 @@ class Index extends React.Component {
                       <h6 className="text-uppercase text-light ls-1 mb-1">
                         Overview
                       </h6>
-                      <h2 className="text-white mb-0">Sales vassssslue</h2>
+                      <h2 className="text-white mb-0">Sales value</h2>
                     </div>
                     <div className="col">
                       <Nav className="justify-content-end" pills>
@@ -124,7 +245,8 @@ class Index extends React.Component {
                   {/* Chart */}
                   <div className="chart">
                     <Line
-                      data={chartExample1[this.state.chartExample1Data]}
+                      // data={chartExample1[this.state.chartExample1Data]}
+                      data={this.fillChart(this.state.chartExample1Data)}
                       options={chartExample1.options}
                       getDatasetAtEvent={e => console.log(e)}
                     />
@@ -132,7 +254,7 @@ class Index extends React.Component {
                 </CardBody>
               </Card>
             </Col>
-            <Col xl="4">
+            {/* <Col xl="4">
               <Card className="shadow">
                 <CardHeader className="bg-transparent">
                   <Row className="align-items-center">
@@ -144,9 +266,9 @@ class Index extends React.Component {
                     </div>
                   </Row>
                 </CardHeader>
-                <CardBody>
-                  {/* Chart */}
-                  <div className="chart">
+                <CardBody> */}
+            {/* Chart */}
+            {/* <div className="chart">
                     <Bar
                       data={chartExample2.data}
                       options={chartExample2.options}
@@ -154,7 +276,7 @@ class Index extends React.Component {
                   </div>
                 </CardBody>
               </Card>
-            </Col>
+            </Col> */}
           </Row>
           <Row className="mt-5">
             <Col className="mb-5 mb-xl-0" xl="8">

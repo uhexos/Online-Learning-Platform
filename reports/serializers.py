@@ -11,4 +11,4 @@ class SalesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EnrolledCourses
-        fields = ['id','course','user']
+        fields = '__all__'

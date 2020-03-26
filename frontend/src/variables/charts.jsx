@@ -201,8 +201,8 @@ function chartOptions() {
         },
         elements: {
           point: {
-            radius: 0,
-            backgroundColor: colors.theme["primary"]
+            radius: 4,
+            backgroundColor: colors.theme["secondary"]
           },
           line: {
             tension: 0.4,
@@ -315,7 +315,7 @@ let chartExample1 = {
           ticks: {
             callback: function(value) {
               if (!(value % 10)) {
-                return "$" + value + "k";
+                return "$" + value;
               }
             }
           }
@@ -333,7 +333,7 @@ let chartExample1 = {
             content += label;
           }
 
-          content += "$" + yLabel + "k";
+          content += "$" + yLabel;
           return content;
         }
       }
@@ -345,7 +345,7 @@ let chartExample1 = {
       datasets: [
         {
           label: "Performance",
-          data: [0, 20, 10, 30, 15, 40, 20, 60, 60]
+          data: [0, 20, 10, 30, 15, 40, 20, 60, 60, 20, 10, 30]
         }
       ]
     };
