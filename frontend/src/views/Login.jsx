@@ -64,6 +64,7 @@ class Login extends React.Component {
       .then(data => {
         context.updateValue('user', data);
         // TODO pick only relevant items to store in the context rather than the entire user object 
+        console.log('useer',JSON.stringify(data))
         localStorage.setItem('user', JSON.stringify(data));
         context.updateValue('isLoggedIn', true);
       });

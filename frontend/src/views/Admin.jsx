@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
-// import Sidebar from '../components/Sidebar/Sidebar'
 import {  Switch } from "react-router-dom";
 import Container from 'reactstrap/lib/Container';
 import AddLesson from './AddLesson';
 import Index from "./Index.jsx";
 import AddCourse from '../components/AddCourse';
 import AddCategory from '../components/AddCategory';
-// import AdminNavbar from "../components/Navbars/AdminNavbar";
-// import AdminFooter from "../components/Footers/AdminFooter";
 import Profile from "../components/ProfilePage";
 import TutorCourses from "../components/TutorCourses";
 import NoMatch from './NoMatch';
@@ -25,6 +22,7 @@ import AdminNavbar from "../components/Navbars/AdminNavbar.jsx";
 import AdminFooter from "../components/Footers/AdminFooter.jsx";
 import Sidebar from '../components/Sidebar/Sidebar';
 import EditTutorCourses from '../components/EditTutorCourses';
+import EditCourseLesson from '../views/EditCourseLesson';
 export class Admin extends Component {
 
     render() {
@@ -90,6 +88,7 @@ export class Admin extends Component {
                                 <ProtectedRoute path="/admin/courses/new" component={AddCourse} />
                                 <ProtectedRoute path="/admin/courses/:id/lessons/new" component={AddLesson} />
                                 <ProtectedRoute path="/admin/courses/:id/edit" component={EditTutorCourses} />
+                                <ProtectedRoute path="/admin/courses/:id/lesson/:lid/edit" component={EditCourseLesson} />
                                 <ProtectedRoute path="/admin/categories" exact component={CategoryList} />
                                 <ProtectedRoute path="/admin/categories/new" exact component={AddCategory} />
                                 <ProtectedRoute path="/admin/categories/:id" component={CategoryDetail} />

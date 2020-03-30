@@ -11,7 +11,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  Col,
+  Col
   // NavbarText
 } from "reactstrap";
 import { NavLink as RRNavLink } from "react-router-dom";
@@ -51,7 +51,9 @@ const TopNavBar = props => {
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={RRNavLink} to="/mycourses/" onClick={toggle}>My Courses</NavLink>
+              <NavLink tag={RRNavLink} to="/mycourses/" onClick={toggle}>
+                My Courses
+              </NavLink>
             </NavItem>
             {/* <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
@@ -65,33 +67,49 @@ const TopNavBar = props => {
               </DropdownMenu>
             </UncontrolledDropdown> */}
             <UserConsumer>
-              {(context) => (
+              {context => (
                 <>
                   {context.state.isLoggedIn ? (
                     <>
+                      {context.state.user.is_tutor ? (
+                        <NavItem>
+                          <NavLink tag={RRNavLink} to="/admin" onClick={toggle}>
+                            Dashboard
+                          </NavLink>
+                        </NavItem>
+                      ) : null}
+
                       <NavItem>
-                        <NavLink tag={RRNavLink} to="/admin" onClick={toggle}>Dashboard</NavLink>
+                        <NavLink tag={RRNavLink} to="#" onClick={auth.logout}>
+                          Log Out
+                        </NavLink>
                       </NavItem>
                       <NavItem>
-                        <NavLink tag={RRNavLink} to="#" onClick={auth.logout}>Log Out</NavLink>
-                      </NavItem>
-                      <NavItem>
-                        <NavLink tag={RRNavLink} to="/cart" onClick={toggle}><i className="ni ni-cart" />
+                        <NavLink tag={RRNavLink} to="/cart" onClick={toggle}>
+                          <i className="ni ni-cart" />
                         </NavLink>
                       </NavItem>
                     </>
-                  ) :
+                  ) : (
                     <>
                       <NavItem>
-                        <NavLink tag={RRNavLink} to="/login" onClick={toggle}>Login</NavLink>
+                        <NavLink tag={RRNavLink} to="/login" onClick={toggle}>
+                          Login
+                        </NavLink>
                       </NavItem>
                       <NavItem>
-                        <NavLink tag={RRNavLink} to="/register" onClick={toggle}>Register</NavLink>
+                        <NavLink
+                          tag={RRNavLink}
+                          to="/register"
+                          onClick={toggle}
+                        >
+                          Register
+                        </NavLink>
                       </NavItem>
-                    </>}
-
-
-                </>)}
+                    </>
+                  )}
+                </>
+              )}
             </UserConsumer>
           </Nav>
           {/* <NavbarText>Simple Text</NavbarText> */}

@@ -132,7 +132,7 @@ class Sidebar extends React.Component {
           >
             <span className="navbar-toggler-icon" />
           </button>
-          <Link to="/"><h1>Home</h1></Link>
+          <Link to="/admin"><h1>Home</h1></Link>
 
           {/* Collapse */}
           <Collapse navbar isOpen={this.state.collapseOpen}>

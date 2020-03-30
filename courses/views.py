@@ -113,7 +113,9 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
     queryset = CustomUser.objects.all()
 
     def get_object(self):
-        return CustomUser.objects.get(id=self.request.user.id)
+        user_id = self.request.user.id
+        print("********************",user_id)
+        return CustomUser.objects.get(id=user_id)
 
 
 class CourseRatingCreateView(generics.CreateAPIView):

@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import Container from "reactstrap/lib/Container";
 import Card from "reactstrap/lib/Card";
-import { Row, Col, CustomInput } from "reactstrap";
+import { Row, Col, CustomInput, Table, CardHeader } from "reactstrap";
 import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
 import CardBody from "reactstrap/lib/CardBody";
 import Alert from "reactstrap/lib/Alert";
 import FormAlert from "./FormAlert";
 import auth from "../auth";
+import { Link } from "react-router-dom";
+import Modals from "./NotificationModal";
 
 export class UpdateCourse extends Component {
   onDismiss = () => this.setState({ visible: false });
@@ -15,7 +17,8 @@ export class UpdateCourse extends Component {
     loading: false,
     visible: false,
     errors: null,
-    lesson: {}
+    course: {},
+    lessons: []
   };
 
   componentDidMount() {
@@ -36,7 +39,7 @@ export class UpdateCourse extends Component {
         this.setState({ categories: data });
       });
 
-    //get all lessons their name, video url and descriptions etc from the api,
+    //get all courses their name, video url and descriptions etc from the api,
     fetch(`http://127.0.0.1:8000/api/courses/${this.props.match.params.id}`, {
       method: "GET",
       headers: {
@@ -45,12 +48,51 @@ export class UpdateCourse extends Component {
     })
       .then(res => auth.checkLoginstatus(res))
       .then(res => res.json())
-      .then(lesson => {
+      .then(course => {
         this.setState({
-          lesson: lesson
+          course: course
+        });
+      });
+
+    //get all lessons their name, video url and descriptions etc from the api,
+    fetch(
+      `http://127.0.0.1:8000/api/courses/${this.props.match.params.id}/lessons`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `JWT ${localStorage.getItem("token")}`
+        }
+      }
+    )
+      .then(res => auth.checkLoginstatus(res))
+      .then(res => res.json())
+      .then(courseLessons => {
+        this.setState({
+          lessons: courseLessons
         });
       });
   }
+  deleteLesson = lesson_id => {
+    // delete return no json response
+    fetch(
+      `http://localhost:8000/api/courses/${this.props.match.params.id}/lessons/${lesson_id}/`,
+      {
+        method: "DELETE",
+        headers: {
+          authorization: `JWT ${localStorage.getItem("token")}`
+        }
+      }
+    )
+      .then(res => auth.checkLoginstatus(res))
+      .then(() => {
+        // remove the just deleted category from the state and update state without making another api call.
+        this.setState({
+          lessons: this.state.lessons.filter(lesson => {
+            return lesson["id"] !== lesson_id;
+          })
+        });
+      });
+  };
   saveCourse = () => {
     const fileField = document.querySelector('input[type="file"]');
     const formData = new FormData();
@@ -60,7 +102,7 @@ export class UpdateCourse extends Component {
     let category = document.getElementById("courseCategory");
     category = category.options[category.selectedIndex].value;
     let description = document.getElementById("courseDescription").value;
-    let isLive = document.getElementById('isLive').checked;
+    let isLive = document.getElementById("isLive").checked;
 
     formData.append("title", title);
     formData.append("price", price);
@@ -117,7 +159,7 @@ export class UpdateCourse extends Component {
                   name="title"
                   id="courseTitle"
                   placeholder="Enter a descriptive name for the course"
-                  defaultValue={this.state.lesson.title}
+                  defaultValue={this.state.course.title}
                 />
               </FormGroup>
               <Row>
@@ -129,7 +171,7 @@ export class UpdateCourse extends Component {
                       name="price"
                       id="coursePrice"
                       placeholder="Enter a price for the course"
-                      defaultValue={this.state.lesson.price}
+                      defaultValue={this.state.course.price}
                     />
                   </FormGroup>
                 </Col>
@@ -138,16 +180,20 @@ export class UpdateCourse extends Component {
                     <Label for="courseCategory">Category</Label>
                     <Input type="select" name="category" id="courseCategory">
                       {this.state.categories
-                        ? this.state.categories.map(category => (
-                            category.id == this.state.lesson.category?(
-                                <option key={category.id} value={category.id} selected>
+                        ? this.state.categories.map(category =>
+                            category.id == this.state.course.category ? (
+                              <option
+                                key={category.id}
+                                value={category.id}
+                                selected
+                              >
                                 {category.title}
                               </option>
-                            ) :( <option key={category.id} value={category.id} >
+                            ) : (
+                              <option key={category.id} value={category.id}>
                                 {category.title}
-                              </option>)  
-                        )
-                           
+                              </option>
+                            )
                           )
                         : null}
                     </Input>
@@ -161,7 +207,7 @@ export class UpdateCourse extends Component {
                   type="textarea"
                   name="description"
                   id="courseDescription"
-                  defaultValue={this.state.lesson.description}
+                  defaultValue={this.state.course.description}
                 />
               </FormGroup>
               <FormGroup>
@@ -171,22 +217,13 @@ export class UpdateCourse extends Component {
                   This is the thumbnail for the course it can be added later
                 </FormText>
               </FormGroup>
-              {/* TODO add to this to edit maybe ? */}
-              {/* <FormGroup>
-                <Label for="courseDescription">Activate course</Label>
-                <span className="clearfix" />
-                <Label className="custom-toggle">
-                  <Input defaultChecked type="checkbox" />
-                  <span className="custom-toggle-slider rounded-circle" />
-                </Label>
-              </FormGroup> */}
               <FormGroup className="pl-5">
                 <CustomInput
                   type="switch"
                   id="isLive"
                   name="isLive"
                   label="Go live."
-                  defaultChecked={this.state.lesson.is_live}
+                  defaultChecked={this.state.course.is_live}
                 />
                 <small className="text-muted ml-1">
                   *Note users who already purchased the course will still have
@@ -203,6 +240,54 @@ export class UpdateCourse extends Component {
             </Form>
           </CardBody>
         </Card>
+        {/* table for editing lessons belonging to a perticular course */}
+        <Row className="mt-5">
+          <Col className="mb-5 mb-xl-0" xl="12">
+            <Card className="shadow">
+              <CardHeader className="border-0">
+                <Row className="align-items-center">
+                  <div className="col">
+                    <h3 className="mb-0">Edit Lessons</h3>
+                  </div>
+                </Row>
+              </CardHeader>
+              <Table className="align-items-center table-flush" responsive>
+                <thead className="thead-light">
+                  <tr>
+                    <th scope="col">Lesson id</th>
+                    <th scope="col">Lesson name</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.lessons.map(lesson => (
+                    <tr key={lesson.id}>
+                      <td>{lesson.id}</td>
+                      <th scope="row">{lesson.title}</th>
+                      <td>
+                        <Link
+                          to={`/admin/courses/${this.state.course.id}/lesson/${lesson.id}/edit`}
+                        >
+                          <i className="fas fa-edit"></i>
+                        </Link>
+                      </td>
+                      <td>
+                        <Modals
+                          title="Confirm Deletion !"
+                          message={`You are about to delete the category "${lesson.title}" permanently are you sure you want to do this? This will delete all courses belonging to it. Did you want to rename ?`}
+                          buttonText="Delete"
+                          buttonColor="danger"
+                          action={() => this.deleteLesson(lesson.id)}
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Card>
+          </Col>
+        </Row>
       </Container>
     );
   }

@@ -35,7 +35,7 @@ class Lesson(models.Model):
     video = models.FileField(
         help_text='Enter course video', null=True, upload_to="lesson_videos")
     content = models.TextField(help_text='Enter lesson text ', null=True)
-    pub_date = models.DateField(null=True, blank=True)
+    pub_date = models.DateField(default=date.today)
     course = models.ForeignKey(
         'Course', on_delete=models.CASCADE, related_name='lessons')
     description = models.TextField(

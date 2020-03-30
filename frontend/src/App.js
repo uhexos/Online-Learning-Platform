@@ -19,6 +19,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import CoursePurchasePage from './views/CoursePurchasePage';
 import { UserProvider } from './UserContext';
 import { ProtectedRoute } from './protected.route';
+import NonTutorProfile from './components/NonTutorProfile';
 // core components
 // import SimpleFooter from "./components/SimpleFooter.jsx";
 class App extends React.Component {
@@ -49,7 +50,7 @@ class App extends React.Component {
               <ProtectedRoute path="/courses/:id/lessons/:lid" component={CourseDetail} />
               <Route path="/register" component={Register} />
               <Route path="/login" component={Login} />
-              <Route path="/profile" component={ProfilePage} />
+              <Route path="/profile" component={NonTutorProfile} />
               {/* <Route path="/dashboard" component={Dashboard} /> */}
               <ProtectedRoute path="/admin" component={Admin} />
               <ProtectedRoute path="/cart" component={Checkout} />

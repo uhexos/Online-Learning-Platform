@@ -17,7 +17,6 @@
 */
 import React, { useContext } from "react";
 
-
 // reactstrap components
 import {
   Button,
@@ -39,14 +38,14 @@ import UserContext, { UserConsumer } from "../UserContext";
 import auth from "../auth";
 
 class UserProfile extends React.Component {
-  static contextType = UserContext
+  static contextType = UserContext;
   state = {
     loading: true,
     user: null
   };
   // TODO remove password field from serialiser or make read only
   componentDidMount() {
-    const context = this.context
+    const context = this.context;
 
     fetch("http://localhost:8000/api/profile", {
       method: "GET",
@@ -58,40 +57,46 @@ class UserProfile extends React.Component {
       .then(res => res.json())
       .then(data => {
         this.setState({ user: data, loading: false });
-        context.updateValue('user', this.state.user);
+        context.updateValue("user", this.state.user);
+        localStorage.setItem('user', JSON.stringify(data));
+        // localStorage.setItem("user", this.state.user);
         // console.log('user',context)
       });
   }
   updateProfile = () => {
     let formdata = new FormData();
 
-    formdata.append('username', document.getElementById("username").value);
-    formdata.append('email', document.getElementById("userEmail").value);
-    formdata.append('first_name', document.getElementById("userFirstName").value);
-    formdata.append('last_name', document.getElementById("userLastName").value);
-    formdata.append('about', document.getElementById("userDescription").value);
-    formdata.append('is_tutor', document.getElementById("userIsTutor").checked);
+    formdata.append("username", document.getElementById("username").value);
+    formdata.append("email", document.getElementById("userEmail").value);
+    formdata.append(
+      "first_name",
+      document.getElementById("userFirstName").value
+    );
+    formdata.append("last_name", document.getElementById("userLastName").value);
+    formdata.append("about", document.getElementById("userDescription").value);
+    formdata.append("is_tutor", document.getElementById("userIsTutor").checked);
 
     fetch(`http://localhost:8000/api/users/${this.state.user.id}/`, {
       method: "PATCH",
       body: formdata,
       headers: {
-        'Authorization': `JWT ${localStorage.getItem('token')}`
+        Authorization: `JWT ${localStorage.getItem("token")}`
       }
     })
       .then(res => res.json())
       .then(res => console.log(res));
-  }
+  };
 
   render() {
     return (
       <UserConsumer>
-        {(context) => (<>
-          {this.state.loading || !this.state.user ? (
-            <h5 className="title">No such  user profile... </h5>
-          ) : (
+        {context => (
+          <>
+            {this.state.loading || !this.state.user ? (
+              <h5 className="title">No such user profile... </h5>
+            ) : (
               <Container className="content" fluid>
-                {console.log('***********', context)}
+                {console.log("***********", context)}
                 <UserHeader name={this.state.user.username} />
                 <Row className="mt-2">
                   <Col lg="8" className="order-xl-2 mb-3">
@@ -117,7 +122,7 @@ class UserProfile extends React.Component {
                               <FormGroup>
                                 <label htmlFor="exampleInputEmail1">
                                   Email address
-                            </label>
+                                </label>
                                 <Input
                                   defaultValue={this.state.user.email}
                                   placeholder="mike@example.com"
@@ -153,23 +158,37 @@ class UserProfile extends React.Component {
                           </Row>
                           <FormGroup>
                             <Label for="userDescription ">Description</Label>
-                            <Input defaultValue={this.state.user.about} type="textarea" name="userDescription" id="userDescription" />
+                            <Input
+                              defaultValue={this.state.user.about}
+                              type="textarea"
+                              name="userDescription"
+                              id="userDescription"
+                            />
                           </FormGroup>
                           <FormGroup>
                             {/* TODO fix this to use proper react strap components */}
                             <Label for="courseIsTutor">Become A tutor</Label>
                             <span className="clearfix" />
                             <Label className="custom-toggle">
-                              <Input defaultChecked={this.state.user.is_tutor} type="checkbox" id="userIsTutor" />
+                              <Input
+                                defaultChecked={this.state.user.is_tutor}
+                                type="checkbox"
+                                id="userIsTutor"
+                              />
                               <span className="custom-toggle-slider rounded-circle" />
                             </Label>
                           </FormGroup>
                         </Form>
                       </CardBody>
                       <CardFooter>
-                        <Button className="btn-fill" color="primary" type="button" onClick={this.updateProfile}>
+                        <Button
+                          className="btn-fill"
+                          color="primary"
+                          type="button"
+                          onClick={this.updateProfile}
+                        >
                           Save
-                    </Button>
+                        </Button>
                       </CardFooter>
                     </Card>
                   </Col>
@@ -197,10 +216,16 @@ class UserProfile extends React.Component {
                       </CardBody>
                       <CardFooter>
                         <div className="button-container">
-                          <Button className="btn-icon btn-round" color="facebook">
+                          <Button
+                            className="btn-icon btn-round"
+                            color="facebook"
+                          >
                             <i className="fab fa-facebook" />
                           </Button>
-                          <Button className="btn-icon btn-round" color="twitter">
+                          <Button
+                            className="btn-icon btn-round"
+                            color="twitter"
+                          >
                             <i className="fab fa-twitter" />
                           </Button>
                           <Button className="btn-icon btn-round" color="google">
@@ -213,9 +238,9 @@ class UserProfile extends React.Component {
                 </Row>
               </Container>
             )}
-        </>)}
+          </>
+        )}
       </UserConsumer>
-
     );
   }
 }

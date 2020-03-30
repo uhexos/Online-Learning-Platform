@@ -17,6 +17,7 @@ class Auth {
     // TODO redirect to sign out page
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('username');
     window.location.reload();
   }
 

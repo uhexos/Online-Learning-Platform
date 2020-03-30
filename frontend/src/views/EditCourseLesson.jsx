@@ -17,8 +17,28 @@ import Container from "reactstrap/lib/Container";
 import Row from "reactstrap/lib/Row";
 import auth from "../auth";
 
-export class AddLesson extends Component {
-  state = { lessonContent: "", visible: false  };
+export class EditCourseLesson extends Component {
+  state = { lessonContent: "", lesson: {}, visible: false };
+  componentDidMount() {
+    //get all lessons their name, video url and descriptions etc from the api,
+    fetch(
+      `http://127.0.0.1:8000/api/courses/${this.props.match.params.id}/lessons/${this.props.match.params.lid}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `JWT ${localStorage.getItem("token")}`
+        }
+      }
+    )
+      .then(res => auth.checkLoginstatus(res))
+      .then(res => res.json())
+      .then(lesson => {
+        this.setState({
+          lesson: lesson
+        });
+      });
+  }
+
   saveLesson = () => {
     const fileField = document.querySelector('input[type="file"]');
     const formData = new FormData();
@@ -33,9 +53,9 @@ export class AddLesson extends Component {
       formData.append("video", fileField.files[0], fileField.files[0].name);
     }
     fetch(
-      `http://localhost:8000/api/courses/${this.props.match.params.id}/lessons/`,
+      `http://localhost:8000/api/courses/${this.props.match.params.id}/lessons/${this.props.match.params.lid}/`,
       {
-        method: "POST",
+        method: "PATCH",
         body: formData,
         headers: {
           Authorization: `JWT ${localStorage.getItem("token")}`
@@ -46,8 +66,7 @@ export class AddLesson extends Component {
       .then(res => {
         if (res.ok) {
           this.setState({ visible: true });
-          document.getElementById("add-lesson").reset();
-          console.log(document.getElementsByTagName("CKEditor").data);
+          document.getElementById("edit-lesson").reset();
         }
         return res.json();
       });
@@ -64,16 +83,21 @@ export class AddLesson extends Component {
                 className="shadow"
                 isOpen={this.state.visible}
               >
-                Course created successfully.
+                Course updated successfully.
               </Alert>
-              <Form id="add-lesson">
+              <Form id="edit-lesson">
                 <FormText>
-                  <h2>Add a lesson</h2>
+                  <h2>Update lesson</h2>
                 </FormText>
                 {/* sample for form group */}
                 <FormGroup>
                   <Label for="title">Title</Label>
-                  <Input type="text" name="title" id="lessonTitle" />
+                  <Input
+                    type="text"
+                    name="title"
+                    id="lessonTitle"
+                    defaultValue={this.state.lesson.title}
+                  />
                   <FormText>Clear name for the lesson</FormText>
                 </FormGroup>
                 {/* end sample */}
@@ -85,7 +109,7 @@ export class AddLesson extends Component {
                   <Label>Content</Label>
                   <CKEditor
                     editor={ClassicEditor}
-                    data="<p>Hello from CKEditor 5!</p>"
+                    data={this.state.lesson.content}
                     onInit={editor => {
                       // You can store the "editor" and use when it is needed.
                       console.log("Editor is ready to use!", editor);
@@ -105,7 +129,12 @@ export class AddLesson extends Component {
                 </FormGroup>
 
                 <FormGroup>
-                  <Input type="textarea" name="text" id="lessonDescription" />
+                  <Input
+                    type="textarea"
+                    name="text"
+                    id="lessonDescription"
+                    defaultValue={this.state.lesson.description}
+                  />
 
                   <FormText>Enter a brief description of the lesson</FormText>
                 </FormGroup>
@@ -121,4 +150,4 @@ export class AddLesson extends Component {
   }
 }
 
-export default AddLesson;
+export default EditCourseLesson;
