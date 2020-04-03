@@ -1,19 +1,5 @@
 /*!
-
-=========================================================
-* Argon Design System React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-design-system-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-design-system-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
+Login page for the site
 */
 import React from "react";
 
@@ -40,6 +26,7 @@ import TopNavBar from '../components/TopNavBar';
 import SimpleFooter from '../components/SimpleFooter';
 import UserContext, { UserConsumer } from "../UserContext";
 import auth from "../auth";
+import {Helmet} from 'react-helmet'
 
 class Login extends React.Component {
   state = { loginError: false };
@@ -120,7 +107,9 @@ class Login extends React.Component {
     return (
       <UserConsumer>
         {(context) => (<>
-          {/* {this.getProfile()} */}
+          <Helmet>
+            <title>Login</title>
+          </Helmet>
           <TopNavBar></TopNavBar>
           <main id="main">
             <section className="section section-shaped section-lg">

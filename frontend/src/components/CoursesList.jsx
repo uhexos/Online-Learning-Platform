@@ -10,7 +10,7 @@ import AdvancedSearch from './advancedSearch';
 import StarRatings from './StarRatings';
 import Search from './search';
 import CoursePaginator from './CoursePaginator';
-
+import {Helmet} from 'react-helmet'
 // this will serve as the explore page check mycourses.jsx for new courses page 
 class CoursesList extends React.Component {
   constructor(props) {
@@ -100,6 +100,9 @@ class CoursesList extends React.Component {
     } else {
       return (
         <div>
+          <Helmet>
+            <title>Explore our courses</title>
+          </Helmet>
           <TopNavBar></TopNavBar>
           <Container>
             <Row className="mt-5">

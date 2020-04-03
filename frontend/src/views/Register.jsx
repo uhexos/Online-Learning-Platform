@@ -19,6 +19,7 @@ import React from "react";
 import axios from 'axios';
 import TopNavBar from '../components/TopNavBar';
 import SimpleFooter from '../components/SimpleFooter';
+import {Helmet} from 'react-helmet'
 
 // reactstrap components
 import {
@@ -84,6 +85,9 @@ class Register extends React.Component {
   render() {
     return (
       <>
+      <Helmet>
+        <title>Register</title>
+      </Helmet>
         <TopNavBar></TopNavBar>
         <main ref="main">
           <section className="section section-shaped section-lg">

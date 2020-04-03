@@ -84,8 +84,8 @@ class Sidebar extends React.Component {
     return routes.map((prop, key) => {
       return (
         <div key={key}>
-          {prop.name != 'Add Lessons' ? (
-            <NavItem >
+          {prop.name != "Add Lessons" ? (
+            <NavItem>
               <NavLink
                 to={prop.layout + prop.path}
                 tag={NavLinkRRD}
@@ -98,8 +98,6 @@ class Sidebar extends React.Component {
             </NavItem>
           ) : null}
         </div>
-
-
       );
     });
   };
@@ -132,7 +130,9 @@ class Sidebar extends React.Component {
           >
             <span className="navbar-toggler-icon" />
           </button>
-          <Link to="/admin"><h1>Home</h1></Link>
+          <Link to="/admin">
+            <h1>Home</h1>
+          </Link>
 
           {/* Collapse */}
           <Collapse navbar isOpen={this.state.collapseOpen}>
@@ -146,10 +146,10 @@ class Sidebar extends React.Component {
                         <img alt={logo.imgAlt} src={logo.imgSrc} />
                       </Link>
                     ) : (
-                        <a href={logo.outterLink}>
-                          <img alt={logo.imgAlt} src={logo.imgSrc} />
-                        </a>
-                      )}
+                      <a href={logo.outterLink}>
+                        <img alt={logo.imgAlt} src={logo.imgSrc} />
+                      </a>
+                    )}
                   </Col>
                 ) : null}
                 <Col className="collapse-close" xs="6">
@@ -186,35 +186,31 @@ class Sidebar extends React.Component {
             <hr className="my-3" />
             {/* Heading */}
             <UserConsumer>
-              {(context) => (
+              {context =>
                 !context.state.user.is_staff ? null : (
                   <>
-                    <h6 className="navbar-heading text-muted">Admininstrator Menu</h6>
+                    <h6 className="navbar-heading text-muted">
+                      Admininstrator Menu
+                    </h6>
                     {/* Navigation */}
                     <Nav className="mb-md-3" navbar>
-                      <NavItem>
+                      <NavItem onClick={this.toggleCollapse}>
                         <NavLink to="/admin/categories/new" tag={NavLinkRRD}>
                           <i className="ni ni-spaceship" />
                           Add Category
-                </NavLink>
+                        </NavLink>
                       </NavItem>
-                      <NavItem>
+                      <NavItem onClick={this.toggleCollapse}>
                         <NavLink to="/admin/categories" tag={NavLinkRRD}>
                           <i className="ni ni-palette" />
                           View Categories
-                </NavLink>
-                      </NavItem>
-                      <NavItem>
-                        <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/documentation/alerts?ref=adr-admin-sidebar">
-                          <i className="ni ni-ui-04" />
-                          Components
-                </NavLink>
+                        </NavLink>
                       </NavItem>
                     </Nav>
-                  </>)
-              )}
+                  </>
+                )
+              }
             </UserConsumer>
-
           </Collapse>
         </Container>
       </Navbar>

@@ -5,7 +5,7 @@ import CardTitle from 'reactstrap/lib/CardTitle'
 import Col from 'reactstrap/lib/Col';
 import Modals from './NotificationModal';
 import auth from '../auth';
-
+import Helmet from "react-helmet"
 export class CategoryList extends Component {
     state = { categories: [] }
     componentDidMount() {
@@ -51,6 +51,9 @@ export class CategoryList extends Component {
         return (
             <div>
                 <Container>
+                    <Helmet>
+                        <title>Admin - All Catgories</title>
+                    </Helmet>
                     <Row>
                         {categories.length > 0 ? categories.map(category => (
                             <Col lg="3" md="6" key={category.id}>

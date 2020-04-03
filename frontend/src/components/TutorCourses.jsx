@@ -1,3 +1,5 @@
+// this page shows a list of all courses that a user has created and allows for editing of the course
+// and lessons
 import React, { Component } from "react";
 import Container from "reactstrap/lib/Container";
 import { Card, CardImg, CardBody, CardTitle, Button } from "reactstrap";
@@ -5,6 +7,7 @@ import Row from "reactstrap/lib/Row";
 import Col from "reactstrap/lib/Col";
 import { Link } from "react-router-dom";
 import auth from "../auth";
+import { Helmet } from "react-helmet";
 
 export class TutorCourses extends Component {
   constructor(props) {
@@ -66,6 +69,9 @@ export class TutorCourses extends Component {
             <h5 className="title">Loading courses...</h5>
           ) : (
             <Container>
+              <Helmet>
+                <title>Admin - Created Courses</title>
+              </Helmet>
               <Row className="mt-5">
                 {owner.courses == 0 ? (
                   <p>You do not have any courses yet.</p>
@@ -84,7 +90,9 @@ export class TutorCourses extends Component {
                             <Col>
                               <h5>{item.title}</h5>
                             </Col>
-                            <h5 className="text-align-right text-muted">{item.id}</h5>
+                            <h5 className="text-align-right text-muted">
+                              {item.id}
+                            </h5>
                           </Row>
 
                           <p>

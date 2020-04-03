@@ -21,6 +21,7 @@ import CoursePurchasePage from './views/CoursePurchasePage';
 import { UserProvider } from './UserContext';
 import { ProtectedRoute } from './protected.route';
 import NonTutorProfile from './components/NonTutorProfile';
+
 // core components
 // import SimpleFooter from "./components/SimpleFooter.jsx";
 class App extends React.Component {

@@ -16,9 +16,11 @@ import {
 import Container from "reactstrap/lib/Container";
 import Row from "reactstrap/lib/Row";
 import auth from "../auth";
-
+import Helmet from "react-helmet"
 export class AddLesson extends Component {
-  state = { lessonContent: "", visible: false  };
+  componentDidMount() {}
+
+  state = { lessonContent: "", visible: false };
   saveLesson = () => {
     const fileField = document.querySelector('input[type="file"]');
     const formData = new FormData();
@@ -56,6 +58,9 @@ export class AddLesson extends Component {
   render() {
     return (
       <Container>
+        <Helmet>
+          <title>Admin - Add lesson to course</title>
+        </Helmet>
         <Row>
           <Card>
             <CardBody>

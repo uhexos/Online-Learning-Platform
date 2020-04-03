@@ -1,10 +1,11 @@
-// doesnt work at at fix this mess
+// this is the checkout page that stores user selected items to a cart
 
 import React, { Component } from 'react'
 import Container from 'reactstrap/lib/Container'
 import { Row, Col, Table, Button } from 'reactstrap'
 import AdminNavbar from './TopNavBar'
 import auth from '../auth'
+import {Helmet} from 'react-helmet'
 import { RaveProvider, RavePaymentButton } from "react-ravepayment";
 const config = {
     txref: "",
@@ -86,6 +87,9 @@ export class Checkout extends Component {
     render() {
         return (
             <div>
+                <Helmet>
+                    <title>Cart and checkout</title>
+                </Helmet>
                 <AdminNavbar />
                 <Container className="pt-2">
                     {console.log(this.state)}

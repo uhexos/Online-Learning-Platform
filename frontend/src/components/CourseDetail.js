@@ -1,3 +1,5 @@
+// this gives a menu containing all the lessons in the course and renders each lesson when
+// when the menu is clicked
 import React, { Component } from 'react'
 // import Vertical from "./Vertical" 
 import LessonNav from './LessonNav';
@@ -7,7 +9,7 @@ import SimpleFooter from "./SimpleFooter.jsx";
 
 import { Container, Row, Col } from 'reactstrap/lib';
 import auth from '../auth';
-import { Spinner } from 'reactstrap';
+import Helmet from 'react-helmet'
 
 export class CourseDetail extends Component {
     constructor(props) {
@@ -23,7 +25,6 @@ export class CourseDetail extends Component {
     }
 
     componentDidMount() {
-        console.log('testing mout');
         //get all lessons their name, video url and descriptions etc from the api, 
         fetch(`http://127.0.0.1:8000/api/courses/${this.props.match.params.id}/lessons/`, {
             method: 'GET',

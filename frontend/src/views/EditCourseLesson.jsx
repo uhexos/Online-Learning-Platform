@@ -1,3 +1,4 @@
+/*This is the page that allows users to edit previously made courses*/
 import React, { Component } from "react";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -16,6 +17,7 @@ import {
 import Container from "reactstrap/lib/Container";
 import Row from "reactstrap/lib/Row";
 import auth from "../auth";
+import {Helmet} from 'react-helmet'
 
 export class EditCourseLesson extends Component {
   state = { lessonContent: "", lesson: {}, visible: false };
@@ -75,6 +77,9 @@ export class EditCourseLesson extends Component {
   render() {
     return (
       <Container>
+        <Helmet>
+          <title>Admin - Edit Lesson</title>
+        </Helmet>
         <Row>
           <Card>
             <CardBody>

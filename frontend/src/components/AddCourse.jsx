@@ -1,3 +1,4 @@
+// this page allows user to make a new course
 import React, { Component } from "react";
 import Container from "reactstrap/lib/Container";
 import Card from "reactstrap/lib/Card";
@@ -7,6 +8,7 @@ import CardBody from "reactstrap/lib/CardBody";
 import Alert from "reactstrap/lib/Alert";
 import FormAlert from "./FormAlert";
 import auth from "../auth";
+import {Helmet} from 'react-helmet'
 
 export class AddCourse extends Component {
   onDismiss = () => this.setState({ visible: false });
@@ -75,6 +77,9 @@ export class AddCourse extends Component {
   render() {
     return (
       <Container>
+        <Helmet>
+          <title>Admin - New Course</title>
+        </Helmet>
         <Card className="shadow">
           <CardBody>
             <Alert

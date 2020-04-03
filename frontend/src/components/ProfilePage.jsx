@@ -36,6 +36,7 @@ import Container from "reactstrap/lib/Container";
 import Label from "reactstrap/lib/Label";
 import UserContext, { UserConsumer } from "../UserContext";
 import auth from "../auth";
+import { Helmet } from "react-helmet";
 
 class UserProfile extends React.Component {
   static contextType = UserContext;
@@ -58,7 +59,7 @@ class UserProfile extends React.Component {
       .then(data => {
         this.setState({ user: data, loading: false });
         context.updateValue("user", this.state.user);
-        localStorage.setItem('user', JSON.stringify(data));
+        localStorage.setItem("user", JSON.stringify(data));
         // localStorage.setItem("user", this.state.user);
         // console.log('user',context)
       });
@@ -96,7 +97,9 @@ class UserProfile extends React.Component {
               <h5 className="title">No such user profile... </h5>
             ) : (
               <Container className="content" fluid>
-                {console.log("***********", context)}
+                <Helmet>
+                  <title>User Profile</title>
+                </Helmet>
                 <UserHeader name={this.state.user.username} />
                 <Row className="mt-2">
                   <Col lg="8" className="order-xl-2 mb-3">

@@ -23,8 +23,12 @@ import AdminFooter from "../components/Footers/AdminFooter.jsx";
 import Sidebar from '../components/Sidebar/Sidebar';
 import EditTutorCourses from '../components/EditTutorCourses';
 import EditCourseLesson from '../views/EditCourseLesson';
-export class Admin extends Component {
+import { Helmet } from "react-helmet";
 
+export class Admin extends Component {
+    // this is the homepage for the admin section
+    // it is also the dashboard
+    
     render() {
         // these get rendered in the sidebar 
         let routes = [
@@ -60,6 +64,9 @@ export class Admin extends Component {
         ];
         return (
             <div>
+                <Helmet>
+                    <title>Admin</title>
+                </Helmet>
                 <div>
                     <UserConsumer>
                         {(context) => (

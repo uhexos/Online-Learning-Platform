@@ -9,7 +9,7 @@ import FormAlert from "./FormAlert";
 import auth from "../auth";
 import { Link } from "react-router-dom";
 import Modals from "./NotificationModal";
-
+import Helmet from "react-helmet"
 export class UpdateCourse extends Component {
   onDismiss = () => this.setState({ visible: false });
   state = {
@@ -138,6 +138,9 @@ export class UpdateCourse extends Component {
   render() {
     return (
       <Container>
+        <Helmet>
+          <title>Admin - Edit Course</title>
+        </Helmet>
         <Card className="shadow">
           <CardBody>
             <Alert

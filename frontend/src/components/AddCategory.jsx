@@ -1,3 +1,4 @@
+// allows only admins or superusers to add a category 
 import React, { Component } from 'react'
 import Container from 'reactstrap/lib/Container'
 import Row from 'reactstrap/lib/Row'
@@ -5,6 +6,7 @@ import { Col, Card, CardBody, CardHeader, Form, FormGroup, Label, Input, Button 
 import CardTitle from 'reactstrap/lib/CardTitle'
 import FormAlert from "./FormAlert";
 import auth from '../auth'
+import {Helmet} from 'react-helmet'
 
 export class AddCategory extends Component {
     state = { errors: null }
@@ -43,6 +45,9 @@ export class AddCategory extends Component {
         return (
             <div>
                 <Container>
+                    <Helmet>
+                        <title>Admin - New Category</title>
+                    </Helmet>
                     <Row>
                         <Col>
                             <Card className="shadow">
