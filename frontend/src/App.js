@@ -14,6 +14,7 @@ import Register from './views/Register'
 import Admin from './views/Admin'
 import ProfilePage from './components/ProfilePage'
 import NoMatch from './views/NoMatch'
+import NoPermission from './views/NoPermission'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 // import Sidebar from './Sidebar'
 import CoursePurchasePage from './views/CoursePurchasePage';
@@ -54,6 +55,7 @@ class App extends React.Component {
               {/* <Route path="/dashboard" component={Dashboard} /> */}
               <ProtectedRoute path="/admin" component={Admin} />
               <ProtectedRoute path="/cart" component={Checkout} />
+              <ProtectedRoute path="/nopermission" component={NoPermission} />
               <Route path="*" component={NoMatch} />
 
             </Switch>
