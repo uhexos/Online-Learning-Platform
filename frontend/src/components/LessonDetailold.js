@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Card from 'reactstrap/lib/Card';
 import CardBody from 'reactstrap/lib/CardBody';
 import CardTitle from 'reactstrap/lib/CardTitle';
-import { Spinner } from 'reactstrap';
 
 export class LessonDetail extends Component {
     createMarkup() {
@@ -10,9 +9,10 @@ export class LessonDetail extends Component {
     }
 
     render() {
-        if (!this.props.lesson) return <Spinner color="primary" size="lg"/> //this line puts a loading icon if no lesson yet 
+        if (!this.props.lesson) return null //this line
         return (
             <Card>
+                {/* {console.log("lesson details",this.props.lesson)} */}
                 <CardBody className="shadow">
                     <CardTitle>
                         <h1>{this.props.lesson.title}</h1>

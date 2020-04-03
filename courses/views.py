@@ -2,7 +2,8 @@ from django.shortcuts import redirect
 from rest_framework import generics, permissions
 from .models import *
 from .serializers import *
-from .permissions import IsOwnerOrReadOnly, IsSuperUser
+from .permissions import IsOwnerOrReadOnly, IsSuperUser, IsTutorUser,OwnsCourse
+from rest_framework.permissions import IsAdminUser
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
@@ -15,30 +16,33 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from math import ceil
 
+
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 15
     page_size_query_param = 'page_size'
     max_page_size = 1000
 
     def get_paginated_response(self, data):
-            return Response({
-                'next': self.get_next_link(),
-                'current':self.page.number,
-                'previous': self.get_previous_link(),
-                'count': self.page.paginator.count,
-                'pages': ceil(self.page.paginator.count/self.page_size),
-                'results': data
-            })
+        return Response({
+            'next': self.get_next_link(),
+            'current': self.page.number,
+            'previous': self.get_previous_link(),
+            'count': self.page.paginator.count,
+            'pages': ceil(self.page.paginator.count/self.page_size),
+            'results': data
+        })
 
 
 class CategoryList(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [IsSuperUser | IsAdminUser]
 
 
 class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [IsSuperUser | IsAdminUser]
 
 
 class CourseList(generics.ListCreateAPIView):
@@ -48,16 +52,21 @@ class CourseList(generics.ListCreateAPIView):
     search_fields = ['owner__username', 'title', 'description']
     filterset_class = CourseFilter
     pagination_class = StandardResultsSetPagination
+    permission_classes = [IsTutorUser]
 
     def get_queryset(self):
-            # return only items that the user hasnt already purchased the ~Q is used for negation here.
-        return Course.objects.filter(~Q(bought_courses__user=self.request.user) , Q(is_live=True))
+        # return only items that the user hasnt already purchased the ~Q is used for negation here.
+        obj = Course.objects.filter(
+            ~Q(bought_courses__user=self.request.user), Q(is_live=True))
+        return obj
 
     def perform_create(self, serializer):
+        self.check_object_permissions(self.request, self.request.user)
         serializer.save(owner=self.request.user)
 
 
 class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsOwnerOrReadOnly]
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
 
@@ -65,12 +74,12 @@ class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
         queryset = self.get_queryset()
         queryset = queryset.filter(id=self.kwargs['pk'])
         obj = get_object_or_404(queryset)
-        self.check_object_permissions(self.request, obj)
+        self.check_object_permissions(self.request, obj.owner)
         return obj
 
 
 class LessonList(generics.ListCreateAPIView):
-    serializer_class = LessonSerializer
+    serializer_class = UnpurchasedLessonSerializer
     queryset = Lesson.objects.all()
 
     def get_queryset(self):
@@ -84,14 +93,17 @@ class LessonList(generics.ListCreateAPIView):
 
 
 class LessonDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [OwnsCourse]
     # queryset = Lesson.objects.all()
-    serializer_class = LessonSerializer
+    serializer_class = PurchasedLessonSerializer
 
     def get_object(self):
        # GET PK FROM URL USING KWARGS TO URL DEFINTIIION
         course_pk = self.kwargs['pk']
         lesson_pk = self.kwargs['lpk']
-        return Lesson.objects.get(course_id=course_pk, id=lesson_pk)
+        obj = Lesson.objects.get(course_id=course_pk, id=lesson_pk)
+        self.check_object_permissions(self.request, obj)
+        return obj
 
 
 class CustomUserList(generics.ListCreateAPIView):
@@ -111,11 +123,13 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
     # see the profile of the logged in user.
     serializer_class = CustomUserSerializer
     queryset = CustomUser.objects.all()
+    permission_classes = [IsOwnerOrReadOnly]
 
     def get_object(self):
         user_id = self.request.user.id
-        print("********************",user_id)
-        return CustomUser.objects.get(id=user_id)
+        obj = CustomUser.objects.get(id=user_id)
+        self.check_object_permissions(self.request, obj)
+        return obj
 
 
 class CourseRatingCreateView(generics.CreateAPIView):
@@ -131,6 +145,7 @@ class CourseRatingCreateView(generics.CreateAPIView):
 class CourseRatingDetailsView(generics.RetrieveUpdateAPIView):
     serializer_class = CourseRatingSerializer
     queryset = CourseRating.objects.all()
+    permission_classes = [IsOwnerOrReadOnly]
 
     def get_object(self):
        # GET PK FROM URL USING KWARGS TO URL DEFINTIIION
@@ -140,6 +155,7 @@ class CourseRatingDetailsView(generics.RetrieveUpdateAPIView):
             obj = CourseRating.objects.get(course=course_pk, owner=owner)
         except CourseRating.DoesNotExist:
             raise Http404("No MyModel matches the given query.")
+        self.check_object_permissions(self.request, obj)
         return obj
 # put rating if previous vote
 

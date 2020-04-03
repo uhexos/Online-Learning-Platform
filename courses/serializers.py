@@ -3,6 +3,7 @@ from .models import *
 from django.db.models import Avg
 from rest_framework.validators import UniqueTogetherValidator
 
+
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
@@ -68,14 +69,26 @@ class CourseSerializer(serializers.ModelSerializer):
     def get_rating(self, obj):
         return obj.rating.aggregate(average=Avg('score'))
 
+# this return all contents of the lesson that dont need guarding.
+class UnpurchasedLessonSerializer(serializers.ModelSerializer):
+    owner = serializers.PrimaryKeyRelatedField(read_only=True)
+    course = serializers.PrimaryKeyRelatedField(read_only=True)
 
-class LessonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Lesson
+        # fields = '__all__'
+        exclude = ["video", "content"]
+
+# this returns the video and content if the user has bought the course.
+class PurchasedLessonSerializer(serializers.ModelSerializer):
     owner = serializers.PrimaryKeyRelatedField(read_only=True)
     course = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Lesson
         fields = '__all__'
+        # exclude = ["video","content"]
+
 
 class EnrolledCourseSerializer(serializers.ModelSerializer):
     class Meta:

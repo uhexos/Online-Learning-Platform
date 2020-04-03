@@ -7,6 +7,7 @@ import SimpleFooter from "./SimpleFooter.jsx";
 
 import { Container, Row, Col } from 'reactstrap/lib';
 import auth from '../auth';
+import { Spinner } from 'reactstrap';
 
 export class CourseDetail extends Component {
     constructor(props) {
@@ -14,9 +15,7 @@ export class CourseDetail extends Component {
         // Bind the this context to the handler function
         //selected refers to the index of the lesson in the return array and not the lesson id
         this.state = {
-            course: {
-                lessons: []
-            },
+            lesson: null,
             lessons: [],
         };
         this.jwtkey = localStorage.getItem('token');
@@ -24,6 +23,7 @@ export class CourseDetail extends Component {
     }
 
     componentDidMount() {
+        console.log('testing mout');
         //get all lessons their name, video url and descriptions etc from the api, 
         fetch(`http://127.0.0.1:8000/api/courses/${this.props.match.params.id}/lessons/`, {
             method: 'GET',
@@ -37,25 +37,45 @@ export class CourseDetail extends Component {
                 this.setState({
                     lessons: lessons,
                 });
+                //click the appropriate lesson item on first load.
+                document.getElementById(`nav-item-${this.props.match.params.lid}`).click()
+            });
+
+    }
+    getLesson = (lid) => {
+        fetch(`http://127.0.0.1:8000/api/courses/${this.props.match.params.id}/lessons/${lid}`,
+            {
+                method: "GET",
+                headers: {
+                    Authorization: `JWT ${localStorage.getItem("token")}`
+                }
+            }
+        )
+            .then(res => auth.checkLoginstatus(res))
+            .then(res => res.json())
+            .then(lesson => {
+                this.setState({
+                    lesson: lesson
+                });
             });
     }
     render() {
         return (
             <div>
-            <AdminNavbar></AdminNavbar>
-            <Container fluid>
-                
-                <Row className="mt-3">
-                    <Col md="3">
-                        <LessonNav className="pt-3" lessons={this.state.lessons} activelink={this.props.match.params.lid}></LessonNav>
-                    </Col>
-                    <Col md="9">
-                        {/*select the first item from the array to display before first click happens */}
-                        <LessonDetail lesson={this.state.lessons[this.props.match.params.lid]}></LessonDetail>
-                    </Col>
-                </Row>
-            </Container>
-            <SimpleFooter/>
+                <AdminNavbar></AdminNavbar>
+                <Container fluid>
+
+                    <Row className="mt-3">
+                        <Col md="3">
+                            <LessonNav className="pt-3" lessons={this.state.lessons} activelink={this.props.match.params.lid} getLesson={this.getLesson}></LessonNav>
+                        </Col>
+                        <Col md="9">
+                            <LessonDetail lesson={this.state.lesson}></LessonDetail>
+
+                        </Col>
+                    </Row>
+                </Container>
+                <SimpleFooter />
             </div>
         )
     }
