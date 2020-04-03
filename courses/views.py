@@ -2,7 +2,7 @@ from django.shortcuts import redirect
 from rest_framework import generics, permissions
 from .models import *
 from .serializers import *
-from .permissions import IsOwnerOrReadOnly, IsSuperUser, IsTutorUser,OwnsCourse
+from .permissions import IsOwnerOrReadOnly, IsSuperUser, IsTutorUser, OwnsCourse, CourseIsLive
 from rest_framework.permissions import IsAdminUser
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
@@ -81,11 +81,19 @@ class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
 class LessonList(generics.ListCreateAPIView):
     serializer_class = UnpurchasedLessonSerializer
     queryset = Lesson.objects.all()
+    permission_classes = [CourseIsLive]
+
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return PurchasedLessonSerializer
+        return UnpurchasedLessonSerializer
 
     def get_queryset(self):
        # GET PK FROM URL USING KWARGS TO URL DEFINTIIION
         course_id = self.kwargs['pk']
-        return Lesson.objects.filter(course__id=course_id)
+        obj = Lesson.objects.filter(course__id=course_id)
+        self.check_object_permissions(self.request, course_id)
+        return obj
 
     def perform_create(self, serializer):
         course = Course.objects.get(id=self.kwargs['pk'])

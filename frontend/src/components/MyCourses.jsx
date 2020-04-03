@@ -12,7 +12,7 @@ import Search from './search';
 import AdvancedSearch from './advancedSearch';
 import CoursePaginator from './CoursePaginator';
 
-// this will serve as the explore page check mycourses.jsx for new courses page 
+// this will serve as the page that shows all bought courses
 class CoursesList extends React.Component {
   constructor(props) {
     super(props);
