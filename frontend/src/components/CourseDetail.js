@@ -38,8 +38,13 @@ export class CourseDetail extends Component {
                     lessons: lessons,
                 });
                 //click the appropriate lesson item on first load.
-                document.getElementById(`nav-item-${this.props.match.params.lid}`).click()
+                let nav = document.getElementById(`nav-item-${this.props.match.params.lid}`);
+                if (nav !== null){
+                    nav.click()
+                }
+                // document.getElementById(`nav-item-${this.props.match.params.lid}`).click()
             });
+
 
     }
     getLesson = (lid) => {
