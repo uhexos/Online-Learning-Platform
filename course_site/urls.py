@@ -25,6 +25,7 @@ urlpatterns = [
     path('api/', include('courses.urls')),
     path('api/', include('cart.urls')),
     path('api/', include('reports.urls')),
+    path('api/', include('quizzes.urls')),
     path('auth/', obtain_jwt_token),
     path('auth/refresh', refresh_jwt_token),
 ]

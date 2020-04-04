@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import *
 from django.db.models import Avg
 from rest_framework.validators import UniqueTogetherValidator
-
+from quizzes.serializers import QuizSerializer
 
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -73,7 +73,6 @@ class CourseSerializer(serializers.ModelSerializer):
 class UnpurchasedLessonSerializer(serializers.ModelSerializer):
     owner = serializers.PrimaryKeyRelatedField(read_only=True)
     course = serializers.PrimaryKeyRelatedField(read_only=True)
-
     class Meta:
         model = Lesson
         # fields = '__all__'
@@ -83,7 +82,7 @@ class UnpurchasedLessonSerializer(serializers.ModelSerializer):
 class PurchasedLessonSerializer(serializers.ModelSerializer):
     owner = serializers.PrimaryKeyRelatedField(read_only=True)
     course = serializers.PrimaryKeyRelatedField(read_only=True)
-
+    quiz = QuizSerializer(read_only=True)
     class Meta:
         model = Lesson
         fields = '__all__'
