@@ -55,7 +55,7 @@ class Header extends React.Component {
         lastMonthTotal += parseFloat(sale.course.price);
       }
     });
-    return ((total - lastMonthTotal) / lastMonthTotal) * 100;
+    return (((total - lastMonthTotal) / lastMonthTotal) * 100).toFixed(2);
   };
   getTotalNumberOfSales = () => {
     return this.props.data.length;
@@ -78,7 +78,7 @@ class Header extends React.Component {
         lastMonthTotal += 1;
       }
     });
-    return ((total - lastMonthTotal) / lastMonthTotal) * 100;
+    return (((total - lastMonthTotal) / lastMonthTotal) * 100).toFixed(2);
   };
 
   getNewSales = () => {
@@ -178,7 +178,7 @@ class Header extends React.Component {
                             tag="h5"
                             className="text-uppercase text-muted mb-0"
                           >
-                            Sales
+                            Sales (expected payout)
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
                             GHS {this.getSalesTotal()}
@@ -199,7 +199,7 @@ class Header extends React.Component {
                           />{" "}
                           {Math.abs(this.getSalesDifference())}%
                         </span>{" "}
-                        <span className="text-nowrap">Since last month</span>
+                        <span className="text-nowrap">vs last month</span>
                       </p>
                     </CardBody>
                   </Card>
