@@ -34,6 +34,7 @@ import {
   Container,
   Media
 } from "reactstrap";
+import auth from "../../auth";
 
 class AdminNavbar extends React.Component {
   render() {
@@ -98,7 +99,7 @@ class AdminNavbar extends React.Component {
                     <span>Support</span>
                   </DropdownItem>
                   <DropdownItem divider />
-                  <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
+                  <DropdownItem href="#" onClick={auth.logout}>
                     <i className="ni ni-user-run" />
                     <span>Logout</span>
                   </DropdownItem>
