@@ -5,9 +5,6 @@ import MyCourses  from "./components/MyCourses";
 import CourseDetail from "./components/CourseDetail";
 import Homepage from "./components/Homepage";
 import Checkout from "./components/Checkout";
-// import AdminNavbar from './components/AdminNavbar';
-// import RegisterPage from './components/RegisterPage'
-// import LoginPage from './components/LoginPage'
 import Login from './views/Login'
 import Register from './views/Register'
 // import Dashboard from './views/Dashboard' //removing this breaks the admin side so don't
@@ -41,10 +38,8 @@ class App extends React.Component {
       <UserProvider value={{ state: this.state, updateValue: this.updateValue, }}>
         <div>
           <Router>
-            {/* <AdminNavbar></AdminNavbar> */}
             <Switch>
               <Route path="/" exact component={Homepage} />
-              {/* <Route path="/" exact={true} component={CoursesList} /> */}
               {/* TODO redirect courses/id to courses/id/lesson/0 */}
               <ProtectedRoute path="/courses/" exact component={CoursesList} />
               <ProtectedRoute path="/mycourses/" exact component={MyCourses} />
@@ -53,16 +48,12 @@ class App extends React.Component {
               <Route path="/register" component={Register} />
               <Route path="/login" component={Login} />
               <Route path="/profile" component={NonTutorProfile} />
-              {/* <Route path="/dashboard" component={Dashboard} /> */}
               <ProtectedRoute path="/admin" component={Admin} />
               <ProtectedRoute path="/cart" component={Checkout} />
               <ProtectedRoute path="/nopermission" component={NoPermission} />
               <Route path="*" component={NoMatch} />
-
             </Switch>
-            {/* <SimpleFooter /> */}
           </Router>
-
         </div>
       </UserProvider>
 

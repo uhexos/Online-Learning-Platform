@@ -8,7 +8,7 @@
 * Copyright 2019 Creative Tim (https://www.creative-tim.com)
 * Licensed under MIT (https://github.com/creativetimofficial/argon-design-system-react/blob/master/LICENSE.md)
 
-* Coded by Creative Tim
+* Original by creative tim. Modified Code by Ugo & Johnson
 
 =========================================================
 
@@ -51,7 +51,6 @@ class Register extends React.Component {
       email: '',
       password: '',
       confirmPassword: ''
-
     }
   }
 // TODO fix this to fill user firstname and lastname, the _ is missing in the fetch data
@@ -107,37 +106,7 @@ class Register extends React.Component {
                   <Card className="bg-secondary shadow border-0">
                     <CardHeader className="bg-white pb-5">
                       <div className="text-muted text-center mb-3">
-                        <small>Sign up with</small>
-                      </div>
-                      <div className="text-center">
-                        <Button
-                          className="btn-neutral btn-icon mr-4"
-                          color="default"
-                          href="#pablo"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <span className="btn-inner--icon mr-1">
-                            <img
-                              alt="..."
-                              src={require("../assets/img/github.svg")}
-                            />
-                          </span>
-                          <span className="btn-inner--text">Github</span>
-                        </Button>
-                        <Button
-                          className="btn-neutral btn-icon ml-1"
-                          color="default"
-                          href="#pablo"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <span className="btn-inner--icon mr-1">
-                            <img
-                              alt="..."
-                              src={require("../assets/img/google.svg")}
-                            />
-                          </span>
-                          <span className="btn-inner--text">Google</span>
-                        </Button>
+                        <h2>Sign up</h2>
                       </div>
                     </CardHeader>
                     <CardBody className="px-lg-5 py-lg-5">

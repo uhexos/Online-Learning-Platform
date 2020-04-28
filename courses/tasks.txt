@@ -33,6 +33,6 @@ ensure all media gets deleted as appropriate.
 
 handle all fetch request gracefully ie handle error cases properly
 
-finish the purchase page. 
+finish the purchase page. --done
 
 TODO make a superior validation system using react strap validation

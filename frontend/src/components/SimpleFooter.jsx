@@ -8,7 +8,7 @@
 * Copyright 2019 Creative Tim (https://www.creative-tim.com)
 * Licensed under MIT (https://github.com/creativetimofficial/argon-design-system-react/blob/master/LICENSE.md)
 
-* Coded by Creative Tim
+* Original by creative tim. Modified Code by Ugo & Johnson
 
 =========================================================
 
@@ -17,6 +17,7 @@
 */
 /*eslint-disable*/
 import React from "react";
+
 // reactstrap components
 import {
   Button,
@@ -48,12 +49,12 @@ class SimpleFooter extends React.Component {
                 <Button
                   className=" btn-neutral btn-icon-only btn-round"
                   color="twitter"
-                  href="https://twitter.com/creativetim"
+                  href="https://twitter.com/"
                   id="tooltip126536702"
                   size="lg"
                   target="_blank"
                 >
-                  <i className=" fa fa-twitter" />
+                  <i className="fab fa-twitter"></i>
                 </Button>
                 <UncontrolledTooltip delay={0} target="tooltip126536702">
                   Follow us
@@ -61,12 +62,12 @@ class SimpleFooter extends React.Component {
                 <Button
                   className=" btn-neutral btn-icon-only btn-round ml-1"
                   color="facebook"
-                  href="https://www.facebook.com/creativetim"
+                  href="https://www.facebook.com/"
                   id="tooltip383967593"
                   size="lg"
                   target="_blank"
                 >
-                  <i className=" fa fa-facebook-square" />
+                  <i className=" fab fa-facebook-square" />
                 </Button>
                 <UncontrolledTooltip delay={0} target="tooltip383967593">
                   Like us
@@ -74,12 +75,12 @@ class SimpleFooter extends React.Component {
                 <Button
                   className=" btn-neutral btn-icon-only btn-round ml-1"
                   color="dribbble"
-                  href="https://dribbble.com/creativetim"
+                  href="https://dribbble.com/"
                   id="tooltip568564532"
                   size="lg"
                   target="_blank"
                 >
-                  <i className=" fa fa-dribbble" />
+                  <i className=" fab fa-dribbble" />
                 </Button>
                 <UncontrolledTooltip delay={0} target="tooltip568564532">
                   Follow us
@@ -87,12 +88,12 @@ class SimpleFooter extends React.Component {
                 <Button
                   className=" btn-neutral btn-icon-only btn-round ml-1"
                   color="github"
-                  href="https://github.com/creativetimofficial"
+                  href="https://github.com/"
                   id="tooltip626177562"
                   size="lg"
                   target="_blank"
                 >
-                  <i className=" fa fa-github" />
+                  <i className=" fab fa-github" />
                 </Button>
                 <UncontrolledTooltip delay={0} target="tooltip626177562">
                   Star on Github
