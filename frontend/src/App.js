@@ -52,7 +52,7 @@ class App extends React.Component {
               <ProtectedRoute path="/courses/:id/lessons/:lid" component={CourseDetail} />
               <Route path="/register" component={Register} />
               <Route path="/login" component={Login} />
-              <Route path="/profile" component={NonTutorProfile} />
+              <ProtectedRoute path="/profile" component={NonTutorProfile} />
               {/* <Route path="/dashboard" component={Dashboard} /> */}
               <ProtectedRoute path="/admin" component={Admin} />
               <ProtectedRoute path="/cart" component={Checkout} />
