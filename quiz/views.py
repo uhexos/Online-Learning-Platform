@@ -72,6 +72,12 @@ class OptionListCreate(generics.ListCreateAPIView):
     queryset = Option.objects.all()
     serializer_class = OptionSerializer
 
+    def get_serializer(self,*args,**kwargs):
+        if 'data' in kwargs:
+            data = kwargs['data']
+            if isinstance(data,list):
+                kwargs["many"] = True
+        return super(OptionListCreate,self).get_serializer(*args,**kwargs)
     def perform_create(self, serializer):
         self.check_object_permissions(self.request, self.request.user)
         question = get_object_or_404(

@@ -9,7 +9,10 @@ import FormAlert from "./FormAlert";
 import auth from "../auth";
 import { Link } from "react-router-dom";
 import Modals from "./NotificationModal";
-import Helmet from "react-helmet"
+import Helmet from "react-helmet";
+import { CreateQuiz } from "./CreateQuiz";
+// import Example from "./Example";
+
 export class UpdateCourse extends Component {
   onDismiss = () => this.setState({ visible: false });
   state = {
@@ -18,24 +21,24 @@ export class UpdateCourse extends Component {
     visible: false,
     errors: null,
     course: {},
-    lessons: []
+    lessons: [],
   };
 
   componentDidMount() {
     fetch("http://localhost:8000/api/categories", {
       method: "get",
       headers: {
-        Authorization: `JWT ${localStorage.getItem("token")}`
-      }
+        Authorization: `JWT ${localStorage.getItem("token")}`,
+      },
     })
-      .then(res => auth.checkLoginstatus(res))
-      .then(res => {
+      .then((res) => auth.checkLoginstatus(res))
+      .then((res) => {
         if (!res.ok) {
           return { test: "ok" };
         }
         return res.json();
       })
-      .then(data => {
+      .then((data) => {
         this.setState({ categories: data });
       });
 
@@ -43,14 +46,14 @@ export class UpdateCourse extends Component {
     fetch(`http://127.0.0.1:8000/api/courses/${this.props.match.params.id}`, {
       method: "GET",
       headers: {
-        Authorization: `JWT ${localStorage.getItem("token")}`
-      }
+        Authorization: `JWT ${localStorage.getItem("token")}`,
+      },
     })
-      .then(res => auth.checkLoginstatus(res))
-      .then(res => res.json())
-      .then(course => {
+      .then((res) => auth.checkLoginstatus(res))
+      .then((res) => res.json())
+      .then((course) => {
         this.setState({
-          course: course
+          course: course,
         });
       });
 
@@ -60,36 +63,36 @@ export class UpdateCourse extends Component {
       {
         method: "GET",
         headers: {
-          Authorization: `JWT ${localStorage.getItem("token")}`
-        }
+          Authorization: `JWT ${localStorage.getItem("token")}`,
+        },
       }
     )
-      .then(res => auth.checkLoginstatus(res))
-      .then(res => res.json())
-      .then(courseLessons => {
+      .then((res) => auth.checkLoginstatus(res))
+      .then((res) => res.json())
+      .then((courseLessons) => {
         this.setState({
-          lessons: courseLessons
+          lessons: courseLessons,
         });
       });
   }
-  deleteLesson = lesson_id => {
+  deleteLesson = (lesson_id) => {
     // delete return no json response
     fetch(
       `http://localhost:8000/api/courses/${this.props.match.params.id}/lessons/${lesson_id}/`,
       {
         method: "DELETE",
         headers: {
-          authorization: `JWT ${localStorage.getItem("token")}`
-        }
+          authorization: `JWT ${localStorage.getItem("token")}`,
+        },
       }
     )
-      .then(res => auth.checkLoginstatus(res))
+      .then((res) => auth.checkLoginstatus(res))
       .then(() => {
         // remove the just deleted category from the state and update state without making another api call.
         this.setState({
-          lessons: this.state.lessons.filter(lesson => {
+          lessons: this.state.lessons.filter((lesson) => {
             return lesson["id"] !== lesson_id;
-          })
+          }),
         });
       });
   };
@@ -117,11 +120,11 @@ export class UpdateCourse extends Component {
       method: "PATCH",
       body: formData,
       headers: {
-        Authorization: `JWT ${localStorage.getItem("token")}`
-      }
+        Authorization: `JWT ${localStorage.getItem("token")}`,
+      },
     })
-      .then(res => auth.checkLoginstatus(res))
-      .then(res => {
+      .then((res) => auth.checkLoginstatus(res))
+      .then((res) => {
         if (res.ok) {
           this.setState({ visible: true });
           document.getElementById("add-course").reset();
@@ -129,8 +132,8 @@ export class UpdateCourse extends Component {
         }
         throw res;
       })
-      .catch(err => {
-        err.text().then(errorMessage => {
+      .catch((err) => {
+        err.text().then((errorMessage) => {
           this.setState({ errors: errorMessage, visible: false });
         });
       });
@@ -183,7 +186,7 @@ export class UpdateCourse extends Component {
                     <Label for="courseCategory">Category</Label>
                     <Input type="select" name="category" id="courseCategory">
                       {this.state.categories
-                        ? this.state.categories.map(category =>
+                        ? this.state.categories.map((category) =>
                             category.id == this.state.course.category ? (
                               <option
                                 key={category.id}
@@ -264,7 +267,7 @@ export class UpdateCourse extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {this.state.lessons.map(lesson => (
+                  {this.state.lessons.map((lesson) => (
                     <tr key={lesson.id}>
                       <td>{lesson.id}</td>
                       <th scope="row">{lesson.title}</th>
@@ -288,6 +291,7 @@ export class UpdateCourse extends Component {
                   ))}
                 </tbody>
               </Table>
+              <CreateQuiz lessons={this.state.lessons}></CreateQuiz>
             </Card>
           </Col>
         </Row>

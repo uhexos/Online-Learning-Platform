@@ -7,6 +7,6 @@ urlpatterns = [
     path('quiz/<int:lid>/questions/', QuestionListCreate.as_view(),name="question-list-create"),
     path('quiz/<int:lid>/questions/<int:qid>/', QuestionDetail.as_view(),name="question-detail"),
     path('quiz/<int:lid>/questions/<int:qid>/options/', OptionListCreate.as_view(),name="option-list-create"),
-    path('quiz/<int:lid>/questions/<int:qid>/options/<int:oid>/', OptionDetail.as_view(),name="option-detail       "),
+    path('quiz/<int:lid>/questions/<int:qid>/options/<int:oid>/', OptionDetail.as_view(),name="option-detail"),
     # path('quiz/<int:lid>/update', QuizUpdate.as_view(),name="quiz-update"),
 ]
