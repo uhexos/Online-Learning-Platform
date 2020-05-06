@@ -71,7 +71,6 @@ export class CourseDetail extends Component {
             <div>
                 <AdminNavbar></AdminNavbar>
                 <Container fluid>
-
                     <Row className="mt-3">
                         <Col md="3">
                             <LessonNav className="pt-3" lessons={this.state.lessons} activelink={this.props.match.params.lid} getLesson={this.getLesson}></LessonNav>

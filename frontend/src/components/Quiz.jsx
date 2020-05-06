@@ -68,7 +68,7 @@ export class Quiz extends Component {
                   ))}
 
                   {this.state.revealAnswers ? (
-                    <p style={{ "font-weight": "bold", "color": "green" }}>
+                    <p style={{ "font-weight": "bold",color:"green" }}>
                       Answer:{" "}
                       {question.answer
                         ? question.options.find(

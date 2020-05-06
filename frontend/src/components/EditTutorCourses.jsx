@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import Container from "reactstrap/lib/Container";
 import Card from "reactstrap/lib/Card";
-import { Row, Col, CustomInput, Table, CardHeader } from "reactstrap";
+import {
+  Row,
+  Col,
+  CustomInput,
+  Table,
+  CardHeader,
+  CardTitle,
+} from "reactstrap";
 import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
 import CardBody from "reactstrap/lib/CardBody";
 import Alert from "reactstrap/lib/Alert";
@@ -11,6 +18,7 @@ import { Link } from "react-router-dom";
 import Modals from "./NotificationModal";
 import Helmet from "react-helmet";
 import { CreateQuiz } from "./CreateQuiz";
+import EditQuiz from "./EditQuiz";
 // import Example from "./Example";
 
 export class UpdateCourse extends Component {
@@ -22,6 +30,7 @@ export class UpdateCourse extends Component {
     errors: null,
     course: {},
     lessons: [],
+    toggleEdit:false
   };
 
   componentDidMount() {
@@ -96,6 +105,9 @@ export class UpdateCourse extends Component {
         });
       });
   };
+  toggleEdit =()=>{
+    this.setState({toggleEdit:!this.state.toggleEdit})
+  }
   saveCourse = () => {
     const fileField = document.querySelector('input[type="file"]');
     const formData = new FormData();
@@ -291,7 +303,16 @@ export class UpdateCourse extends Component {
                   ))}
                 </tbody>
               </Table>
-              <CreateQuiz lessons={this.state.lessons}></CreateQuiz>
+            </Card>
+            <Card className="mt-2">
+              <CardBody>
+                <Button color="primary" className="float-right" onClick={this.toggleEdit}>{this.state.toggleEdit?"Make quizzes":"Edit Quiz"}</Button> 
+                <CardTitle>
+                  <h3>{!this.state.toggleEdit?"Make quizzes":"Edit Quiz"}</h3>
+                </CardTitle>
+                {!this.state.toggleEdit?<CreateQuiz lessons={this.state.lessons}></CreateQuiz>:<EditQuiz lessons={this.state.lessons}></EditQuiz>}
+                
+              </CardBody>
             </Card>
           </Col>
         </Row>

@@ -57,7 +57,7 @@ export class CreateQuiz extends Component {
       .then((res) => res.json())
       .then((res) => {
         if (res.id || res.lesson[0] === "This field must be unique.") {
-          // this.setState({ activeQuiz: res.id });
+          //this checks if the lesson already has a quiz and allows you add new questions to it despite the error.
           this.setState({ activeLesson: lesson_id });
           this.setActiveTab("2");
           document.getElementById("quizForm").reset();
