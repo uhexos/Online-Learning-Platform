@@ -7,15 +7,15 @@ import auth from "../auth";
 export class StarRatings extends Component {
   state = {
     exampleModal: false,
-    user_rating: null
+    user_rating: null,
   };
-  toggleModal = state => {
+  toggleModal = (state) => {
     this.setState({
-      [state]: !this.state[state]
+      [state]: !this.state[state],
     });
   };
 
-  createStars = numberOfStars => {
+  createStars = (numberOfStars) => {
     let stars = [];
     for (var i = 0; i < Math.floor(numberOfStars); i++) {
       stars.push(
@@ -45,12 +45,12 @@ export class StarRatings extends Component {
         method: "POST",
         body: formdata,
         headers: {
-          Authorization: `JWT ${localStorage.getItem("token")}`
-        }
+          Authorization: `JWT ${localStorage.getItem("token")}`,
+        },
       }
     )
-      .then(res => auth.checkLoginstatus(res))
-      .then(res => res.json());
+      .then((res) => auth.checkLoginstatus(res))
+      .then((res) => res.json());
     this.toggleModal("exampleModal");
   };
 
@@ -62,24 +62,24 @@ export class StarRatings extends Component {
       method: "PUT",
       body: formdata,
       headers: {
-        Authorization: `JWT ${localStorage.getItem("token")}`
-      }
+        Authorization: `JWT ${localStorage.getItem("token")}`,
+      },
     })
-      .then(res => auth.checkLoginstatus(res))
-      .then(res => res.json())
-      .then(res => console.log(res));
+      .then((res) => auth.checkLoginstatus(res))
+      .then((res) => res.json())
+      .then((res) => console.log(res));
     this.toggleModal("exampleModal");
   };
   componentDidMount = () => {
     fetch(`http://localhost:8000/api/courses/${this.props.course_id}/rating/`, {
       method: "get",
       headers: {
-        authorization: `JWT ${localStorage.getItem("token")}`
-      }
+        authorization: `JWT ${localStorage.getItem("token")}`,
+      },
     })
-      .then(res => auth.checkLoginstatus(res))
-      .then(res => res.json())
-      .then(res => this.setState({ user_rating: res.score }));
+      .then((res) => auth.checkLoginstatus(res))
+      .then((res) => res.json())
+      .then((res) => this.setState({ user_rating: res.score }));
   };
 
   renderRateButton = () => {

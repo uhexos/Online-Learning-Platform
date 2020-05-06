@@ -10,6 +10,7 @@ import SimpleFooter from "./SimpleFooter.jsx";
 import { Container, Row, Col } from 'reactstrap/lib';
 import auth from '../auth';
 import Helmet from 'react-helmet'
+import Quiz from './Quiz';
 
 export class CourseDetail extends Component {
     constructor(props) {
@@ -40,7 +41,7 @@ export class CourseDetail extends Component {
                 });
                 //click the appropriate lesson item on first load.
                 let nav = document.getElementById(`nav-item-${this.props.match.params.lid}`);
-                if (nav !== null){
+                if (nav !== null) {
                     nav.click()
                 }
                 // document.getElementById(`nav-item-${this.props.match.params.lid}`).click()
@@ -70,14 +71,13 @@ export class CourseDetail extends Component {
             <div>
                 <AdminNavbar></AdminNavbar>
                 <Container fluid>
-
                     <Row className="mt-3">
                         <Col md="3">
                             <LessonNav className="pt-3" lessons={this.state.lessons} activelink={this.props.match.params.lid} getLesson={this.getLesson}></LessonNav>
                         </Col>
                         <Col md="9">
                             <LessonDetail lesson={this.state.lesson}></LessonDetail>
-
+                            {this.state.lesson ? <Quiz quiz={this.state.lesson.quiz} ></Quiz> : null}
                         </Col>
                     </Row>
                 </Container>

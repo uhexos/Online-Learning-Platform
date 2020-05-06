@@ -4,11 +4,11 @@
 * Argon Design System React - v1.0.0
 =========================================================
 
-* Product Page: https://www.creative-tim.com/product/argon-design-system-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-design-system-react/blob/master/LICENSE.md)
+* Product Page: https://www.Coursesa.com/product/argon-design-system-react
+* Copyright 2019 Coursesa (https://www.Coursesa.com)
+* Licensed under MIT (https://github.com/coursesaofficial/argon-design-system-react/blob/master/LICENSE.md)
 
-* Original by creative tim. Modified Code by Ugo & Johnson
+* Coded by Coursesa
 
 =========================================================
 
@@ -49,12 +49,12 @@ class SimpleFooter extends React.Component {
                 <Button
                   className=" btn-neutral btn-icon-only btn-round"
                   color="twitter"
-                  href="https://twitter.com/"
+                  href="https://twitter.com/coursesa"
                   id="tooltip126536702"
                   size="lg"
                   target="_blank"
                 >
-                  <i className="fab fa-twitter"></i>
+                  <i className=" fab fa-twitter" />
                 </Button>
                 <UncontrolledTooltip delay={0} target="tooltip126536702">
                   Follow us
@@ -62,7 +62,7 @@ class SimpleFooter extends React.Component {
                 <Button
                   className=" btn-neutral btn-icon-only btn-round ml-1"
                   color="facebook"
-                  href="https://www.facebook.com/"
+                  href="https://www.facebook.com/coursesa"
                   id="tooltip383967593"
                   size="lg"
                   target="_blank"
@@ -75,7 +75,7 @@ class SimpleFooter extends React.Component {
                 <Button
                   className=" btn-neutral btn-icon-only btn-round ml-1"
                   color="dribbble"
-                  href="https://dribbble.com/"
+                  href="https://dribbble.com/coursesa"
                   id="tooltip568564532"
                   size="lg"
                   target="_blank"
@@ -88,7 +88,7 @@ class SimpleFooter extends React.Component {
                 <Button
                   className=" btn-neutral btn-icon-only btn-round ml-1"
                   color="github"
-                  href="https://github.com/"
+                  href="https://github.com/coursesaofficial"
                   id="tooltip626177562"
                   size="lg"
                   target="_blank"
@@ -106,10 +106,10 @@ class SimpleFooter extends React.Component {
                 <div className=" copyright">
                   © {new Date().getFullYear()}{" "}
                   <a
-                    href="https://www.creative-tim.com?ref=adsr-footer"
+                    href="https://www.Coursesa.com?ref=adsr-footer"
                     target="_blank"
                   >
-                    Creative Tim
+                    Coursesa
                   </a>
                   .
                 </div>
@@ -118,15 +118,15 @@ class SimpleFooter extends React.Component {
                 <Nav className=" nav-footer justify-content-end">
                   <NavItem>
                     <NavLink
-                      href="https://www.creative-tim.com?ref=adsr-footer"
+                      href="https://www.Coursesa.com?ref=adsr-footer"
                       target="_blank"
                     >
-                      Creative Tim
+                      Coursesa
                     </NavLink>
                   </NavItem>
                   <NavItem>
                     <NavLink
-                      href="https://www.creative-tim.com/presentation?ref=adsr-footer"
+                      href="https://www.Coursesa.com/presentation?ref=adsr-footer"
                       target="_blank"
                     >
                       About Us
@@ -134,7 +134,7 @@ class SimpleFooter extends React.Component {
                   </NavItem>
                   <NavItem>
                     <NavLink
-                      href="http://blog.creative-tim.com?ref=adsr-footer"
+                      href="http://blog.Coursesa.com?ref=adsr-footer"
                       target="_blank"
                     >
                       Blog
@@ -142,7 +142,7 @@ class SimpleFooter extends React.Component {
                   </NavItem>
                   <NavItem>
                     <NavLink
-                      href="https://github.com/creativetimofficial/argon-design-system-react/blob/master/LICENSE.md"
+                      href="https://github.com/coursesaofficial/argon-design-system-react/blob/master/LICENSE.md"
                       target="_blank"
                     >
                       MIT License
