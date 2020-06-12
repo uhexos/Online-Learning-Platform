@@ -30,7 +30,7 @@ export class UpdateCourse extends Component {
     errors: null,
     course: {},
     lessons: [],
-    toggleEdit:false
+    toggleEdit: false,
   };
 
   componentDidMount() {
@@ -105,9 +105,9 @@ export class UpdateCourse extends Component {
         });
       });
   };
-  toggleEdit =()=>{
-    this.setState({toggleEdit:!this.state.toggleEdit})
-  }
+  toggleEdit = () => {
+    this.setState({ toggleEdit: !this.state.toggleEdit });
+  };
   saveCourse = () => {
     const fileField = document.querySelector('input[type="file"]');
     const formData = new FormData();
@@ -306,12 +306,23 @@ export class UpdateCourse extends Component {
             </Card>
             <Card className="mt-2">
               <CardBody>
-                <Button color="primary" className="float-right" onClick={this.toggleEdit}>{this.state.toggleEdit?"Make quizzes":"Edit Quiz"}</Button> 
+                <Button
+                  color="primary"
+                  className="float-right"
+                  onClick={this.toggleEdit}
+                >
+                  {this.state.toggleEdit ? "Make quizzes" : "Edit Quiz"}
+                </Button>
                 <CardTitle>
-                  <h3>{!this.state.toggleEdit?"Make quizzes":"Edit Quiz"}</h3>
+                  <h3>
+                    {!this.state.toggleEdit ? "Make quizzes" : "Edit Quiz"}
+                  </h3>
                 </CardTitle>
-                {!this.state.toggleEdit?<CreateQuiz lessons={this.state.lessons}></CreateQuiz>:<EditQuiz lessons={this.state.lessons}></EditQuiz>}
-                
+                {!this.state.toggleEdit ? (
+                  <CreateQuiz lessons={this.state.lessons}></CreateQuiz>
+                ) : (
+                  <EditQuiz lessons={this.state.lessons}></EditQuiz>
+                )}
               </CardBody>
             </Card>
           </Col>

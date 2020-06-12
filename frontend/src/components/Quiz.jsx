@@ -46,47 +46,56 @@ export class Quiz extends Component {
       <div>
         <Card className="mt-2">
           <CardBody>
-            <CardTitle>Quiz: {this.props.quiz.title}</CardTitle>
-            <Form>
-              {this.props.quiz.questions.map((question, index) => (
-                <FormGroup key={`q-${question.id}`}>
-                  <p style={{ "font-weight": "bold" }}>
-                    ({index + 1}) {question.prompt}
-                  </p>
-                  {question.options.map((option) => (
-                    <div key={`option-${option.id}`}>
-                      <input
-                        type="radio"
-                        id={`option-${option.id}`}
-                        name={question.id}
-                        value={option.id}
-                      />
-                      <Label className="ml-2" for={`option-${option.id}`}>
-                        {option.prompt}
-                      </Label>
-                    </div>
-                  ))}
+            {this.props.quiz ? (
+              <>
+                <CardTitle>Quiz: {this.props.quiz.title}</CardTitle>
+                <Form>
+                  {this.props.quiz.questions.map((question, index) => (
+                    <FormGroup key={`q-${question.id}`}>
+                      <p style={{ "font-weight": "bold" }}>
+                        ({index + 1}) {question.prompt}
+                      </p>
+                      {question.options.map((option) => (
+                        <div key={`option-${option.id}`}>
+                          <input
+                            type="radio"
+                            id={`option-${option.id}`}
+                            name={question.id}
+                            value={option.id}
+                          />
+                          <Label className="ml-2" for={`option-${option.id}`}>
+                            {option.prompt}
+                          </Label>
+                        </div>
+                      ))}
 
-                  {this.state.revealAnswers ? (
-                    <p style={{ "font-weight": "bold",color:"green" }}>
-                      Answer:{" "}
-                      {question.answer
-                        ? question.options.find(
-                            (option) => option.id === question.answer
-                          ).prompt
-                        : "No answer provided"}
-                    </p>
-                  ) : null}
-                </FormGroup>
-              ))}
-            </Form>
-            <button
-              type="button"
-              class="btn btn-primary"
-              onClick={this.markQuiz}
-            >
-              Mark quiz
-            </button>
+                      {this.state.revealAnswers ? (
+                        <p style={{ "font-weight": "bold", color: "green" }}>
+                          Answer:{" "}
+                          {question.answer
+                            ? question.options.find(
+                                (option) => option.id === question.answer
+                              ).prompt
+                            : "No answer provided"}
+                        </p>
+                      ) : null}
+                    </FormGroup>
+                  ))}
+                </Form>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onClick={this.markQuiz}
+                >
+                  Mark quiz
+                </button>
+              </>
+            ) : (
+              <>
+                {" "}
+                <CardTitle>Quiz: No quiz for this course</CardTitle>
+              </>
+            )}
           </CardBody>
         </Card>
       </div>
