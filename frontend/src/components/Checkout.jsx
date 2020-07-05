@@ -11,7 +11,7 @@ const config = {
     txref: "",
     customer_email: "",
     amount: 0,
-    PBFPubKey: "FLWPUBK_TEST-8916fcc2b01e16ac3eb7d38fb4c9872c-X",
+    PBFPubKey: "",
     meta: [{
         metaname: "cart",
         metavalue: ""
